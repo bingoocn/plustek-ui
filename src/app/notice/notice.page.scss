@@ -1,0 +1,45 @@
+// 设置搜索框样式
+ion-searchbar{
+    padding: 0;
+    height: 40px;
+    margin-bottom: 1em;
+}
+ion-grid{
+    --ion-grid-padding: 0 5px 0 5px;
+}
+// 移除ion-list的背景颜色
+.list-ios-lines-full,
+.list-md-lines-full{
+    background: none;
+}
+// 移除ion-item的边框
+.list-ios-lines-full .item,
+.list-md-lines-full .item{
+    --border-width: 0.55px;
+    --border-color: #f0f0f0;
+    margin-bottom: 1em;
+}
+.list-ios-lines-full .item:last-child,
+.list-md-lines-full .item:last-child{
+    margin-bottom: 0;
+}
+// ion-label不进行超出省略
+.item.sc-ion-label-ios-h, .item .sc-ion-label-ios-h,
+.item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
+    text-overflow: inherit;
+    white-space: inherit;
+}
+.button-small{
+    --padding-top: 0;
+    --padding-start: 0.9em;
+    --padding-end: 0.9em;
+    --padding-bottom: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+
+// 时间
+.time{
+    line-height: 2.5em;
+    font-size: .9em;
+}
