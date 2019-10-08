@@ -20,5 +20,16 @@ export class NoticePage implements OnInit {
       })
     }
   }
+  // 关键字搜索
+  getNotices(ev: any) {
+    this.ngOnInit();
 
+    const val = ev.target.value;
+
+    if (val && val.trim() != '') {
+      this.notices = this.notices.filter((item) => {
+        return (item.title.indexOf(val) > -1);
+      })
+    }
+  }
 }
