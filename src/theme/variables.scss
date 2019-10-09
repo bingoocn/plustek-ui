@@ -89,14 +89,34 @@
 }
 /*  App内自定义样式  */
 
-// 基础颜色
+/*  基础颜色  */
+
 .grey{
   color: #999999;
 }
-// 布局
+/*  布局  */
+
 .pull-right{
   float: right;
 }
+/*  栅格化布局  */
+
+.col-20{
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 20%;
+  -moz-box-flex: 0;
+  -moz-flex: 0 0 %20;
+  -ms-flex: 0 0 20%;
+  flex: 0 0 20%;
+}
+/*  自定义样式  */
+
+.time{
+  font-size: 1rem;
+}
+
+/*  重置原有样式  */
+
 // 移除ion-list的背景颜色
 .list-ios-lines-full,
 .list-md-lines-full{
@@ -113,7 +133,4 @@
 .list-md-lines-full .item:last-child{
     margin-bottom: 0;
 }
-// 时间
-.time{
-  font-size: 1rem;
-}
+

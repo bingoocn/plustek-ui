@@ -1,3 +1,15 @@
-ion-col{
-    background: red;
+ion-grid{
+    --ion-grid-padding: 0;
+    --ion-grid-width: 10%;
+    --ion-grid-width-lg: 10%;
+    --ion-grid-width-md: 10%;
+    --ion-grid-width-sm: 10%;
+    --ion-grid-width-xl: 10%;
+    --ion-grid-width-xs: 10%;
+}
+ion-item{
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --inner-padding-bottom: 10px;
+    --inner-padding-top: 10px;
 }

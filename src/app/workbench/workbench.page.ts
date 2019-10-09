@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workbench.page.scss'],
 })
 export class WorkbenchPage implements OnInit {
-
+  public banner:any = './banner.jpg';
   constructor() { }
 
   ngOnInit() {
