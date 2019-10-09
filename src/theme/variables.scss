@@ -97,6 +97,23 @@
 .pull-right{
   float: right;
 }
+// 移除ion-list的背景颜色
+.list-ios-lines-full,
+.list-md-lines-full{
+    background: none;
+}
+// 移除ion-item的边框
+.list-ios-lines-full .item,
+.list-md-lines-full .item{
+    --border-width: 0.55px;
+    --border-color: #f0f0f0;
+    margin-bottom: 1em;
+}
+.list-ios-lines-full .item:last-child,
+.list-md-lines-full .item:last-child{
+    margin-bottom: 0;
+}
+// 时间
 .time{
   font-size: 1rem;
 }
