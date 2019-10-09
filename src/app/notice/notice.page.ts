@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notice',
@@ -9,9 +10,16 @@ export class NoticePage implements OnInit {
 
   public notices:any = [];
 
-  constructor() { }
+  constructor(public router: Router) { 
+    //this.router.navigate(['/viewNotice'], {
+      //queryParams: {
+       // object: JSON.stringify(object)
+      //}
+    //});
+  }
 
   ngOnInit() {
+    this.notices = [];
     for(let i=0; i<10; i++) {
       this.notices.push({
         guid: Math.round(Math.random()*10000),
@@ -30,6 +38,12 @@ export class NoticePage implements OnInit {
       this.notices = this.notices.filter((item) => {
         return (item.title.indexOf(val) > -1);
       })
+    }
+  }
+  //查看公告通知
+  viewNotice(item: any) {
+    if (item && item.title) {
+
     }
   }
 }
