@@ -92,15 +92,61 @@
 /*  基础颜色  */
 
 .grey{
-  color: #999999;
+  color: #999999 !important;
+}
+.darkgrey{
+  color:#666666 !important;
+}
+/*  重置原有样式  */
+
+// 移除ion-list的背景颜色
+.list-ios-lines-full,
+.list-md-lines-full{
+    background: none;
+}
+// 移除ion-item的边框
+.list-ios-lines-full .item,
+.list-md-lines-full .item{
+    --border-width: 0.55px;
+    --border-color: #f0f0f0;
+    margin-bottom: 10px;
+  
+}
+.list-ios-lines-full .item:last-child,
+.list-md-lines-full .item:last-child{
+    margin-bottom: 0;
+}
+// 重写button的border-radius
+ion-button {
+  --border-radius: 5px;
 }
 
 /*  外边距  */
 .no-margin{
-  margin:0;
+  margin:0 !important;
 }
 .mr-top-10{
   margin-top:10px;
+}
+.mr-top-20{
+  margin-top:20px;
+}
+.mr-right-10{
+  margin-right:10px;
+}
+.mr-right-20{
+  margin-right:20px;
+}
+.mr-left-50{
+  margin-left:50px;
+}
+/*  内边距  */
+.no-padding{
+  padding:0 !important;
+}
+/*  边框   */
+.border-bottom{
+  border-bottom: 1px solid #ddd;
 }
 /*  布局  */
 
@@ -117,11 +163,22 @@
   -ms-flex: 0 0 20%;
   flex: 0 0 20%;
 }
-/*  自定义样式  */
 
+/*  自定义样式  */
+//大头像
+.avatar-lg{
+  width:60px;
+  height: 60px;
+}
 .time{
   font-size: 1rem;
 }
+.mine-item{
+  width: 100%;
+  height: auto;
+  background: white;
+}
+
 //部分
 .section{
     background-color:#fff;
@@ -169,23 +226,13 @@
         text-overflow: ellipsis;
     }
 }
-/*  重置原有样式  */
 
-// 移除ion-list的背景颜色
-.list-ios-lines-full,
-.list-md-lines-full{
-    background: none;
+//我的列表图片
+.ion-list-img{
+  width:20px;
+  height:20px;
+  margin-right: 15px;
 }
-// 移除ion-item的边框
-.list-ios-lines-full .item,
-.list-md-lines-full .item{
-    --border-width: 0.55px;
-    --border-color: #f0f0f0;
-    margin-bottom: 10px;
-  
+.item-native .item-inner{
+  border-bottom-color:#eee;
 }
-.list-ios-lines-full .item:last-child,
-.list-md-lines-full .item:last-child{
-    margin-bottom: 0;
-}
-

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-notice-add',
@@ -6,9 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notice-add.component.scss'],
 })
 export class NoticeAddComponent implements OnInit {
+  addNoticeForm;
+  constructor(private formBuilder: FormBuilder) {
+    
+  }
 
-  constructor() { }
+  ngOnInit() {
+    this.addNoticeForm = this.formBuilder.group({
+      noticeTitle: [ null, [ Validators.required ] ],
+      noticeContent: [ null, [ Validators.required ] ],
+      noticeAttach:[ null ]
+    });
+  }
+  addAttach(){
 
-  ngOnInit() {}
-
+  }
+  onSubmit(noticeData){
+    console.log(noticeData,"noticeData");
+    // for (const i in this.addNoticeForm.controls) {
+    //   if (i) {
+    //     this.addNoticeForm.controls[ i ].markAsDirty();
+    //   }
+    // }
+    console.warn("提交成功！");
+    this.addNoticeForm.reset();
+  }
 }
