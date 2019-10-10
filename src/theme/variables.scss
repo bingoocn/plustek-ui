@@ -87,12 +87,98 @@
   // tint 色调
   --ion-color-tint: #f7f7f7;
 }
+.ion-color-lightPrimary {
+  // base 基本颜色
+  --ion-color-base: #4768f3;
+  --ion-color-base-rgb: 71, 104, 243;
+  // contrast 对比颜色
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255, 255, 255;
+  // shade 阴影颜色
+  --ion-color-shade: #3171e0;
+  // tint 色调
+  --ion-color-tint: #4c8dff;
+}
 /*  App内自定义样式  */
 
 /*  基础颜色  */
 
 .grey{
   color: #999999;
+}
+// 淡青色
+.bg-cyan{
+  background: #4ec7ff;
+}
+// 黄色
+.bg-yellow{
+  background: #ffc63d;
+}
+// 暗红色
+.bg-red{
+  background: #d83e3e;
+}
+// 浅红色
+.bg-lightRed{
+  background: #f35b47;
+}
+// 橘色
+.bg-orange{
+  background: #fcac6d;
+}
+// 亮蓝色
+.bg-brightBlue{
+  background: #3880ff;
+}
+// 天蓝色
+.bg-skyBlue{
+  background: #4ec7ff;
+}
+/*  重置原有样式  */
+
+// 移除ion-list的背景颜色
+.list-ios-lines-full,
+.list-md-lines-full{
+    background: none;
+}
+// 移除ion-item的边框
+.list-ios-lines-full .item,
+.list-md-lines-full .item{
+    --border-width: 0.55px;
+    --border-color: #f0f0f0;
+    margin-bottom: .5rem;
+  
+}
+.list-ios-lines-full .item:last-child,
+.list-md-lines-full .item:last-child{
+    margin-bottom: 0;
+}
+// 修改底部导航选中颜色
+ion-tab-button{
+  --color: #b6b6b6;
+  --color-selected:#4768f3;
+}
+/*  内外边距  */
+.no-margin{
+  margin:0;
+}
+.no-padding{
+  padding:0;
+}
+.mr-top-10{
+  margin-top:10px;
+}
+.padding-top-5{
+  padding-top: 5px;
+}
+.padding-bottom-5{
+  padding-bottom: 5px;
+}
+.padding-top-10{
+  padding-top: 10px;
+}
+.padding-bottom-10{
+  padding-bottom: 10px;
 }
 /*  布局  */
 
@@ -110,32 +196,75 @@
   flex: 0 0 20%;
 }
 
-/*  重置原有样式  */
-
-// 移除ion-list的背景颜色
-.list-ios-lines-full,
-.list-md-lines-full{
-    background: none;
-}
-// 移除ion-item的边框
-.list-ios-lines-full .item,
-.list-md-lines-full .item{
-    --border-width: 0.55px;
-    --border-color: #f0f0f0;
-    margin-bottom: .3em;
-}
-.list-ios-lines-full .item:last-child,
-.list-md-lines-full .item:last-child{
-    margin-bottom: 0;
-}
-
 /*  自定义样式  */
 
 .time{
   font-size: 1rem;
 }
+// 单条数据
 .mine-item{
   width: 100%;
   height: auto;
   background: white;
+  border: 0.55px #f0f0f0 solid;
+  margin-bottom: .5rem;
+}
+
+//部分
+.section{
+    background-color:#fff;
+    padding:10px;
+}
+//段落
+.paragraph{
+    text-indent:2em;
+    line-height:30px;
+    color:#333;
+}
+//带图标的标题
+.subtitle{
+    font-size:13px;
+    color:#999;
+}
+//附件标题
+.attach-title{
+    font-size:13px;
+    color: #999999;
+}
+//附件列表
+.attach-item{
+    text-align: center;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    ion-thumbnail{
+        margin:0 auto;
+    }
+    .attach-text{
+        display:block;
+        font-size:13px;
+        color:#666;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .attach-subtext{
+        display:block;
+        font-size:12px;
+        color:#999;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+// 图标列表
+.mine-icon-circle{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  padding: 7px;
+  .mine-icon-img{
+    width: 100%;
+    height: 100%;
+  }
 }
