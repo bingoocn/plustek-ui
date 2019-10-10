@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'index', loadChildren: './index/index.module#IndexPageModule' },
   { path: 'notice', loadChildren: './notice/notice.module#NoticePageModule' },
   { path: 'workbench', loadChildren: './workbench/workbench.module#WorkbenchPageModule' },
-  { path: 'mine', loadChildren: './mine/mine.module#MinePageModule' }
+  { path: 'mine', loadChildren: './mine/mine.module#MinePageModule' },
+  { path: 'exprience', loadChildren: './exprience/exprience.module#ExpriencePageModule' }
 ];
 @NgModule({
   imports: [

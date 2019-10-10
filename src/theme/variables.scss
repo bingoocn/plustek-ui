@@ -185,6 +185,9 @@ ion-tab-button{
 .pull-right{
   float: right;
 }
+.text-center{
+  text-align: center;
+}
 /*  栅格化布局  */
 
 .col-20{
@@ -263,6 +266,7 @@ ion-tab-button{
   height: 2.5rem;
   border-radius: 50%;
   padding: 7px;
+  margin-left: calc((100% - 2.5rem) / 2);
   .mine-icon-img{
     width: 100%;
     height: 100%;
