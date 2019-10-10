@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" color="grey">
+<ion-content color="grey">
   <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getNotices($event)"></ion-searchbar>
   <ion-list lines="full">
     <ion-item *ngFor="let item of notices; let key = index">
@@ -26,7 +26,7 @@
     </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small">
+    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addNotice']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -94,6 +94,14 @@
 .grey{
   color: #999999;
 }
+
+/*  外边距  */
+.no-margin{
+  margin:0;
+}
+.mr-top-10{
+  margin-top:10px;
+}
 /*  布局  */
 
 .pull-right{
@@ -114,7 +122,53 @@
 .time{
   font-size: 1rem;
 }
-
+//部分
+.section{
+    background-color:#fff;
+    padding:10px;
+}
+//段落
+.paragraph{
+    text-indent:2em;
+    line-height:30px;
+    color:#333;
+}
+//带图标的标题
+.subtitle{
+    font-size:13px;
+    color:#999;
+}
+//附件标题
+.attach-title{
+    font-size:13px;
+    color: #999999;
+}
+//附件列表
+.attach-item{
+    text-align: center;
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    ion-thumbnail{
+        margin:0 auto;
+    }
+    .attach-text{
+        display:block;
+        font-size:13px;
+        color:#666;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .attach-subtext{
+        display:block;
+        font-size:12px;
+        color:#999;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -127,7 +181,7 @@
 .list-md-lines-full .item{
     --border-width: 0.55px;
     --border-color: #f0f0f0;
-    margin-bottom: 1em;
+    margin-bottom: 10px;
 }
 .list-ios-lines-full .item:last-child,
 .list-md-lines-full .item:last-child{
