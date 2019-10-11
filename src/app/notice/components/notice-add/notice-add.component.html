@@ -1,3 +1,29 @@
-<p>
-  notice-add works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>公告通知</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="section">
+    <form [formGroup]="addNoticeForm" (ngSubmit)="onSubmit(addNoticeForm.value)">
+      <ion-list class="no-margin">
+        <ion-item>
+          <ion-label>标题：</ion-label>
+          <ion-input type="text" formControlName="noticeTitle"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>通知内容：</ion-label>
+          <ion-textarea rows="15" clearOnEdit="true" formControlName="noticeContent"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>附件：</ion-label>
+          <ion-button color="primary" (click)="addAttach()"><ion-icon slot="start" name="add"></ion-icon>添加</ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-button class="mr-top-20" type="submit" expand="block">保存</ion-button>
+    </form>
+  </div>
+</ion-content>
