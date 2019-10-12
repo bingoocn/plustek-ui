@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ModifyPasswordComponent } from '../modify-password/modify-password.component';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-setup',
@@ -12,7 +13,7 @@ export class SetupComponent implements OnInit {
 
   formData;//返回的修改密码表单数据
 
-  constructor(public router: Router, public modalController: ModalController) { }
+  constructor(public router: Router, public modalController: ModalController, public nav: NavController) { }
 
   ngOnInit() {}
 
@@ -28,5 +29,10 @@ export class SetupComponent implements OnInit {
       console.log(res,"返回的表单数据");
       this.formData = res.data.result;
     })
+  }
+  // 退出登录
+  logout() {
+    window.localStorage.removeItem('token');
+    this.nav.navigateForward('login');
   }
 }

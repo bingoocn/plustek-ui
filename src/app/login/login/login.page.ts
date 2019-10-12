@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+// 引入封装的axios服务
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +11,16 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private nav: NavController) { }
+  constructor(private nav: NavController, private router: Router, public axios:HttpService) { }
 
   ngOnInit() {
   }
   login() {
     window.localStorage.setItem("token", '1');
-    console.log(this.nav)
-    // this.nav.back();
-    // this.nav.navigateForward('tabs');
-    // this.nav.first();
-    // this.nav.navigateRoot('notice');
-    // this.nav.navigateByUrl('/index');
+    var api = "http://a.itying.com/api/productlist"; 
+    this.axios.axiosGet(api).then((response) => {
+      console.log(response)
+    });
+    // this.router.navigate(['']);
   }
 }
