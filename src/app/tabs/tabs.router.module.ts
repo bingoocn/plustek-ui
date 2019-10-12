@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-
+import { LoginGuardGuard } from 'src/app/guard/login-guard.guard';
 const routes: Routes = [
   {
     path: 'tabs',
@@ -12,8 +12,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../index/index.module').then(m => m.IndexPageModule)
+            loadChildren: () => import('../index/index.module').then(m => m.IndexPageModule),
+            canActivate: [LoginGuardGuard]
           }
         ]
       },
@@ -22,8 +22,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../notice/notice.module').then(m => m.NoticePageModule)
+            loadChildren: () => import('../notice/notice.module').then(m => m.NoticePageModule),
+            canActivate: [LoginGuardGuard]
           }
         ]
       },
@@ -32,8 +32,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../workbench/workbench.module').then(m => m.WorkbenchPageModule)
+            loadChildren: () => import('../workbench/workbench.module').then(m => m.WorkbenchPageModule),
+            canActivate: [LoginGuardGuard]
           }
         ]
       },
@@ -42,8 +42,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../mine/mine.module').then(m => m.MinePageModule)
+            loadChildren: () => import('../mine/mine.module').then(m => m.MinePageModule),
+            canActivate: [LoginGuardGuard]
           }
         ]
       },
