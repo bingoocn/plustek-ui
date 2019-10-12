@@ -6,11 +6,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MinePage } from './mine.page';
+import { SetupComponent } from './setup/setup.component';
+import { ModifyPasswordComponent } from './modify-password/modify-password.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MinePage
+  },{
+    path: 'setup',
+    component: SetupComponent
   }
 ];
 
@@ -21,6 +26,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MinePage]
+  declarations: [MinePage, SetupComponent, ModifyPasswordComponent],
+  entryComponents: [ModifyPasswordComponent]
 })
 export class MinePageModule {}

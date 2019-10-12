@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { NoticePage } from './notice.page';
-import { NoticeDetailComponent } from './components/notice-detail/notice-detail.component';
-import { NoticeAddComponent } from './components/notice-add/notice-add.component';
+import { NoticeDetailComponent } from './notice-detail/notice-detail.component';
+import { NoticeAddComponent } from './notice-add/notice-add.component';
 
 const routes: Routes = [
   {
