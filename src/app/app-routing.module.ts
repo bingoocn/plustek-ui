@@ -17,6 +17,9 @@ const routes: Routes = [
   // 具体业务模块
   { path: 'case', loadChildren: './pages/case/case.module#CasePageModule' },
   { path: 'exprience', loadChildren: './pages/exprience/exprience.module#ExpriencePageModule' },
+  { path: 'mytopic', loadChildren: './pages/mytopic/mytopic.module#MytopicPageModule' },
+  { path: 'myreply', loadChildren: './pages/myreply/myreply.module#MyreplyPageModule' },
+
 ];
 @NgModule({
   imports: [
