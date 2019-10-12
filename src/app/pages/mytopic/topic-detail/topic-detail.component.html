@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>主题详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="grey">
+  <div class="section">
+    <ion-text color="dark">
+      <h5 align="left">关于国庆放假的通知</h5>
+      <ion-grid class="no-padding">
+        <ion-row>
+          <ion-col size="8" class="subtitle">总部人力资源部</ion-col>
+          <ion-col size="4" class="subtitle text-right">2019-10-09</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <div class="paragraph">国庆放假7天，假期外出旅行请注意安全！国庆放假7天，假期外出旅行请注意安全！国庆放假7天，假期外出旅行请注意安全！</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-text>
+  </div>
+  <div class="section no-padding mr-top-10">
+    <ion-item lines="full" class="bordered-bottom">
+      <ion-label class="subtitle">评论<span class="mr-left-10">1500</span></ion-label>
+      <ion-label slot="end" class="grey subtitle" align="right">访问<span class="mr-left-10">5000</span></ion-label>
+    </ion-item>
+  </div>
+  <div class="section no-padding">
+    <ion-list class="no-margin">
+      <ion-item lines="none" *ngFor="let item of comments; let key = index">
+        <ion-avatar class="mr-right-10">
+          <img [src]="item.imgSrc">
+        </ion-avatar>
+        <ion-label>
+          <h6 class="grey">{{ item.commentator }}</h6>
+          <p>{{ item.content }}</p>
+          <h6 class="grey">{{ item.time }}</h6>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="section">
+    <ion-item lines="none" class="comment-box">
+      <ion-textarea rows="3" cols="20" clearOnEdit="true" placeholder="写评论..."></ion-textarea>
+    </ion-item>
+    <div class="text-right mr-top-5">
+      <ion-button size="small" (click)="comment()">
+        评论
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

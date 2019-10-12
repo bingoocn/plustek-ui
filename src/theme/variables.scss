@@ -191,6 +191,9 @@ ion-tab-button{
 .no-padding{
   padding:0;
 }
+.mr-top-5{
+  margin-top:5px;
+}
 .mr-top-10{
   margin-top:10px;
 }
@@ -202,6 +205,12 @@ ion-tab-button{
 }
 .mr-right-20{
   margin-right:20px;
+}
+.mr-left-5{
+  margin-left:5px;
+}
+.mr-left-10{
+  margin-left:10px;
 }
 .mr-left-50{
   margin-left:50px;
@@ -222,8 +231,11 @@ ion-tab-button{
   padding-bottom: 10px;
 }
 /*  边框   */
-.border-bottom{
-  border-bottom: 1px solid #ddd;
+.bordered{
+  border: 1px solid #eeeeee;
+}
+.bordered-bottom{
+  border-bottom: 1px solid #eeeeee;
 }
 /*  布局  */
 
@@ -232,6 +244,12 @@ ion-tab-button{
 }
 .text-center{
   text-align: center;
+}
+.text-left{
+  text-align:left;
+}
+.text-right{
+  text-align:right;
 }
 /*  栅格化布局  */
 
@@ -270,13 +288,14 @@ ion-tab-button{
 //段落
 .paragraph{
     text-indent:2em;
-    line-height:30px;
+    line-height:24px;
+    font-size:15px;
     color:#333;
 }
 //带图标的标题
 .subtitle{
-    font-size:13px;
-    color:#999;
+    font-size:13px !important;
+    color:#999999 !important;
 }
 //附件标题
 .attach-title{
@@ -330,4 +349,18 @@ ion-tab-button{
     width: 100%;
     height: 100%;
   }
+}
+//我的主题列表
+.item-foot{
+  font-size:13px;
+  color:#666666;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+//评论
+.comment-box{
+  border:1px solid #eeeeee;
+  border-radius:5px;
+  font-size:13px;
 }

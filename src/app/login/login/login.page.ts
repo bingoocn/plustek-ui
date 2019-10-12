@@ -17,10 +17,6 @@ export class LoginPage implements OnInit {
   }
   login() {
     window.localStorage.setItem("token", '1');
-    var api = "http://a.itying.com/api/productlist"; 
-    this.axios.axiosGet(api).then((response) => {
-      console.log(response)
-    });
-    // this.router.navigate(['']);
+    this.router.navigate(['']);
   }
 }
