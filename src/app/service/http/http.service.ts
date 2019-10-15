@@ -10,7 +10,7 @@ export class HttpService {
   // http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1
   // 请求头
   public header = new HttpHeaders({
-    // 'token': window.localStorage.getItem('token'),
+    // 'X-Requested-Width': 'XMLHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded'
   })
 
