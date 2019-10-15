@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
     window.localStorage.setItem("token", '1');
     this.nav.navigateRoot("/tabs/index")
     this.http.getRequest('/appapi.php?a=getPortalList&catid=20&page=1').then(response => {
-      console.log(response)
+      // console.log(response)
     })
   }
 }
