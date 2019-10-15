@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>案例分析详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="grey">
+  <div class="section">
+    <ion-item lines="none" class="item-title">
+      <ion-label>
+        <h2 class="mr-bottom-10">关于企业改革的案例分析</h2>
+        <p>填报单位：北化集团人力部</p>
+        <p>发布者：李鸿章</p>
+        <p>发布时间：2019-10-09</p>
+        <p>关键字：改革、企业</p>
+      </ion-label>
+    </ion-item>
+  </div>
+  <div class="section mr-top-10">
+    <div>
+      <ion-segment [(ngModel)] = "caseTabValue" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="caseContent" checked>
+          <ion-label>案例内容</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="caseAnalysis">
+          <ion-label>案例分析</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="caseAttach">
+          <ion-label>相关附件</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div class="paragraph mr-top-10" *ngIf=" caseTabValue == 'caseContent'">
+      这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容这里是案例内容
+    </div>
+    <div class="paragraph mr-top-10" *ngIf=" caseTabValue == 'caseAnalysis'">
+      这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析这里是案例分析
+    </div>
+    <div *ngIf=" caseTabValue == 'caseAttach'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <div class="attach-item">
+              <ion-thumbnail slot="start">
+                <img src="assets/word.png">
+              </ion-thumbnail>
+              <ion-label class="attach-text">通知书</ion-label>
+              <ion-label class="attach-subtext">18.3K</ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="attach-item">
+              <ion-thumbnail slot="start">
+                <img src="assets/excel.png">
+              </ion-thumbnail>
+              <ion-label class="attach-text">通知详情</ion-label>
+              <ion-label class="attach-subtext">1.5M</ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="attach-item">
+              <ion-thumbnail slot="start">
+                <img src="assets/ppt.png">
+              </ion-thumbnail>
+              <ion-label class="attach-text">参考文献参考文献参考文献参考文献</ion-label>
+              <ion-label class="attach-subtext">1.1M</ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

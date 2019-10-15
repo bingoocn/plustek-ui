@@ -109,6 +109,16 @@
 .darkgrey{
   color:#666666 !important;
 }
+
+/* 字符间距 */
+.letter-spacing-2em{
+  letter-spacing: 2em;
+  margin-right: -2em;
+}
+.letter-spacing-05em{
+  letter-spacing: 0.5em;
+  margin-right: -0.5em;
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -199,6 +209,9 @@ ion-tab-button{
 }
 .mr-top-20{
   margin-top:20px;
+}
+.mr-bottom-10{
+  margin-bottom:10px !important;
 }
 .mr-right-10{
   margin-right:10px;
@@ -363,4 +376,16 @@ ion-tab-button{
   border:1px solid #eeeeee;
   border-radius:5px;
   font-size:13px;
+}
+//案例分析
+.item-title:before{
+  display: inline-block;
+  content: "";
+  width: 3px;
+  height: 14px;
+  background-color: blue;
+  position: absolute;
+  top: 14px;
+  left: 5px;
+  z-index: 1;
 }

@@ -16,9 +16,10 @@ const routes: Routes = [
   { path: 'register', loadChildren: './login/register/register.module#RegisterPageModule' },
   // 具体业务模块
   { path: 'case', loadChildren: './pages/case/case.module#CasePageModule' },
-  { path: 'exprience', loadChildren: './pages/exprience/exprience.module#ExpriencePageModule' },
-  { path: 'mytopic', loadChildren: './pages/mytopic/mytopic.module#MytopicPageModule' },
-  { path: 'myreply', loadChildren: './pages/myreply/myreply.module#MyreplyPageModule' },
+  { path: 'internal-communication', loadChildren: './pages/internal-communication/internal-communication.module#InternalCommunicationPageModule' },
+  { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },
+
+
 
 ];
 @NgModule({
