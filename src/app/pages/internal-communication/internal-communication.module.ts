@@ -5,12 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MyreplyPage } from './myreply.page';
+import { InternalCommunicationPage } from './internal-communication.page';
+import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MyreplyPage
+    component: InternalCommunicationPage
+  },{
+    path: 'topicDetail/:topicId',
+    component: TopicDetailComponent
   }
 ];
 
@@ -21,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MyreplyPage]
+  declarations: [InternalCommunicationPage, TopicDetailComponent]
 })
-export class MyreplyPageModule {}
+export class InternalCommunicationPageModule {}

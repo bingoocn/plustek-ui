@@ -44,4 +44,5 @@ export class TopicDetailComponent implements OnInit {
   comment(){
 
   }
+
 }

@@ -5,12 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ExpriencePage } from './exprience.page';
+import { ExperiencePage } from './experience.page';
+import { ExperienceDetailComponent } from './experience-detail/experience-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ExpriencePage
+    component: ExperiencePage
+  },{
+    path: 'experiences/:experienceId',
+    component: ExperienceDetailComponent
   }
 ];
 
@@ -21,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ExpriencePage]
+  declarations: [ExperiencePage, ExperienceDetailComponent]
 })
-export class ExpriencePageModule {}
+export class ExperiencePageModule {}

@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { MinePage } from './mine.page';
 import { SetupComponent } from './setup/setup.component';
 import { ModifyPasswordComponent } from './modify-password/modify-password.component';
+import { InternalCommunicationPageModule } from '../pages/internal-communication/internal-communication.module';
 
 const routes: Routes = [
   {
@@ -16,6 +17,9 @@ const routes: Routes = [
   },{
     path: 'setup',
     component: SetupComponent
+  },{
+    path: 'internal-communication',
+    component: InternalCommunicationPageModule
   }
 ];
 

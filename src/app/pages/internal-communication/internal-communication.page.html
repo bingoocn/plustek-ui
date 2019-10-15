@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>我的主题</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,7 +36,7 @@
             </ion-col>
             <ion-col size="3">
               <div class="item-foot">
-                <div [routerLink]="['./topicDetail']">
+                <div [routerLink]="['./topicDetail',item.guid]">
                   <i class="iconfont icon-text"></i>
                   <span class="grey mr-left-5">详情</span>
                 </div>

@@ -6,11 +6,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CasePage } from './case.page';
+import { CaseDetailComponent } from './case-detail/case-detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CasePage
+  },{
+    path: 'cases/:caseId',
+    component: CaseDetailComponent
   }
 ];
 
@@ -21,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CasePage]
+  declarations: [CasePage, CaseDetailComponent]
 })
 export class CasePageModule {}
