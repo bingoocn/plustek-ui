@@ -7,7 +7,6 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 })
 export class HttpService {
   readonly baseIp = 'http://www.phonegap100.com';
-  // http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1
   // 请求头
   public header = new HttpHeaders({
     // 'X-Requested-Width': 'XMLHttpRequest',
