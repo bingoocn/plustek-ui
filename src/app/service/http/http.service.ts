@@ -7,10 +7,9 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 })
 export class HttpService {
   readonly baseIp = 'http://www.phonegap100.com';
-  // http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1
   // 请求头
   public header = new HttpHeaders({
-    'token': window.localStorage.getItem('token'),
+    // 'X-Requested-Width': 'XMLHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded'
   })
 
@@ -26,10 +25,10 @@ export class HttpService {
    * @param apiName 
    * @param params 
    */
-  getRequest(apiName: string, params?: {[key: string]: any}):any {
+  public getRequest(apiName: string, params?: {[key: string]: any}):any {
     let url = this.baseIp + apiName;
     return new Promise((resolve, reject) => {
-      this.http.get(url, { params: params }).subscribe(response => {
+      this.http.get(url, { params: params, headers: this.header }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
