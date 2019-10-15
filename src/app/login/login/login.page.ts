@@ -11,12 +11,15 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private nav: NavController, private router: Router, public axios:HttpService) { }
+  constructor(private nav: NavController, private router: Router, public http:HttpService) { }
 
   ngOnInit() {
   }
   login() {
-    window.localStorage.setItem("token", '1');
-    this.router.navigate(['']);
+    // window.localStorage.setItem("token", '1');
+    // this.nav.navigateRoot("/tabs/index")
+    this.http.getRequest('/appapi.php?a=getPortalList&catid=20&page=1').then(response => {
+      console.log(response)
+    })
   }
 }
