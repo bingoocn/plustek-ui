@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Platform } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,7 @@ export class TabsService {
   }
 
   private navEvents(){
-    console.log(this.router);
-    console.log(this.router.events.pipe());
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e: any) => {
-    console.log(e);
     this.showHideTabs(e);
     });
   }
