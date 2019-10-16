@@ -9,8 +9,12 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginGuardGuard } from './guard/login-guard.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+
 import { HttpService } from './service/http/http.service';
+
+import { MyInterceptor } from "./service/interceptor/auth-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +24,8 @@ import { HttpService } from './service/http/http.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // 启用http拦截器
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     LoginGuardGuard,
     HttpService
   ],

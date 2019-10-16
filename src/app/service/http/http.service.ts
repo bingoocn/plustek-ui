@@ -7,6 +7,7 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 })
 export class HttpService {
   readonly baseIp = 'http://www.phonegap100.com';
+  readonly portalIp = 'http://route.showapi.com';
   // 请求头
   public header = new HttpHeaders({
     // 'X-Requested-Width': 'XMLHttpRequest',
@@ -28,7 +29,7 @@ export class HttpService {
   public getRequest(apiName: string, params?: {[key: string]: any}):any {
     let url = this.baseIp + apiName;
     return new Promise((resolve, reject) => {
-      this.http.get(url, { params: params, headers: this.header }).subscribe(response => {
+      this.http.get(url, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -45,7 +46,7 @@ export class HttpService {
     let url = this.baseIp + apiName;
     let body = JSON.stringify(params);
     return new Promise((resolve, reject) => {
-      this.http.post(url, body, { headers: this.header }).subscribe(response => {
+      this.http.post(url, body).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -62,7 +63,7 @@ export class HttpService {
     let url = this.baseIp + apiName;
     let body = JSON.stringify(params);
     return new Promise((resolve, reject) => {
-      this.http.put(url, body, { headers: this.header }).subscribe(response => {
+      this.http.put(url, body).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -78,7 +79,7 @@ export class HttpService {
   public delRequest(apiName: string, params?: {[key: string]: any}) {
     let url = this.baseIp + apiName;
     return new Promise((resolve, reject) => {
-      this.http.delete(url, { params: params, headers: this.header }).subscribe(response => {
+      this.http.delete(url, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -96,10 +97,10 @@ export class HttpService {
       Authorization: 'Basic dWk6dWk=',
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    let url = this.baseIp + apiName;
+    let url = this.portalIp + apiName;
     let body = JSON.stringify(params);
     return new Promise((resolve, reject) => {
-      this.http.post(url, body, { headers: header }).subscribe(response => {
+      this.http.post(url, body).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -157,16 +158,27 @@ export class HttpService {
     })
     await loading.present();
   }
-
+  /**
+   * 关闭loading
+   */
+  async hideLoading() {
+    await this.loadingController.dismiss();
+  }
   /**
    * 统一调用此方法显示toast
    * @param message 显示信息
    * @param position 显示位置
+   * @param color toast主题颜色
    */
-  async presentToast(message: string, position?: 'top'|'bottom'|'middle') {
+  async presentToast(
+    message: string, 
+    position?: 'top'|'bottom'|'middle', 
+    color?: string
+  ) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
+      color: color || 'dark',
       position: position || 'middle'
     })
     toast.present();
