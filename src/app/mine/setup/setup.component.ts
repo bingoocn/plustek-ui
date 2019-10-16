@@ -33,6 +33,6 @@ export class SetupComponent implements OnInit {
   // 退出登录
   logout() {
     window.localStorage.removeItem('token');
-    this.nav.navigateForward('login');
+    this.nav.navigateBack(['login']);
   }
 }

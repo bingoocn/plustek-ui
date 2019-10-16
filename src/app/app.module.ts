@@ -15,8 +15,6 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HttpService } from './service/http/http.service';
 import { TabsService } from './service/tabs/tabs.service';
 
-import { MyInterceptor } from "./service/interceptor/auth-interceptor.service";
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
