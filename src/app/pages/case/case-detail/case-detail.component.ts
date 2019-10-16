@@ -15,6 +15,7 @@ export class CaseDetailComponent implements OnInit {
     this.caseTabValue = 'caseContent';
   }
 
+  // tab切换事件
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);
   }
