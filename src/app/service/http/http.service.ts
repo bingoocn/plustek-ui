@@ -69,7 +69,44 @@ export class HttpService {
       })
     })
   }
-  
+
+  /**
+   * delete 网络请求
+   * @param apiName
+   * @param params
+   */
+  public delRequest(apiName: string, params?: {[key: string]: any}) {
+    let url = this.baseIp + apiName;
+    return new Promise((resolve, reject) => {
+      this.http.delete(url, { params: params, headers: this.header }).subscribe(response => {
+        resolve(response);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+
+  /**
+   * 登录 网络请求
+   * @param apiName
+   * @param params
+   */
+  public loginRequest(apiName: string, params?: {[key: string]: any}) {
+    const header = new HttpHeaders({
+      Authorization: 'Basic dWk6dWk=',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    let url = this.baseIp + apiName;
+    let body = JSON.stringify(params);
+    return new Promise((resolve, reject) => {
+      this.http.post(url, body, { headers: header }).subscribe(response => {
+        resolve(response);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+
   /**
    * 请求失败处理
    * @param content
