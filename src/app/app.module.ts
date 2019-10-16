@@ -13,13 +13,19 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { HttpService } from './service/http/http.service';
+import { TabsService } from './service/tabs/tabs.service';
 
 import { MyInterceptor } from "./service/interceptor/auth-interceptor.service";
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot({
+    // tabsHideOnSubPages: 'true', //隐藏全部子页面 tabs
+    backButtonText: '', /*配置返回按钮*/
+    backButtonIcon: 'ios-arrow-back-outline',//统一返回按钮图标
+    mode: 'ios' /*配置android ios使用一套样式*/
+  }), AppRoutingModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -27,7 +33,8 @@ import { MyInterceptor } from "./service/interceptor/auth-interceptor.service";
     // 启用http拦截器
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     LoginGuardGuard,
-    HttpService
+    HttpService,
+    TabsService
   ],
   bootstrap: [AppComponent]
 })

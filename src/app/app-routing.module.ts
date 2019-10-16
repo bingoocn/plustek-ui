@@ -17,7 +17,8 @@ const routes: Routes = [
   // 具体业务模块
   { path: 'case', loadChildren: './pages/case/case.module#CasePageModule' },
   { path: 'internal-communication', loadChildren: './pages/internal-communication/internal-communication.module#InternalCommunicationPageModule' },
-  { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },
+  { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },  { path: 'improvement-plan', loadChildren: './pages/improvement-plan/improvement-plan.module#ImprovementPlanPageModule' },
+
 
 
 
