@@ -1,23 +1,29 @@
 <ion-content>
-  <ion-avatar class="logo">
-      <!-- <img src="assets/image/head_default.jpg"> -->
-  </ion-avatar>
-  <ion-list>
-      <ion-item>
-          <ion-label>用户名：</ion-label>
-          <ion-input type="text" placeholder="由字母、数字、下划线组成" maxlength="25" debounce = '1000'
+  <div class="logo-content">
+    <ion-img src="./assets/logo.png" alt=""></ion-img>
+  </div>
+  <div class="list">
+    <div class="item">
+      <ion-icon name="contact"></ion-icon>
+      <ion-input type="text" placeholder="由字母、数字、下划线组成" maxlength="25" debounce = '1000'
           [(ngModel)]="username" (ionChange)="validate(1)"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label>密&emsp;码：</ion-label>
-          <ion-input type="password" placeholder="6-20位数字或字母" minlength="6" maxlength="20" debounce = '1000'
+    </div>
+    <div class="item">
+        <ion-icon name="unlock"></ion-icon>
+      <ion-input type="password" placeholder="6-20位数字或字母" minlength="6" maxlength="20" debounce = '1000'
           [(ngModel)]="password" (ionChange)="validate(2)"></ion-input>
-      </ion-item>
-  </ion-list>
-  <ion-button class="login" (click)="onLogin()" color="primary" fill="solid" size="default" type="button" expand="block" [disabled]='!status'> 
+    </div>
+  </div>
+  <ion-button class="login" (click)="onLogin()" fill="outline" size="default" type="button" expand="block"> 
     登录
   </ion-button>
-  <ion-button (click)="toRegister()" class="register" color="primary" fill="clear" size="default" type="button" expand="block"> 
+  <!-- <ion-button class="login" (click)="onLogin()" fill="outline" size="default" type="button" expand="block" [disabled]='!status'> 
+    登录
+  </ion-button> -->
+  <!-- <ion-button (click)="toRegister()" class="register" color="primary" fill="clear" size="default" type="button" expand="block"> 
     注册
-  </ion-button>
+  </ion-button> -->
+  <ion-text>
+    Copyright©2019 中国兵器工业信息中心
+  </ion-text>
 </ion-content>

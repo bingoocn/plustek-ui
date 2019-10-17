@@ -13,7 +13,6 @@ export class LoginPage implements OnInit {
   public password: string;
   public userFlag: boolean = false;
   public pwdFlag: boolean = false;
-  public errorMsg: string;
   public status: boolean = false;
 
   constructor(private nav: NavController, private router: Router, public http:HttpService) { }
