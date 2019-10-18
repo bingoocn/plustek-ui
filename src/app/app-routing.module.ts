@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'case', loadChildren: './pages/case/case.module#CasePageModule' },
   { path: 'internal-communication', loadChildren: './pages/internal-communication/internal-communication.module#InternalCommunicationPageModule' },
   { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },  { path: 'improvement-plan', loadChildren: './pages/improvement-plan/improvement-plan.module#ImprovementPlanPageModule' },
+  { path: 'evaluation-index', loadChildren: './pages/evaluation-index/evaluation-index.module#EvaluationIndexPageModule' },
+  { path: 'evaluation-model', loadChildren: './pages/evaluation-model/evaluation-model.module#EvaluationModelPageModule' },
 
 
 

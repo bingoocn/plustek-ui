@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>评价指标</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <div class="section">
+    <ion-label class="lightgrey size-sm">
+      <span>2019年XXX规范评价指标</span>
+      <i class="iconfont icon-single-arrow-right"></i>
+      <span>维度1</span>
+    </ion-label>
+  </div>
+  <ion-list class="mr-top-10" class="bg-LightGrey">
+    <ion-item lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index">
+      <ion-label class="no-margin" slot="start">
+        <div class="list-item">{{ item.indexName }}</div>
+        <div *ngIf="item.children != undefined" class="dropdown-list">
+          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index">{{ i.indexName }}</div>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

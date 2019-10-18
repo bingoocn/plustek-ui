@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>评价指标</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header class="bordered-bottom">
+      <ion-label class="lightgrey"><i class="iconfont icon-location"></i> 2019年XXX规范评价指标</ion-label>
+    </ion-list-header>
+    <ion-item detail *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.guid]">
+      <ion-label>{{ item.indexName }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

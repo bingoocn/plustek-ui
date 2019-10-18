@@ -109,6 +109,9 @@
 .darkgrey{
   color:#666666 !important;
 }
+.lightgrey{
+  color:#cccccc !important;
+}
 
 /* 字符间距 */
 .letter-spacing-2em{
@@ -169,6 +172,10 @@ ion-button {
 // 天蓝色
 .bg-skyBlue{
   background: #4ec7ff;
+}
+// 浅灰色
+.bg-LightGrey{
+  background: #F7F7F7;
 }
 /*  重置原有样式  */
 
@@ -252,6 +259,10 @@ ion-tab-button{
 }
 .bordered-bottom{
   border-bottom: 1px solid #eeeeee;
+}
+/*   字体大小  */
+.size-sm{
+  font-size:14px;
 }
 /*  布局  */
 
@@ -391,4 +402,16 @@ ion-tab-button{
   top: 14px;
   left: 5px;
   z-index: 1;
+}
+// 多层列表
+.list-item{
+  height:44px;
+  line-height: 44px;
+}
+.dropdown-list{
+  padding-left: 1em;
+}
+.dropdown-list-item{
+  height:44px;
+  line-height: 44px;
 }
