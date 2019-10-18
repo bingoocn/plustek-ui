@@ -1,0 +1,20 @@
+<ion-content>
+    <ion-slides #slide mode="ios" pager="ios" [options]="slideOpts" (ionSlideTouchEnd)="touchEnd()">
+      <ion-slide>
+        企业
+      </ion-slide>
+      <ion-slide>
+        子集团
+      </ion-slide>
+      <ion-slide>
+        集团
+      </ion-slide>
+    </ion-slides>
+    <ion-button (click)="prev()" size="small">
+      上一页
+    </ion-button>
+    <ion-button (click)="next()" size="small">
+      下一页
+    </ion-button>
+  </ion-content>
+  

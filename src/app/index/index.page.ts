@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexPage implements OnInit {
 
+  public flag:boolean = false;
+
   constructor() { }
 
   ngOnInit() {
