@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { IndexPage } from './index.page';
+import { BusinessComponent } from '../components/index/business/business.component';
+import { GroupComponent } from '../components/index/group/group.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,10 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [IndexPage]
+  declarations: [
+    IndexPage, 
+    BusinessComponent,
+    GroupComponent
+  ]
 })
 export class IndexPageModule {}
