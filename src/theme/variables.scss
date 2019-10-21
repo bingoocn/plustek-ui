@@ -261,8 +261,11 @@ ion-tab-button{
   border-bottom: 1px solid #eeeeee;
 }
 /*   字体大小  */
+.size-xs{
+  font-size:12px !important;
+}
 .size-sm{
-  font-size:14px;
+  font-size:14px !important;
 }
 /*  布局  */
 

@@ -7,12 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-list-header class="bordered-bottom">
-      <ion-label class="lightgrey"><i class="iconfont icon-location"></i> 2019年XXX规范评价指标</ion-label>
-    </ion-list-header>
-    <ion-item detail *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.guid]">
+<ion-content color="grey">
+  <div class="section">
+    <ion-label class="lightgrey size-sm">
+      <span>2019年XXX规范评价指标</span>
+    </ion-label>
+  </div>
+  <ion-list class="bg-LightGrey">
+    <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.guid]">
       <ion-label>{{ item.indexName }}</ion-label>
     </ion-item>
   </ion-list>

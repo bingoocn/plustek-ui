@@ -6,6 +6,8 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
   providedIn: 'root'
 })
 export class HttpService {
+  // readonly baseIp = 'http://10.100.240.159:10008/api';
+  // readonly portalIp = 'http://10.100.240.159:10002/api';
   readonly baseIp = 'http://www.phonegap100.com';
   readonly portalIp = 'http://route.showapi.com';
   // 请求头

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { EvaluationIndexPage } from './evaluation-index.page';
 import { EvaluationIndexSecondLevelComponent } from './evaluation-index-second-level/evaluation-index-second-level.component';
+import { IndexDetailComponent } from './index-detail/index-detail.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,9 @@ const routes: Routes = [
   },{
     path: 'evaluationIndexes/:indexId',
     component: EvaluationIndexSecondLevelComponent
+  },{
+    path: 'indexes/:indexId',
+    component: IndexDetailComponent
   }
 ];
 
@@ -25,6 +29,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [EvaluationIndexPage, EvaluationIndexSecondLevelComponent]
+  declarations: [EvaluationIndexPage, EvaluationIndexSecondLevelComponent, IndexDetailComponent]
 })
 export class EvaluationIndexPageModule {}
