@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notice-detail',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoticeDetailComponent implements OnInit {
 
-  constructor() { }
+  public notice: any;
 
-  ngOnInit() {}
+  constructor(public route:ActivatedRoute) { 
+
+  }
+    
+  ngOnInit() {
+    this.route.queryParams.subscribe((data)=>{ 
+      let id = data.id;
+    });
+  }
   // 返回
   goBack(){
     

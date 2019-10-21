@@ -9,15 +9,15 @@
 <ion-content color="grey">
   <div class="section">
     <ion-text color="dark">
-      <h5 align="left">关于加快推进建设精益管理信息化系统建设的通知</h5>
+      <h5 align="left">{{ notice.title }}</h5>
       <ion-grid>
         <ion-row>
-          <ion-col size="8" class="subtitle">总部人力资源部</ion-col>
-          <ion-col size="4" class="subtitle text-right">2019-10-09</ion-col>
+          <ion-col size="8" class="subtitle">{{ notice.publish_unit.name }}</ion-col>
+          <ion-col size="4" class="subtitle text-right">{{ notice.publish_time }}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12">
-            <div class="paragraph">加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设加快推进建设精益管理信息化系统建设。</div>
+            <div class="paragraph">{{ notice.content }}</div>
           </ion-col>
         </ion-row>
       </ion-grid>

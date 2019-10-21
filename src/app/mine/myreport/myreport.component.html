@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>我的填报</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getReports($event)"></ion-searchbar>
+  <ion-list lines="full">
+    <ion-item *ngFor="let item of reports; let key = index" detail [routerLink]="['./reports',item.guid]">
+      <ion-label>
+        <h3>《规范》评级：{{ item.level }}</h3>
+        <h3>自评得分：{{ item.score }}</h3>
+        <h3>当前状态：{{ item.status }}</h3>
+        <h3>自评时间：{{ item.time }}</h3>
+        <ion-chip color="success">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-label>{{ item.process }}</ion-label>
+        </ion-chip>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

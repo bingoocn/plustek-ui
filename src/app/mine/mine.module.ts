@@ -9,6 +9,7 @@ import { MinePage } from './mine.page';
 import { SetupComponent } from './setup/setup.component';
 import { ModifyPasswordComponent } from './modify-password/modify-password.component';
 import { InternalCommunicationPageModule } from '../pages/internal-communication/internal-communication.module';
+import { MyreportComponent } from './myreport/myreport.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
   },{
     path: 'internal-communication',
     component: InternalCommunicationPageModule
+  },{
+    path: 'myreport',
+    component: MyreportComponent
   }
 ];
 
@@ -30,7 +34,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MinePage, SetupComponent, ModifyPasswordComponent],
+  declarations: [MinePage, SetupComponent, ModifyPasswordComponent, MyreportComponent],
   entryComponents: [ModifyPasswordComponent]
 })
 export class MinePageModule {}
