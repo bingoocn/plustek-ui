@@ -40,11 +40,13 @@ export class LoginPage implements OnInit {
       let pwdReg = /^(\w){6,20}$/;
       if(this.password == undefined || this.password.length == 0) {
         this.http.presentToast('密码不能为空！', 'bottom');
-      }else if (this.password.length < 6 || this.password.length > 20) {
-        this.http.presentToast('密码长度为6~20位', 'bottom');
-      } else if (!pwdReg.test(this.password)) {
-        this.http.presentToast('密码由字母、数字组成', 'bottom');
-      }else{
+      }
+      // else if (this.password.length < 6 || this.password.length > 20) {
+      //   this.http.presentToast('密码长度为6~20位', 'bottom');
+      // } else if (!pwdReg.test(this.password)) {
+      //   this.http.presentToast('密码由字母、数字组成', 'bottom');
+      // }
+      else{
         this.pwdFlag = true;
       }
     }
@@ -52,12 +54,15 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    this.http.presentLoading('努力登录中...');
-    this.http.loginRequest('/107-33', { userName: this.username, password: this.password }).then(response => {
-      this.http.hideLoading();
-      window.localStorage.setItem("token", response['showapi_res_id']);
-      this.nav.navigateRoot("/tabs/index");
-    })
+    if(this.status){
+      this.http.presentLoading('努力登录中...');
+      const params = { username: this.username, password: this.password,grant_type:"password" }
+      this.http.loginRequest('/oauth/token', params).then(response => {
+        // this.http.hideLoading();
+        window.localStorage.setItem("token", response['access_token']);
+        this.nav.navigateRoot("/tabs/index");
+      })
+    }
   }
   toRegister() {
     this.nav.navigateForward('/register');

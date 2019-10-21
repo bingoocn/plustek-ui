@@ -14,10 +14,10 @@
               <ion-label>{{ item.title }}</ion-label>
             </ion-col>
             <ion-col size="9">
-              <span class="time grey">时间：{{ item.time }}</span>
+              <span class="time grey">时间：{{ item.publish_time }}</span>
             </ion-col>
             <ion-col size="3">
-              <ion-button fill="outline" expand="block" size="small" class="pull-right" [routerLink]="['./notices',item.guid]">
+              <ion-button fill="outline" expand="block" size="small" class="pull-right" [routerLink]="['./notices',item.id]">
                 查看
               </ion-button>
             </ion-col>

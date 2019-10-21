@@ -25,26 +25,27 @@ export class TokenInterceptor implements HttpInterceptor {
 
         const token = localStorage.getItem('token');
         // 连接正式环境时放开，请求时携带token
-        // if (token) {
-        //     request = request.clone({
-        //         setHeaders: {
-        //             'Authorization': 'Basic dWk6dWk=' + token
-        //         }
-        //     });
-        // }
-        
-        if (!request.headers.has('Content-Type')) {
+        if (!token) {
             request = request.clone({
                 setHeaders: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Authorization: 'Basic dWk6dWk=',
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             });
         }
-        
+        if (token) {
+            request = request.clone({
+                setHeaders: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Authorization: 'Bearer ' + token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+        }
         request = request.clone({
-            headers: request.headers.set('Accept', 'application/json')
+            headers: request.headers.set('Accept', '*/*')
         });
-        
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {

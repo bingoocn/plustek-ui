@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-notice',
@@ -9,8 +10,9 @@ import { Router } from '@angular/router';
 export class NoticePage implements OnInit {
 
   public notices:any = [];
+  // public publish_status_code:string;
 
-  constructor(public router: Router) { 
+  constructor(public router: Router,public http:HttpService) { 
     //this.router.navigate(['/viewNotice'], {
       //queryParams: {
        // object: JSON.stringify(object)
@@ -20,13 +22,11 @@ export class NoticePage implements OnInit {
 
   ngOnInit() {
     this.notices = [];
-    for(let i=0; i<10; i++) {
-      this.notices.push({
-        guid: Math.round(Math.random()*10000),
-        title: `201${i}年关于组织召开《精益管理信息化系统培训》的通知`,
-        time: `201${i}年10月1日`
-      })
-    }
+    const params = { title:'',publish_status_code: '' };
+    this.http.getRequest('/notices', params).then((response:any) => {
+      console.log(response,"返回的数据");
+      this.notices = response;
+    })
   }
   // 关键字搜索
   getNotices(ev: any) {
@@ -35,7 +35,7 @@ export class NoticePage implements OnInit {
     const val = ev.target.value;
 
     if (val && val.trim() != '') {
-      this.notices = this.notices.filter((item) => {
+      this.notices = this.notices.filter((item:any) => {
         return (item.title.indexOf(val) > -1);
       })
     }

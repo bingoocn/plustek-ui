@@ -6,13 +6,13 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
   providedIn: 'root'
 })
 export class HttpService {
-  // readonly baseIp = 'http://10.100.240.159:10008/api';
-  // readonly portalIp = 'http://10.100.240.159:10002/api';
-  readonly baseIp = 'http://www.phonegap100.com';
-  readonly portalIp = 'http://route.showapi.com';
+  readonly baseIp = 'http://10.100.240.159:10008';
+  readonly portalIp = 'http://10.100.240.159:10002';
+  // readonly baseIp = 'http://www.phonegap100.com';
+  // readonly portalIp = 'http://route.showapi.com';
   // 请求头
   public header = new HttpHeaders({
-    // 'X-Requested-Width': 'XMLHttpRequest',
+    'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded'
   })
 
@@ -46,9 +46,9 @@ export class HttpService {
    */
   public postRequest(apiName: string, params?: {[key: string]: any}):any {
     let url = this.baseIp + apiName;
-    let body = JSON.stringify(params);
+    let body = null;
     return new Promise((resolve, reject) => {
-      this.http.post(url, body).subscribe(response => {
+      this.http.post(url, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
@@ -95,14 +95,10 @@ export class HttpService {
    * @param params
    */
   public loginRequest(apiName: string, params?: {[key: string]: any}) {
-    const header = new HttpHeaders({
-      Authorization: 'Basic dWk6dWk=',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
     let url = this.portalIp + apiName;
-    let body = JSON.stringify(params);
+    let body = null;
     return new Promise((resolve, reject) => {
-      this.http.post(url, body).subscribe(response => {
+      this.http.post(url, body, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);
