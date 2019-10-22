@@ -20,6 +20,10 @@ const routes: Routes = [
   { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },  { path: 'improvement-plan', loadChildren: './pages/improvement-plan/improvement-plan.module#ImprovementPlanPageModule' },
   { path: 'evaluation-index', loadChildren: './pages/evaluation-index/evaluation-index.module#EvaluationIndexPageModule' },
   { path: 'evaluation-model', loadChildren: './pages/evaluation-model/evaluation-model.module#EvaluationModelPageModule' },
+  { path: 'expert-review', loadChildren: './pages/expert-review/expert-review.module#ExpertReviewPageModule' },
+  { path: 'leader-review', loadChildren: './pages/leader-review/leader-review.module#LeaderReviewPageModule' },
+  { path: 'monitor-evaluation', loadChildren: './pages/monitor-evaluation/monitor-evaluation.module#MonitorEvaluationPageModule' },
+  { path: 'view-self-evaluation', loadChildren: './pages/view-self-evaluation/view-self-evaluation.module#ViewSelfEvaluationPageModule' },
 
 
 

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>规范达标评价</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getTopics($event)"></ion-searchbar>
+  <ion-list lines="full" class="no-margin">
+    <ion-item *ngFor="let item of points; let key = index">
+      <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label>{{ item.title }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <span>达级：</span>
+              <span>{{ item.reachLevel }}</span>
+            </ion-col>
+            <ion-col size="6">
+              <span>分数：</span>
+              <span>{{ item.score }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-item>
+  </ion-list>
+  <div class="section mr-top-10">
+    <div class="text-center">
+      <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertBasicInfo',reviewId]">专家阅评详情</ion-button>
+      <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button>
+      <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button>
+    </div>
+  </div>
+</ion-content>

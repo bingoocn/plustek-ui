@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>专家阅评</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <ion-searchbar placeholder="请输入子集团/直管单位关键字" [debounce]="250" (ionInput)="getExpertEvaluations($event)"></ion-searchbar>
+  <ion-list lines="full">
+    <ion-item *ngFor="let item of expertEvaluations; let key = index" detail [routerLink]="['./expertBasicInfo',item.guid]">
+      <ion-label>
+        <h3>子集团/直管单位：{{ item.subGroup }}</h3>
+        <h3>单位名称：{{ item.unitName }}</h3>
+        <h3>所属板块：{{ item.plate }}</h3>
+        <h3>达级结果：{{ item.levelResult }}</h3>
+        <h3>检查分数：{{ item.checkScore }}</h3>
+        <h3>检查起始日期：{{ item.checkStartDate }}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addPlan']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>

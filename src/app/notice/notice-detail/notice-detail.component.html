@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content color="grey">
-  <div class="section">
+  <div class="section" *ngIf="notice">
     <ion-text color="dark">
       <h5 align="left">{{ notice.title }}</h5>
       <ion-grid>
@@ -23,35 +23,17 @@
       </ion-grid>
     </ion-text>
   </div>
-  <div class="section mr-top-10">
+  <div class="section mr-top-10" *ngIf="notice && notice.attachment">
     <ion-label color="dark" class="attach-title"><ion-icon name="attach" color="warning"></ion-icon> 相关附件</ion-label>
     <ion-grid>
       <ion-row>
         <ion-col size="4">
           <div class="attach-item">
             <ion-thumbnail slot="start">
-              <img src="assets/word.png">
+              <img src="assets/attach.png">
             </ion-thumbnail>
-            <ion-label class="attach-text">通知书</ion-label>
-            <ion-label class="attach-subtext">18.3K</ion-label>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="attach-item">
-            <ion-thumbnail slot="start">
-              <img src="assets/excel.png">
-            </ion-thumbnail>
-            <ion-label class="attach-text">通知详情</ion-label>
-            <ion-label class="attach-subtext">1.5M</ion-label>
-          </div>
-        </ion-col>
-        <ion-col size="4">
-          <div class="attach-item">
-            <ion-thumbnail slot="start">
-              <img src="assets/ppt.png">
-            </ion-thumbnail>
-            <ion-label class="attach-text">参考文献参考文献参考文献参考文献</ion-label>
-            <ion-label class="attach-subtext">1.1M</ion-label>
+            <ion-label class="attach-text">{{ notice.attachment.name }}</ion-label>
+            <ion-label class="attach-subtext">{{ notice.attachment.size }}</ion-label>
           </div>
         </ion-col>
       </ion-row>

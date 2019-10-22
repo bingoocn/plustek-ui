@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-experience',
@@ -10,27 +11,16 @@ export class ExperiencePage implements OnInit {
 
   public experiences:any = [];
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, public http:HttpService) { }
 
   ngOnInit() {
-    this.experiences = [
-      {
-        guid:'01',
-        title:'关于企业改革的经验分享',
-        shareTime:'2019-10-13',
-        keyWords:'改革、经验'
-      },{
-        guid:'02',
-        title:'关于企业自评的经验分享',
-        shareTime:'2019-10-12',
-        keyWords:'自评、经验'
-      },{
-        guid:'02',
-        title:'关于提高国民经济的经验分享',
-        shareTime:'2019-10-10',
-        keyWords:'经济'
+    this.experiences = [];
+    const params = { title:'',publish_status_code: '02' };
+    this.http.getRequest('/experiences', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.experiences = response;
       }
-    ];
+    })
   }
 
   // 关键字搜索
@@ -40,7 +30,7 @@ export class ExperiencePage implements OnInit {
     const val = ev.target.value;
 
     if (val && val.trim() != '') {
-      this.experiences = this.experiences.filter((item) => {
+      this.experiences = this.experiences.filter((item:any) => {
         return (item.title.indexOf(val) > -1);
       })
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-notice-detail',
@@ -8,19 +9,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NoticeDetailComponent implements OnInit {
 
+  public noticeId:string;
   public notice: any;
 
-  constructor(public route:ActivatedRoute) { 
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { 
 
   }
     
   ngOnInit() {
-    this.route.queryParams.subscribe((data)=>{ 
-      let id = data.id;
-    });
-  }
-  // 返回
-  goBack(){
-    
+    this.routeInfo.params.subscribe((params: Params) => this.noticeId = params['noticeId']);
+    if(this.noticeId){
+      this.http.getRequest('/notices/' + this.noticeId).then((response:any) => {
+        if(response) {
+          this.notice = response;
+        }
+      })
+    }
   }
 }
