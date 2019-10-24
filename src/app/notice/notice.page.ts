@@ -17,6 +17,7 @@ export class NoticePage implements OnInit {
     const params = { title:'',publish_status_code: '02' };
     this.getData(params);
   }
+  
   // 关键字搜索
   getNotices(ev: any) {
     const params = { title:ev.target.value,publish_status_code: '02' };

@@ -14,25 +14,22 @@ export class ExperiencePage implements OnInit {
   constructor(public router: Router, public http:HttpService) { }
 
   ngOnInit() {
-    this.experiences = [];
     const params = { title:'',publish_status_code: '02' };
+    this.getData(params);
+  }
+
+  // 关键字搜索
+  getExperiences(ev: any) {
+    const params = { title:ev.target.value,publish_status_code: '02' };
+    this.getData(params);
+  }
+
+  // 发送请求获取数据
+  getData(params:any){
     this.http.getRequest('/experiences', params).then((response:any) => {
       if(response && response.length > 0){
         this.experiences = response;
       }
     })
-  }
-
-  // 关键字搜索
-  getExperiences(ev: any) {
-    this.ngOnInit();
-
-    const val = ev.target.value;
-
-    if (val && val.trim() != '') {
-      this.experiences = this.experiences.filter((item:any) => {
-        return (item.title.indexOf(val) > -1);
-      })
-    }
   }
 }

@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>leaderReview</ion-title>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>领导阅评</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color="grey">
+  <div>
+    <div class="padding-10 no-padding-bottom">
+      <ion-segment [(ngModel)] = "evaluationTabValue" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="notEvaluated" checked>
+          <ion-label>未评价</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="alreadyEvaluated">
+          <ion-label>已评价</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div *ngIf=" evaluationTabValue == 'notEvaluated'">
+      <ion-list lines="full" class="no-margin">
+        <ion-item class="mr-top-10" *ngFor="let item of noEvaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]">
+          <ion-label>
+            <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
+            <h3>单位名称：{{ item.unit.name }}</h3>
+            <h3>所属板块：{{ item.subordinate_plate }}</h3>
+            <h3>认定自评等级：{{ item.questionnaire.evaluation_level.name }}</h3>
+            <h3>自评得分：{{ item.self_score }}</h3>
+            <h3>自评时间：{{ item.evaluation_date }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf=" evaluationTabValue == 'alreadyEvaluated'">
+      <ion-list lines="full">
+        <ion-item class="mr-top-10" *ngFor="let item of evaluations; let key = index" detail [routerLink]="['./evaluations',item.id]">
+          <ion-label>
+            <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
+            <h3>单位名称：{{ item.unit.name }}</h3>
+            <h3>所属板块：{{ item.subordinate_plate }}</h3>
+            <h3>认定自评等级：{{ item.questionnaire.evaluation_level.name }}</h3>
+            <h3>自评得分：{{ item.self_score }}</h3>
+            <h3>自评时间：{{ item.evaluation_date }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 </ion-content>

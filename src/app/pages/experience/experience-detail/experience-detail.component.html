@@ -7,51 +7,33 @@
     </ion-toolbar>
   </ion-header>
   <ion-content color="grey">
-    <div class="section">
+    <div class="section" *ngIf="experience">
       <ion-text color="dark">
-        <h5 align="left">关于企业改革的经验分享</h5>
+        <h5 align="left">{{ experience.title }}</h5>
         <ion-grid>
           <ion-row>
-            <ion-col size="8" class="subtitle">张三丰</ion-col>
-            <ion-col size="4" class="subtitle text-right">2019-10-13</ion-col>
+            <ion-col size="8" class="subtitle">{{ experience.publish_unit.name}}</ion-col>
+            <ion-col size="4" class="subtitle text-right">{{ experience.publish_time }}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <div class="paragraph">企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革企业改革的经验分享。</div>
+              <div class="paragraph">{{ experience.share_point }}</div>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-text>
     </div>
-    <div class="section mr-top-10">
+    <div class="section mr-top-10" *ngIf="experience && experience.attachments && experience.attachments.length > 0">
       <ion-label color="dark" class="attach-title"><ion-icon name="attach" color="warning"></ion-icon> 相关附件</ion-label>
       <ion-grid>
         <ion-row>
-          <ion-col size="4">
+          <ion-col size="4" *ngFor="let item of experience.attachments; let key = index">
             <div class="attach-item">
               <ion-thumbnail slot="start">
-                <img src="assets/word.png">
+                <img src="assets/attach.png">
               </ion-thumbnail>
-              <ion-label class="attach-text">具体实践文档</ion-label>
-              <ion-label class="attach-subtext">18.3K</ion-label>
-            </div>
-          </ion-col>
-          <ion-col size="4">
-            <div class="attach-item">
-              <ion-thumbnail slot="start">
-                <img src="assets/excel.png">
-              </ion-thumbnail>
-              <ion-label class="attach-text">相关资料</ion-label>
-              <ion-label class="attach-subtext">1.5M</ion-label>
-            </div>
-          </ion-col>
-          <ion-col size="4">
-            <div class="attach-item">
-              <ion-thumbnail slot="start">
-                <img src="assets/ppt.png">
-              </ion-thumbnail>
-              <ion-label class="attach-text">参考文献</ion-label>
-              <ion-label class="attach-subtext">1.1M</ion-label>
+              <ion-label class="attach-text">{{ item.name }}</ion-label>
+              <ion-label class="attach-subtext">{{ item.size }}</ion-label>
             </div>
           </ion-col>
         </ion-row>

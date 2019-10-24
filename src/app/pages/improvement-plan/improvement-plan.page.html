@@ -8,20 +8,20 @@
 </ion-header>
 
 <ion-content color="grey">
-  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getPlans($event)"></ion-searchbar>
+  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getImprovements($event)"></ion-searchbar>
   <ion-list lines="full">
-    <ion-item *ngFor="let item of plans; let key = index" detail [routerLink]="['./plans',item.guid]">
+    <ion-item *ngFor="let item of improvements; let key = index" detail [routerLink]="['./plans',item.id]">
       <ion-label>
         <h3><ion-text class="letter-spacing-2em">标题</ion-text>：{{ item.title }}</h3>
-        <h3>填报单位：{{ item.unit }}</h3>
-        <h3><ion-text class="letter-spacing-05em">发布者</ion-text>：{{ item.publisher }}</h3>
-        <h3>发布时间：{{ item.publishTime }}</h3>
+        <h3>填报单位：{{ item.publish_unit.name }}</h3>
+        <h3><ion-text class="letter-spacing-05em">发布者</ion-text>：{{ item.publish_people.name }}</h3>
+        <h3>发布时间：{{ item.publish_time }}</h3>
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small" class="no-margin" [routerLink]="['./addPlan']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 </ion-content>

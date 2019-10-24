@@ -7,19 +7,19 @@
   </ion-toolbar>
 </ion-header>
 <ion-content color="grey">
-  <div class="section">
+  <div class="section" *ngIf="improvement">
     <ion-item lines="none" class="item-title">
       <ion-label>
-        <h2 class="mr-bottom-10">关于企业改革的改善方案</h2>
-        <p>填报单位：北化集团人力部</p>
-        <p>发布者：李鸿章</p>
-        <p>发布时间：2019-10-09</p>
-        <p>关键字：改革、企业</p>
+        <h2 class="mr-bottom-10">{{ improvement.title }}</h2>
+        <p>填报单位：{{ improvement.publish_unit.name }}</p>
+        <p>发布者：{{ improvement.publish_people.name }}</p>
+        <p>发布时间：{{ improvement.publish_time }}</p>
+        <p>关键字：{{ improvement.keywords }}</p>
       </ion-label>
     </ion-item>
   </div>
-  <div class="section mr-top-10 no-padding-top">
-    <div>
+  <div class="section mr-top-10 no-padding-top" *ngIf="improvement">
+    <div class="padding-top-10">
       <ion-segment [(ngModel)] = "planTabValue" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="improveContent" checked>
           <ion-label>改善内容</ion-label>
@@ -33,39 +33,21 @@
       </ion-segment>
     </div>
     <div class="paragraph mr-top-10" *ngIf=" planTabValue == 'improveContent'">
-      这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容这里是改善内容
+      {{ improvement.improve_content }}
     </div>
     <div class="paragraph mr-top-10" *ngIf=" planTabValue == 'highlights'">
-      这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出这里是亮点突出
+      {{ improvement.highlight }}
     </div>
     <div *ngIf=" planTabValue == 'caseAttach'">
-      <ion-grid>
+      <ion-grid *ngIf="improvement && improvement.attachments && improvement.attachments.length > 0">
         <ion-row>
-          <ion-col size="4">
+          <ion-col size="4" *ngFor="let item of improvement.attachments; let key = index">
             <div class="attach-item">
               <ion-thumbnail slot="start">
-                <img src="assets/word.png">
+                <img src="assets/attach.png">
               </ion-thumbnail>
-              <ion-label class="attach-text">通知书</ion-label>
-              <ion-label class="attach-subtext">18.3K</ion-label>
-            </div>
-          </ion-col>
-          <ion-col size="4">
-            <div class="attach-item">
-              <ion-thumbnail slot="start">
-                <img src="assets/excel.png">
-              </ion-thumbnail>
-              <ion-label class="attach-text">通知详情</ion-label>
-              <ion-label class="attach-subtext">1.5M</ion-label>
-            </div>
-          </ion-col>
-          <ion-col size="4">
-            <div class="attach-item">
-              <ion-thumbnail slot="start">
-                <img src="assets/ppt.png">
-              </ion-thumbnail>
-              <ion-label class="attach-text">参考文献参考文献参考文献参考文献</ion-label>
-              <ion-label class="attach-subtext">1.1M</ion-label>
+              <ion-label class="attach-text">{{ item.name }}</ion-label>
+              <ion-label class="attach-subtext">{{ item.size }}</ion-label>
             </div>
           </ion-col>
         </ion-row>

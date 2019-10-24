@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-case-detail',
@@ -7,11 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CaseDetailComponent implements OnInit {
 
-  caseTabValue: string;
+  public caseId:string;
+  public case:any;
+  public caseTabValue: string;
 
-  constructor() { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    this.routeInfo.params.subscribe((params: Params) => this.caseId = params['caseId']);
+    if(this.caseId){
+      this.http.getRequest('/cases/' + this.caseId).then((response:any) => {
+        if(response) {
+          this.case = response;
+        }
+      })
+    }
     this.caseTabValue = 'caseContent';
   }
 

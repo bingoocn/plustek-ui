@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>监控评价详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <ion-list lines="full" class="no-margin" *ngIf="selfEvaluation">
+    <ion-item>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <span>子集团/直管单位：</span>
+            <span>{{ selfEvaluation.unit.group.name }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>单位名称：</span>
+            <span>{{ selfEvaluation.unit.name }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>所属板块：</span>
+            <span>{{ selfEvaluation.subordinate_plate }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>认定自评等级：</span>
+            <span>{{ selfEvaluation.questionnaire.evaluation_level.name }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>自评得分：</span>
+            <span>{{ selfEvaluation.self_score }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>自评时间：</span>
+            <span>{{ selfEvaluation.evaluation_date }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>主要亮点：</span>
+            <span>{{ selfEvaluation.main_highlight }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>主要不足：</span>
+            <span>{{ selfEvaluation.major_deficiency }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <div class="section mr-top-10">
+    <ion-list class="no-margin">
+      <ion-item>
+        <ion-label>亮点推荐：</ion-label>
+        <ion-toggle color="primary" size="small" [(ngModel)]="isHighlightRecommend"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>留言：</ion-label>
+        <ion-textarea rows="6" cols="20" clearOnEdit="true" placeholder="请输入留言内容..."></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <div class="text-right mr-top-5">
+      <ion-button size="small" fill="outline">
+        提交
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

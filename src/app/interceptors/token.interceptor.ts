@@ -39,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 setHeaders: {
                     'X-Requested-With': 'XMLHttpRequest',
                     Authorization: 'Bearer ' + token,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 }
             });
         }
