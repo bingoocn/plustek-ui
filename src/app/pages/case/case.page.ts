@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-case',
@@ -10,30 +11,26 @@ export class CasePage implements OnInit {
 
   public cases:any = [];
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, public http:HttpService) { }
 
   ngOnInit() {
-    this.cases = [
-      {
-        guid:'01',
-        title:'案例分析标题1',
-        publishTime:'2019-10-13',
-        unit:'北化集团人力部',
-        publisher:'李鸿章'
-      },{
-        guid:'02',
-        title:'案例分析标题2',
-        publishTime:'2019-10-10',
-        unit:'物资集团人力部',
-        publisher:'曾国藩'
-      },{
-        guid:'02',
-        title:'案例分析标题3',
-        publishTime:'2019-10-09',
-        unit:'兵科院人力部',
-        publisher:'张作霖'
+    const params = { title:'',publish_status_code: '02' };
+    this.getData(params);
+  }
+
+  // 关键字搜索
+  getCases(ev: any) {
+    const params = { title:ev.target.value,publish_status_code: '02' };
+    this.getData(params);
+  }
+
+  // 发送请求获取数据
+  getData(params:any){
+    this.http.getRequest('/cases', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.cases = response;
       }
-    ];
+    });
   }
 
 }

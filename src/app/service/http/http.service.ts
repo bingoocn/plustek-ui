@@ -44,11 +44,11 @@ export class HttpService {
    * @param apiName 
    * @param params 
    */
-  public postRequest(apiName: string, params?: {[key: string]: any}):any {
+  public postRequest(apiName: string, body: any | null, params?: {[key: string]: any}):any {
     let url = this.baseIp + apiName;
-    let body = null;
+    body = JSON.stringify(body);
     return new Promise((resolve, reject) => {
-      this.http.post(url, { params: params }).subscribe(response => {
+      this.http.post(url, body, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);

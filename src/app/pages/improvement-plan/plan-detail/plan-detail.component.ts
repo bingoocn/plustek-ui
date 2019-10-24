@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-plan-detail',
@@ -7,11 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanDetailComponent implements OnInit {
 
-  planTabValue: string;
+  public planId:string;
+  public improvement:any;
+  public planTabValue: string;
 
-  constructor() { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    this.routeInfo.params.subscribe((params: Params) => this.planId = params['planId']);
+    if(this.planId){
+      this.http.getRequest('/improvements/' + this.planId).then((response:any) => {
+        if(response) {
+          this.improvement = response;
+        }
+      })
+    }
     this.planTabValue = 'improveContent';
   }
 
