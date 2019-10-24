@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>互动留言</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="grey">
+<ion-list lines="full" class="no-margin">
+  <ion-item>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <span>子集团/直管单位：</span>
+          <span>{{ interationInfo.subGroup }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>单位名称：</span>
+          <span>{{ interationInfo.unitName }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>认定自评等级：</span>
+          <span>{{ interationInfo.selfEvaluationLevel }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>自评得分：</span>
+          <span>{{ interationInfo.selfEvaluationScore }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>留言人：</span>
+          <span>{{ interationInfo.person }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>留言时间：</span>
+          <span>{{ interationInfo.time }}</span>
+        </ion-col>
+        <ion-col size="12">
+          <span>留言内容：</span>
+          <span>{{ interationInfo.content }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+</ion-list>
+</ion-content>
+  

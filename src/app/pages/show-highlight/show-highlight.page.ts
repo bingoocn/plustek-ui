@@ -43,10 +43,10 @@ export class ShowHighlightPage implements OnInit {
         guid:'01',
         group:'',
         unit:'',
-        level:'三级',
-        grade:'80',
-        person:'张平',
-        time:'2019.9.10'
+        level:'二级',
+        grade:'88',
+        person:'周宽',
+        time:'2019.11.10'
       }
     ]
   }
