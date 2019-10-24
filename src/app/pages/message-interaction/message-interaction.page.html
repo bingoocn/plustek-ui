@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-toolbar color="lightPrimary">
+      <ion-buttons slot="start">
+        <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+      </ion-buttons>
+      <ion-title>互动留言</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content color="grey">
+    <div class="section mr-top-10 no-padding-top">
+      <div>
+        <ion-segment [(ngModel)] = "interactionValue" (ionChange)="tabChanged($event)">
+          <ion-segment-button value="group" checked>
+            <ion-label>集团留言</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="subGroup">
+            <ion-label>子集团留言</ion-label>
+          </ion-segment-button>
+      </ion-segment><ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getHighlights($event)"></ion-searchbar>
+      </div>
+      <ion-list lines="full" *ngIf=" interactionValue == 'group'">
+        <ion-item *ngFor="let item of groupInterations; let key = index" detail [routerLink]="['./interationInfo',item.guid]">
+          <ion-label>
+            <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
+            <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
+            <h3><ion-text class="">认定自评等级</ion-text>：{{ item.level }}</h3>
+            <h3><ion-text class="letter-spacing-05em">自评得分</ion-text>：{{ item.grade }}</h3>
+            <h3><ion-text class="letter-spacing-05em">留言人</ion-text>：{{ item.person }}</h3>
+            <h3><ion-text class="">留言时间</ion-text>：{{ item.time }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <ion-list lines="full" *ngIf=" interactionValue == 'subGroup'">
+        <ion-item *ngFor="let item of subGroupInterations; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
+          <ion-label>
+            <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
+            <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
+            <h3><ion-text class="">认定自评等级</ion-text>：{{ item.level }}</h3>
+            <h3><ion-text class="letter-spacing-05em">自评得分</ion-text>：{{ item.grade }}</h3>
+            <h3><ion-text class="letter-spacing-05em">留言人</ion-text>：{{ item.person }}</h3>
+            <h3><ion-text class="">留言时间</ion-text>：{{ item.time }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button size="small" class="no-margin" [routerLink]="['./addExperience']">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> -->
+  </ion-content>
+    
