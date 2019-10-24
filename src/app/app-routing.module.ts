@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'view-self-evaluation', loadChildren: './pages/view-self-evaluation/view-self-evaluation.module#ViewSelfEvaluationPageModule' },
   { path: 'show-highlight', loadChildren: './pages/show-highlight/show-highlight.module#ShowHighlightPageModule' },
   { path: 'message-interaction', loadChildren: './pages/message-interaction/message-interaction.module#MessageInteractionPageModule' },
+  { path: 'overall-evaluation', loadChildren: './pages/overall-evaluation/overall-evaluation.module#OverallEvaluationPageModule' },
 
 
 
