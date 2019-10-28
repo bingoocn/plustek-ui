@@ -1,0 +1,20 @@
+.mine-item{
+    color: #000;
+    ion-slides{
+        height: 10rem;
+        ion-slide{
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            .slide-item{
+                color: #000;
+                -webkit-box-flex: 1;
+                height: 100%;
+                line-height: 10rem;
+                border-right: 1px dashed #ccc;
+                &:last-child{
+                    border: none;
+                }
+            }
+        }
+    }
+}
