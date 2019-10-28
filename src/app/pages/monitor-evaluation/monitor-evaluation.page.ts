@@ -8,9 +8,9 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class MonitorEvaluationPage implements OnInit {
 
-  public evaluationTabValue: string;
-  public noEvaluations: any = [];
-  public evaluations: any = [];
+  public evaluationTabValue: string;//当前tab值
+  public noEvaluations: any = [];//未评价
+  public evaluations: any = [];//已评价
 
   constructor(public http:HttpService) { }
 
@@ -18,67 +18,30 @@ export class MonitorEvaluationPage implements OnInit {
     const params = { evaluation_level_code: '' };
     this.getData(params);
     this.evaluationTabValue = 'notEvaluated';
-    // this.noEvaluations =[
-    //   {
-    //     id:'01',
-    //     unit:{
-    //       group:{
-    //         name:'中国北方公司'
-    //       },
-    //       name:'中国万宝过程公司'
-    //     },
-    //     subordinate_plate:'所属板块一',
-    //     questionnaire:{
-    //       evaluation_level:{
-    //         name:'一级'
-    //       }
-    //     },
-    //     self_score:80,
-    //     evaluation_date:'2019-10-20'
-    //   },{
-    //     id:'02',
-    //     unit:{
-    //       group:{
-    //         name:'中国北方公司'
-    //       },
-    //       name:'中国万宝过程公司'
-    //     },
-    //     subordinate_plate:'所属板块一',
-    //     questionnaire:{
-    //       evaluation_level:{
-    //         name:'一级'
-    //       }
-    //     },
-    //     self_score:80,
-    //     evaluation_date:'2019-10-20'
-    //   }
-    // ];
-    // this.evaluations =[
-    //   {
-    //     id:'03',
-    //     unit:{
-    //       group:{
-    //         name:'中国北方公司1'
-    //       },
-    //       name:'中国万宝过程公司1'
-    //     },
-    //     subordinate_plate:'所属板块二',
-    //     questionnaire:{
-    //       evaluation_level:{
-    //         name:'二级'
-    //       }
-    //     },
-    //     self_score:80,
-    //     evaluation_date:'2019-10-20'
-    //   }
-    // ]
   }
 
   // 发送请求获取数据
   getData(params:any){
     this.http.getRequest('/specification_mon_evaluations', params).then((response:any) => {
       if(response && response.length > 0){
-        this.noEvaluations = response;
+        // 便利每条数据，区分未评价、已评价
+        response.forEach(element => {
+          if(element.id){
+            this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_monitor').then((response:any) => {
+              if(response && response.mon_approval_content){
+                this.evaluations.push(element);
+              }else{
+                this.http.getRequest('/specification_evaluations/' + element.id + '/top_group_monitor').then((response:any) => {
+                  if(response && response.mon_approval_content){
+                    this.evaluations.push(element);
+                  }else{
+                    this.noEvaluations.push(element);
+                  }
+                })
+              }
+            });
+          }
+        });
       }
     });
   }
