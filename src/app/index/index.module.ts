@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { IndexPage } from './index.page';
 import { BusinessComponent } from '../components/index/business/business.component';
 import { GroupComponent } from '../components/index/group/group.component';
+import { ExpertComponent } from '../components/index/expert/expert.component';
+
 
 const routes: Routes = [
   {
@@ -26,7 +28,8 @@ const routes: Routes = [
   declarations: [
     IndexPage, 
     BusinessComponent,
-    GroupComponent
+    GroupComponent,
+    ExpertComponent
   ]
 })
 export class IndexPageModule {}
