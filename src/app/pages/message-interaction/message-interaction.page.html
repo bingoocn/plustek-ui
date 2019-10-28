@@ -22,25 +22,25 @@
       <ion-list lines="full" *ngIf=" interactionValue == 'group'">
         <ion-item *ngFor="let item of groupInterations; let key = index" detail [routerLink]="['./interationInfo',item.guid]">
           <ion-label>
-            <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
-            <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
-            <h3><ion-text class="">认定自评等级</ion-text>：{{ item.level }}</h3>
-            <h3><ion-text class="letter-spacing-05em">自评得分</ion-text>：{{ item.grade }}</h3>
-            <h3><ion-text class="letter-spacing-05em">留言人</ion-text>：{{ item.person }}</h3>
-            <h3><ion-text class="">留言时间</ion-text>：{{ item.time }}</h3>
+            <h3>子集团/直管单位：{{ item.group }}</h3>
+            <h3>单位名称：{{ item.unit }}</h3>
+            <h3>认定自评等级：{{ item.level }}</h3>
+            <h3>自评得分：{{ item.grade }}</h3>
+            <h3>留言人：{{ item.person }}</h3>
+            <h3>留言时间：{{ item.time }}</h3>
           </ion-label>
         </ion-item>
       </ion-list>
       
       <ion-list lines="full" *ngIf=" interactionValue == 'subGroup'">
-        <ion-item *ngFor="let item of subGroupInterations; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
+        <ion-item *ngFor="let item of subGroupInterations; let key = index" detail [routerLink]="['./interationInfo',item.guid]">
           <ion-label>
-            <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
-            <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
-            <h3><ion-text class="">认定自评等级</ion-text>：{{ item.level }}</h3>
-            <h3><ion-text class="letter-spacing-05em">自评得分</ion-text>：{{ item.grade }}</h3>
-            <h3><ion-text class="letter-spacing-05em">留言人</ion-text>：{{ item.person }}</h3>
-            <h3><ion-text class="">留言时间</ion-text>：{{ item.time }}</h3>
+            <h3>子集团/直管单位：{{ item.group }}</h3>
+            <h3>单位名称：{{ item.unit }}</h3>
+            <h3>认定自评等级：{{ item.level }}</h3>
+            <h3>自评得分：{{ item.grade }}</h3>
+            <h3>留言人：{{ item.person }}</h3>
+            <h3>留言时间：{{ item.time }}</h3>
           </ion-label>
         </ion-item>
       </ion-list>

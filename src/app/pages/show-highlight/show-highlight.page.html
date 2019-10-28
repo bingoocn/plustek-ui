@@ -23,24 +23,24 @@
     <ion-list lines="full" *ngIf=" highlightTabValue == 'group'">
       <ion-item *ngFor="let item of groupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
         <ion-label>
-          <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
-          <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
-          <h3><ion-text class="">《规范》评级</ion-text>：{{ item.level }}</h3>
-          <h3><ion-text class="">自评得分</ion-text>：{{ item.grade }}</h3>
-          <h3><ion-text class="letter-spacing-05em">推荐人</ion-text>：{{ item.person }}</h3>
-          <h3><ion-text class="">推荐时间</ion-text>：{{ item.time }}</h3>
+          <h3> 子集团/直管单位：{{ item.group }}</h3>
+          <h3>单位名称：{{ item.unit }}</h3>
+          <h3>《规范》评级：{{ item.level }}</h3>
+          <h3>自评得分：{{ item.grade }}</h3>
+          <h3>推荐人：{{ item.person }}</h3>
+          <h3>推荐时间：{{ item.time }}</h3>
         </ion-label>
       </ion-item>
     </ion-list>
     <ion-list lines="full" *ngIf=" highlightTabValue == 'subGroup'">
       <ion-item *ngFor="let item of subGroupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
         <ion-label>
-          <h3><ion-text class=""> 子集团/直管单位</ion-text>：{{ item.group }}</h3>
-          <h3><ion-text class="letter-spacing-05em">单位名称</ion-text>：{{ item.unit }}</h3>
-          <h3><ion-text class="">《规范》评级</ion-text>：{{ item.level }}</h3>
-          <h3><ion-text class="">自评得分</ion-text>：{{ item.grade }}</h3>
-          <h3><ion-text class="letter-spacing-05em">推荐人</ion-text>：{{ item.person }}</h3>
-          <h3><ion-text class="">推荐时间</ion-text>：{{ item.time }}</h3>
+          <h3> 子集团/直管单位：{{ item.group }}</h3>
+          <h3>单位名称：{{ item.unit }}</h3>
+          <h3>《规范》评级：{{ item.level }}</h3>
+          <h3>自评得分：{{ item.grade }}</h3>
+          <h3>推荐人：{{ item.person }}</h3>
+          <h3>推荐时间：{{ item.time }}</h3>
         </ion-label>
       </ion-item>
     </ion-list>
