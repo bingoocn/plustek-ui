@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-expert-review',
@@ -9,49 +10,33 @@ export class ExpertReviewPage implements OnInit {
 
   public expertEvaluations:any = [];
 
-  constructor() { }
+  constructor(public http:HttpService) { }
 
   ngOnInit() {
-    this.expertEvaluations = [
-      {
-        guid:'01',
-        subGroup:'北化集团',
-        unitName:'245厂',
-        plate:'板块一',
-        levelResult:'五级',
-        checkScore:10,
-        checkStartDate:'2019-08-23'
-      },{
-        guid:'02',
-        subGroup:'北方工业',
-        unitName:'振华石油',
-        plate:'板块二',
-        levelResult:'三级',
-        checkScore:5,
-        checkStartDate:'2019-08-10'
-      },{
-        guid:'03',
-        subGroup:'光电集团',
-        unitName:'西安应用光学',
-        plate:'板块四',
-        levelResult:'二级',
-        checkScore:13,
-        checkStartDate:'2019-07-30'
-      }
-    ];
+    const params = { };
+    this.getData(params);
   }
 
   // 关键字搜索
   getExpertEvaluations(ev: any) {
-    this.ngOnInit();
+    // this.ngOnInit();
 
-    const val = ev.target.value;
+    // const val = ev.target.value;
 
-    if (val && val.trim() != '') {
-      this.expertEvaluations = this.expertEvaluations.filter((item:any) => {
-        return (item.subGroup.indexOf(val) > -1);
-      })
-    }
+    // if (val && val.trim() != '') {
+    //   this.expertEvaluations = this.expertEvaluations.filter((item:any) => {
+    //     return (item.subGroup.indexOf(val) > -1);
+    //   })
+    // }
+  }
+
+  // 发送请求获取数据
+  getData(params:any){
+    this.http.getRequest('/expert_reviews', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.expertEvaluations = response;
+      }
+    })
   }
 
 }

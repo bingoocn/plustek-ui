@@ -8,8 +8,6 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 export class HttpService {
   readonly baseIp = 'http://10.100.240.163:10008';
   readonly portalIp = 'http://10.100.240.163:10002';
-  // readonly baseIp = 'http://www.phonegap100.com';
-  // readonly portalIp = 'http://route.showapi.com';
   // 请求头
   public header = new HttpHeaders({
     'X-Requested-With': 'XMLHttpRequest',
@@ -61,11 +59,11 @@ export class HttpService {
    * @param apiName
    * @param params
    */
-  public putRequest(apiName: string, params?: {[key: string]: any}) {
+  public putRequest(apiName: string, body: any | null, params?: {[key: string]: any}) {
     let url = this.baseIp + apiName;
-    let body = JSON.stringify(params);
+    body = JSON.stringify(body);
     return new Promise((resolve, reject) => {
-      this.http.put(url, body).subscribe(response => {
+      this.http.put(url, body, { params: params }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);

@@ -9,37 +9,37 @@
 
 <ion-content color="grey">
   <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getTopics($event)"></ion-searchbar>
-  <ion-list lines="full" class="no-margin">
+  <ion-list lines="full" class="no-margin" *ngIf="experts && experts.length > 0">
     <ion-item *ngFor="let item of experts; let key = index">
       <ion-grid fixed>
           <ion-row>
-            <ion-col size="12">
-              <span>单位：</span>
-              <span>{{ item.unitName }}</span>
-            </ion-col>
-            <ion-col size="6">
-              <div class="">
-                <span>姓名：</span>
-                <span>{{ item.expertName }}</span>
-              </div>
-            </ion-col>
             <ion-col size="6">
               <div class="">
                 <span>组别：</span>
-                <span>{{ item.group }}</span>
+                <span>{{ (item.group_name) ? item.group_name:'' }}</span>
               </div>
             </ion-col>
             <ion-col size="6">
               <div class="">
                 <span>角色：</span>
-                <span>{{ item.role }}</span>
+                <span>{{ (item.expert_role && item.expert_role.name) ? item.expert_role.name:'' }}</span>
               </div>
             </ion-col>
             <ion-col size="6">
               <div class="">
-                <span>类别：</span>
+                <span>姓名：</span>
+                <span>{{ (item.expert && item.expert.name) ? item.expert.name:'' }}</span>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div class="">
+                <span>单位类别：</span>
                 <span>{{ item.type }}</span>
               </div>
+            </ion-col>
+            <ion-col size="12">
+              <span>主要职责：</span>
+              <span>{{ (item.main_responsibility) ? item.main_responsibility:'' }}</span>
             </ion-col>
           </ion-row>
         </ion-grid>

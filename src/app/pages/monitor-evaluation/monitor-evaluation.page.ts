@@ -17,7 +17,7 @@ export class MonitorEvaluationPage implements OnInit {
   ngOnInit() {
     const params = { evaluation_level_code: '' };
     this.getData(params);
-    this.evaluationTabValue = 'notEvaluated';
+    this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
   }
 
   // 发送请求获取数据

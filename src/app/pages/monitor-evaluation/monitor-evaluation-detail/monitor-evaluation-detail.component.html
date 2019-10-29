@@ -12,6 +12,18 @@
     <ion-item>
       <ion-grid fixed>
         <ion-row>
+          <ion-col size="6" *ngIf="selfEvaluation.is_sub_group_recommended">
+            <ion-chip color="secondary">
+              <ion-icon name="star"></ion-icon>
+              <ion-label>子集团推荐</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col size="6" *ngIf="selfEvaluation.is_group_recommended">
+            <ion-chip color="tertiary">
+              <ion-icon name="thumbs-up"></ion-icon>
+              <ion-label>集团推荐</ion-label>
+            </ion-chip>
+          </ion-col>
           <ion-col size="12">
             <span>子集团/直管单位：</span>
             <span>{{ selfEvaluation.unit.group.name }}</span>
@@ -44,6 +56,14 @@
             <span>主要不足：</span>
             <span>{{ selfEvaluation.major_deficiency }}</span>
           </ion-col>
+          <ion-col size="12" *ngIf="is_evaluated && is_sub_group_evaluated">
+            <span>子集团留言：</span>
+            <span>{{ sub_group_mon_approval_content }}</span>
+          </ion-col>
+          <ion-col size="12" *ngIf="is_evaluated && is_group_evaluated">
+            <span>集团留言：</span>
+            <span>{{ group_mon_approval_content }}</span>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
@@ -51,16 +71,15 @@
   <div class="section mr-top-10">
     <ion-list class="no-margin">
       <ion-item>
-        <ion-label>亮点推荐：</ion-label>
-        <ion-toggle color="primary" size="small" [(ngModel)]="isHighlightRecommend"></ion-toggle>
-      </ion-item>
-      <ion-item>
         <ion-label>留言：</ion-label>
-        <ion-textarea rows="6" cols="20" clearOnEdit="true" placeholder="请输入留言内容..." [(ngModel)]="isHighlightRecommend"></ion-textarea>
+        <ion-textarea rows="3" cols="20" clearOnEdit="true" placeholder="请输入留言内容..." [(ngModel)]="mon_approval_content"></ion-textarea>
       </ion-item>
     </ion-list>
     <div class="text-right mr-top-5">
-      <ion-button size="small" fill="outline">
+      <ion-button size="small" fill="outline" (click)="toRecommend()">
+        亮点推荐
+      </ion-button>
+      <ion-button size="small" fill="outline" (click)="toSubmit()">
         提交
       </ion-button>
     </div>
