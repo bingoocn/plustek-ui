@@ -21,7 +21,7 @@
     </div>
     <div *ngIf=" evaluationTabValue == 'notEvaluated'">
       <ion-list lines="full" class="no-margin">
-        <ion-item class="mr-top-10" *ngFor="let item of noEvaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]">
+        <ion-item class="mr-top-10" *ngFor="let item of noEvaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]" [queryParams]="{isEvaluated:false}">
           <ion-label>
             <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
             <h3>单位名称：{{ item.unit.name }}</h3>
@@ -35,7 +35,7 @@
     </div>
     <div *ngIf=" evaluationTabValue == 'alreadyEvaluated'">
       <ion-list lines="full">
-        <ion-item class="mr-top-10" *ngFor="let item of evaluations; let key = index" detail [routerLink]="['./evaluations',item.id]">
+        <ion-item class="mr-top-10" *ngFor="let item of evaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]" [queryParams]="{isEvaluated:true}">
           <ion-label>
             <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
             <h3>单位名称：{{ item.unit.name }}</h3>

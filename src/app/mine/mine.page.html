@@ -31,20 +31,29 @@
           我的回复
         </ion-label>
       </ion-item>
-      <ion-item detail class="ion-text-nowrap" lines="none" [routerLink]="['./myreport']">
+      <ion-item detail class="ion-text-nowrap" [routerLink]="['./myreport']">
         <ion-img slot="start" class="ion-list-img" src="assets/fillin.png"></ion-img>
         <ion-label>
           我的填报
         </ion-label>
       </ion-item>
+      <ion-item detail class="ion-text-nowrap" lines="none" [routerLink]="['./myreport']">
+        <ion-img slot="start" class="ion-list-img" src="assets/review.png"></ion-img>
+        <ion-label>
+          我的阅评
+        </ion-label>
+      </ion-item>
     </ion-list>
   </div>
   <div class="section mr-top-10 no-padding">
-    <ion-item detail class="ion-text-nowrap" lines="none" [routerLink]="['./setup']">
+    <ion-item lines="none" (click)="logout()">
+      <ion-label align="center">退出登录</ion-label>
+    </ion-item>
+    <!-- <ion-item detail class="ion-text-nowrap" lines="none" [routerLink]="['./setup']">
       <ion-img class="ion-list-img" src="assets/config.png"></ion-img>
       <ion-label>
         设置
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </div>
 </ion-content>

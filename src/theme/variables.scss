@@ -122,6 +122,13 @@
   letter-spacing: 0.5em;
   margin-right: -0.5em;
 }
+
+/*超过长度显示省略号*/
+.text_overflow{
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -460,14 +467,6 @@ a{
 .dropdown-list-item{
   height:44px;
   line-height: 44px;
-}
-// 标签
-.item-label .notice{
-  background-color: #c4c4c4;
-  color:#ffffff;
-  width:9px;
-  padding: 2px 3px;
-  font-size: 6px;
 }
 .full-width{
   width:100%;

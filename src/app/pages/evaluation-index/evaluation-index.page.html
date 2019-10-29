@@ -8,14 +8,14 @@
 </ion-header>
 
 <ion-content color="grey">
-  <div class="section">
+  <div class="section" *ngIf="indicator_name">
     <ion-label class="lightgrey size-sm">
-      <span>2019年XXX规范评价指标</span>
+      <span>{{ indicator_name }}</span>
     </ion-label>
   </div>
-  <ion-list class="bg-LightGrey">
-    <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.guid]">
-      <ion-label>{{ item.indexName }}</ion-label>
+  <ion-list class="bg-LightGrey" *ngIf="indexes && indexes.length > 0">
+    <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.id]" [queryParams]="{indicatorId:indicator_id}">
+      <ion-label>{{ item.index_num + "&nbsp;&nbsp;" + item.index_name }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -10,18 +10,18 @@
 <ion-content color="grey">
   <div class="section">
     <ion-label class="lightgrey size-sm">
-      <span>2019年XXX规范评价指标</span>
+      <span>{{ indicator_name }}</span>
       <i class="iconfont icon-single-arrow-right"></i>
-      <span>维度1</span>
+      <span>{{ index_name }}</span>
       <i class="iconfont icon-single-arrow-right"></i>
-      <span>质量损失率</span>
+      <span>{{ point_name }}</span>
     </ion-label>
   </div>
 
   <ion-list class="bg-LightGrey">
     <ion-item class="mr-top-10" lines="none">
       <ion-label class="ion-text-wrap">级别</ion-label>
-      <ion-select class="size-xs" placeholder="请选择" [compareWith]="levels">
+      <ion-select class="size-xs" placeholder="请选择" [(ngModel)]="selectedLevel" [compareWith]="compareWwithFn" interface="action-sheet" cancelText="取消" okText="确定">
         <ion-select-option [value]="level.value" *ngFor="let level of levels">{{ level.label }}</ion-select-option>
       </ion-select>
     </ion-item>

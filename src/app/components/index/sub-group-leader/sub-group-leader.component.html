@@ -1,125 +1,140 @@
 <ion-content class="grey" color="grey">
-    <div class="mine-item padding-top-10 padding-bottom-5">
-      <ion-grid fixed>
-        <!-- 常用功能 -->
-        <ion-row>
-          <ion-col size="12"> <ion-label class="index-title-center text-center">常用功能</ion-label> </ion-col>
-          <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/leader-review']">
-            <div class="mine-icon-circle bg-brightBlue" style="padding: 4px;">
-              <ion-img class="mine-icon-img" src="./assets/leader.png" alt=""></ion-img>
-            </div>
-            <ion-label class="mine-icon-label">领导阅评</ion-label>
-          </ion-col>
-          <ion-col class="col-20 text-center ion-align-self-center" >
-            <div class="mine-icon-circle bg-lightRed">
-              <ion-img class="mine-icon-img" src="./assets/evaluation.png" alt=""></ion-img>
-            </div>
-            <ion-label class="mine-icon-label">企业自评</ion-label>
-          </ion-col><ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
-            <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
-              <ion-img class="mine-icon-img" src="./assets/evaluate.png" alt=""></ion-img>
-            </div>
-            <ion-label class="mine-icon-label">综合评价</ion-label>
-          </ion-col>
-
-        </ion-row> 
-        <!-- 企业自评评估统计 -->
-        <ion-row>
-            <ion-col size="12"> <ion-label class="index-title-center text-center">企业自评评价统计</ion-label> </ion-col>
-            <ion-col size="4">
-              <ion-item color="secondary">
-                <ion-label text-wrap text-center style="height:72px;">
-                    {{selfAccess.accessedNum}}家已自评
-                </ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size="8">
-              <ion-item class="margin-bottom-10" color="secondary">
-                <ion-label text-center>
-                  最高达级：{{selfAccess.heighLevel}} ({{selfAccess.heighsum}})家
-                </ion-label>
-              </ion-item>
-              <ion-item color="secondary" class="mr-top-5">
-                  <ion-label text-center>
-                    最低达级：{{selfAccess.lowLevel}} ({{selfAccess.lowsum}})家
-                  </ion-label>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <!-- 公告通知 -->
-        <ion-row>
-            <ion-col size="12"> <ion-label class="index-title-center text-center">公告通知</ion-label></ion-col>
-            <ion-col size="12">
-              <ion-slides #slide mode="ios" pager="ios" [options]="noticeOpts" [pager]="false" style="height:30px;">
-                <ion-slide *ngFor="let item of slides; let key = index">
-                    <ion-item class="full-width" [routerLink]="['notice/notices',item.id]">
-                      <ion-label style="font-size: 12px;">{{item.notice}}</ion-label>
-                      <ion-note style="font-size: 12px;" slot="end">{{item.date}}</ion-note>
-                    </ion-item>
-                </ion-slide>
-              </ion-slides>
-            </ion-col>
-        </ion-row>
-        <!-- 我的工作 -->
-        <ion-row>
-            <ion-col size="12"> <ion-label class="index-title-center text-center">我的工作</ion-label> </ion-col>
-            <ion-col size="6">
-              <ion-item color="primary">
-                <ion-label text-wrap text-center style="text-align:center;">
-                  待评价
-                </ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="margin-bottom-10" color="secondary">
-                <ion-label text-center>
-                    已评价
-                </ion-label>
-              </ion-item>
-            </ion-col>
-        </ion-row>
-        <!-- 亮点展示 -->
-        <ion-row>
-            <ion-col size="12"> <ion-label class="index-title-center text-center">亮点展示</ion-label> </ion-col>
-            <ion-col size="6">
-              <ion-item color="primary">
-                <ion-label text-wrap text-center style="text-align:center;">
-                  子集团推荐
-                </ion-label>
-              </ion-item>
-            </ion-col>
-            <ion-col size="6">
-              <ion-item class="margin-bottom-10" color="secondary">
-                <ion-label text-center>
-                    集团推荐
-                </ion-label>
-              </ion-item>
-            </ion-col>
-        </ion-row>
-        <!-- 专家检查结果 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+    <ion-grid fixed>
+      <!-- 常用功能 -->
       <ion-row>
-          <ion-col size="12"> <ion-label class="index-title-center text-center">专家检查结果</ion-label> </ion-col>
-          <ion-col size="4">
-            <ion-item color="primary">
-              <ion-label text-wrap text-center style="height:72px;text-align:center;">
-                {{selfCheck.checkedNum}}家已检查
-              </ion-label>
-            </ion-item>
+        <ion-col size="12"> <ion-label class="index-title-center text-center">常用功能</ion-label> </ion-col>
+        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/leader-review']">
+          <div class="mine-icon-circle bg-brightBlue" style="padding: 4px;">
+            <ion-img class="mine-icon-img" src="./assets/leader.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">领导阅评</ion-label>
+        </ion-col>
+        <ion-col class="col-20 text-center ion-align-self-center" >
+          <div class="mine-icon-circle bg-lightRed">
+            <ion-img class="mine-icon-img" src="./assets/evaluation.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">企业自评</ion-label>
+        </ion-col><ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
+          <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
+            <ion-img class="mine-icon-img" src="./assets/evaluate.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">综合评价</ion-label>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </div>
+  <!-- 企业自评评估统计 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" class="title-pos"> 
+          <ion-label class="mine-section-title linear-Violet">自评结果</ion-label> 
+        </ion-col>
+        <ion-col size="4">
+          <div class="mine-section linear-lightViolet">
+            <p>{{selfAccess.accessedNum}}</p>
+            <p>家已自评</p>
+          </div>
+        </ion-col>
+        <ion-col size="8">
+          <div class="mine-section-item linear-lightViolet">
+            最高达级：<span>{{ selfAccess.heighLevel }}</span> ({{selfAccess.heighsum}})家
+          </div>
+          <div class="mine-section-item linear-lightViolet">
+            最高达级：<span>{{ selfAccess.lowLevel }}</span> ({{selfAccess.lowsum}})家
+          </div>
+        </ion-col>
+      </ion-row>  
+    </ion-grid>
+  </div>
+  <!-- 公告通知 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+    <ion-grid fixed>
+      <ion-row>
+          <ion-col size="12" class="title-pos"> 
+            <ion-label class="mine-section-title linear-Violet">公告通知</ion-label> 
+            <span class="more">更多</span>
           </ion-col>
-          <ion-col size="8">
-            <ion-item class="margin-bottom-10" color="primary">
-              <ion-label text-center>
-                最高达级：{{selfCheck.heighLevel}} ({{selfCheck.heighsum}})家
-              </ion-label>
-            </ion-item>
-            <ion-item color="primary" class="mr-top-5">
-              <ion-label text-center>
-                最低达级：{{selfCheck.lowLevel}} ({{selfCheck.lowsum}})家
-              </ion-label>
-            </ion-item>
+          <ion-col size="12">
+            <ion-slides #slide mode="ios" pager="ios" [options]="noticeOpts" [pager]="false" style="height:30px;">
+              <ion-slide *ngFor="let item of slides; let key = index">
+                  <ion-item class="full-width" [routerLink]="['notice/notices',item.id]">
+                    <ion-label style="font-size: 12px;">{{item.notice}}</ion-label>
+                    <ion-note style="font-size: 12px;" slot="end">{{item.date}}</ion-note>
+                  </ion-item>
+              </ion-slide>
+            </ion-slides>
           </ion-col>
       </ion-row>
+    </ion-grid>
+  </div>
+  <!-- 我的工作 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+      <ion-grid fixed>
+          <ion-row>
+              <ion-col size="12"> <ion-label class="index-title-center text-center">我的工作</ion-label> </ion-col>
+              <ion-col size="12">
+                <div class="mine-section mini linear-lightViolet">
+                  <ion-row>
+                    <ion-col size="2">111</ion-col>
+                    <ion-col size="5">待评价</ion-col>
+                    <ion-col size="5">已评价</ion-col>
+                  </ion-row>
+                </div>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </div>
+  <!-- 亮点展示 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12" class="title-pos"> 
+            <ion-label class="mine-section-title linear-orange">亮点推荐</ion-label> 
+          </ion-col>
+          <ion-col size="6">
+            <div class="mine-section mini linear-lightViolet">
+              <ion-row>
+                <ion-col size="5">111</ion-col>
+                <ion-col size="7">集团推荐</ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="mine-section mini linear-lightViolet">
+              <ion-row>
+                <ion-col size="5">111</ion-col>
+                <ion-col size="7">子集团推荐</ion-col>
+              </ion-row>
+            </div>
+          </ion-col>
+        </ion-row>  
       </ion-grid>
     </div>
-  </ion-content>
+  <!-- 专家检查结果 -->
+  <div class="mine-item padding-top-10 padding-bottom-5">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12" class="title-pos"> 
+          <ion-label class="mine-section-title linear-Violet">自评结果</ion-label> 
+        </ion-col>
+        <ion-col size="4">
+          <div class="mine-section linear-lightViolet">
+            <p>{{selfCheck.checkedNum}}</p>
+            <p>家已检查</p>
+          </div>
+        </ion-col>
+        <ion-col size="8">
+          <div class="mine-section-item linear-lightViolet">
+            最高达级：<span>{{ selfCheck.heighLevel }}</span> ({{selfCheck.heighsum}})家
+          </div>
+          <div class="mine-section-item linear-lightViolet">
+            最高达级：<span>{{ selfCheck.lowLevel }}</span> ({{selfCheck.lowsum}})家
+          </div>
+        </ion-col>
+      </ion-row>  
+    </ion-grid>
+  </div>
+</ion-content>
   

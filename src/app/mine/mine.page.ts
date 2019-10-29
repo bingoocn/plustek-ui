@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mine',
@@ -7,7 +8,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 })
 export class MinePage implements OnInit {
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, public nav: NavController) { }
 
   ngOnInit() {
     // 通过延时操作更改shadow dom的样式
@@ -17,6 +18,11 @@ export class MinePage implements OnInit {
         toolbar[i].shadowRoot.querySelector('.item-inner').style.borderBottomColor = '#eeeeee';
       }
     }, 1000);
+  }
+  // 退出登录
+  logout() {
+    window.localStorage.removeItem('token');
+    this.nav.navigateBack(['login']);
   }
 
 }

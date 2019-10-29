@@ -10,17 +10,17 @@
 <ion-content color="grey">
   <div class="section">
     <ion-label class="lightgrey size-sm">
-      <span>2019年XXX规范评价指标</span>
+      <span>{{ indicator_name }}</span>
       <i class="iconfont icon-single-arrow-right"></i>
-      <span>维度1</span>
+      <span>{{ index_name }}</span>
     </ion-label>
   </div>
-  <ion-list class="bg-LightGrey">
+  <ion-list class="bg-LightGrey" *ngIf="indexes && indexes.length > 0">
     <ion-item lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index">
       <ion-label class="no-margin">
-        <div class="list-item">{{ item.indexName }}</div>
+        <div class="list-item">{{ item.index_num + item.index_name }}</div>
         <div *ngIf="item.children != undefined" class="dropdown-list">
-          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../../indexes',i.guid]">{{ i.indexName }}</div>
+          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../../indexes',i.id]" [queryParams]="{indicatorId:indicator_id,indexId:index_id}">{{ i.index_num + "&nbsp;" + i.index_name }}</div>
         </div>
       </ion-label>
     </ion-item>
