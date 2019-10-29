@@ -13,7 +13,15 @@ export class BusinessComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
-
+  public noticeOpts:any = {
+    effect: 'flip', 
+    speed: 400, 
+    loop:true, 
+    direction: 'vertical',
+    autoplay: { delay: 2000 }, 
+    pager: false
+  }
+  // 轮播图数据
   public slides = [
     {
       self: '5',
@@ -29,6 +37,12 @@ export class BusinessComponent implements OnInit {
       leader: '3'
     }
   ];
+  // 自评结果数据
+  public selfEvaluations = {
+    level: '四级',
+    score: '80',
+    time: '2019-10-28'
+  }
 
   @ViewChild("slide", { static: false }) slide;
   
