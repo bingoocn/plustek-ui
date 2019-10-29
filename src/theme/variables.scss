@@ -177,6 +177,23 @@ ion-button {
 .bg-LightGrey{
   background: #F7F7F7;
 }
+// 紫色渐变
+.linear-Violet{
+  background: #635df5 linear-gradient(-90deg, #b657e9, #635df5) !important;
+}
+// 浅紫色渐变
+.linear-lightViolet{
+  // background: #9ee0fb linear-gradient(-90deg, #a4adf9, #9ee0fb) !important;
+  background: rgba(0, 0, 0, .3) !important;
+}
+// 浅绿色渐变
+.linear-lightGreen{
+  background: #6d7df6 linear-gradient(-90deg, #7febd2, #6d7df6) !important;
+}
+// 橘色渐变
+.linear-orange{
+  background: #f5c577 linear-gradient(-90deg, #f09563, #f5c577) !important;
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -206,7 +223,7 @@ ion-tab-button{
   margin:0 !important;
 }
 .no-padding{
-  padding:0;
+  padding:0 !important;
 }
 .no-padding-top{
   padding-top:0 !important;

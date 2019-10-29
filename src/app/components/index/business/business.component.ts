@@ -13,6 +13,14 @@ export class BusinessComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
+  public noticeOpts:any = {
+    effect: 'flip', 
+    speed: 400, 
+    loop:true, 
+    direction: 'vertical',
+    autoplay: { delay: 2000 }, 
+    pager: false
+  }
   // 轮播图数据
   public slides = [
     {
