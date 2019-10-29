@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-message-interaction',
@@ -10,7 +11,7 @@ export class MessageInteractionPage implements OnInit {
   public groupInterations:any = [];
   public subGroupInterations:any = [];
 
-  constructor() { }
+  constructor(public http:HttpService) { }
 
   tabChanged(ev:any){
     console.log('Tab changed', ev);
@@ -18,25 +19,26 @@ export class MessageInteractionPage implements OnInit {
 
   ngOnInit() {
     this.interactionValue = "group";
-    this.groupInterations = [
-      {
-        guid:'01',
-        group:'',
-        unit:'',
-        level:'三级',
-        grade:'80',
-        person:'张平',
-        time:'2019.9.10'
-      },{
-        guid:'02',
-        group:'',
-        unit:'',
-        level:'一级',
-        grade:'90',
-        person:'张真',
-        time:'2019.11.20'
-      }
-    ];
+    this.getData();
+    // this.groupInterations = [
+    //   {
+    //     guid:'01',
+    //     group:'',
+    //     unit:'',
+    //     level:'三级',
+    //     grade:'80',
+    //     person:'张平',
+    //     time:'2019.9.10'
+    //   },{
+    //     guid:'02',
+    //     group:'',
+    //     unit:'',
+    //     level:'一级',
+    //     grade:'90',
+    //     person:'张真',
+    //     time:'2019.11.20'
+    //   }
+    // ];
     this.subGroupInterations = [
       {
         guid:'01',
@@ -49,5 +51,12 @@ export class MessageInteractionPage implements OnInit {
       }
     ];
   }
-
+  getData(){
+    this.http.getRequest('/specification_evaluation/'+ '/top_group_monitor').then((response:any)=>{
+      if(response && response.length > 0){
+        console.log(response)
+        this.groupInterations = response;
+      }
+    })
+  }
 }

@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
       this.http.presentLoading('努力登录中...');
       const params = { username: this.username, password: this.password,grant_type:"password" }
       this.http.loginRequest('/oauth/token', params).then(response => {
-        // this.http.hideLoading();
+        this.http.hideLoading();
         window.localStorage.setItem("token", response['access_token']);
         this.nav.navigateRoot("/tabs/index");
       })
