@@ -53,6 +53,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
   toRecommend(){
     this.http.putRequest('/specification_evaluations/' + this.evaluationId + '/top_group_recommended' ,'').then((response:any) => {
       this.http.presentToast('推荐成功！', 'bottom', 'success');
+      this.ngOnInit();
     })
   }
   // 提交-集团

@@ -49,35 +49,40 @@
     </ion-item>
   </ion-list>
   <div class="section mr-top-10">
-    <ion-list class="no-margin" *ngIf="gorupEvaluation">
+    <ion-list class="no-margin">
+      <ion-list-header>
+        <ion-label class="size-sm">集团领导</ion-label>
+      </ion-list-header>
       <ion-item>
-        <ion-label>集团领导点评：</ion-label>
+        <ion-label>领导点评：</ion-label>
         <ion-textarea 
-          rows="5" 
+          rows="3" 
           cols="20" 
           clearOnEdit="true" 
-          readonly="{{gorupEvaluation.leader_review_content !== ''}}" 
-          value="{{gorupEvaluation.leader_review_content}}" 
-          placeholder="请输入集团领导点评内容...">
+          [(ngModel)]="group_leader_review_content" 
+          placeholder="请输入...">
         </ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label>集团布置任务：</ion-label>
-        <ion-textarea rows="5" cols="20" clearOnEdit="true" readonly="{{gorupEvaluation.layout_task !== ''}}" value="{{gorupEvaluation.layout_task}}" placeholder="请输入集团任务内容..."></ion-textarea>
+        <ion-label>布置任务：</ion-label>
+        <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="group_layout_task" placeholder="请输入..."></ion-textarea>
       </ion-item>
     </ion-list>
-    <ion-list class="no-margin" *ngIf="subGorupEvaluation">
+    <ion-list class="no-margin">
+      <ion-list-header>
+        <ion-label class="size-sm">子集团领导</ion-label>
+      </ion-list-header>
       <ion-item>
-        <ion-label>子集团领导点评：</ion-label>
-          <ion-textarea rows="5" cols="20" clearOnEdit="true" readonly="{{subGorupEvaluation.leader_review_content !== ''}}" value="{{subGorupEvaluation.leader_review_content}}" placeholder="请输入子领导点评内容..."></ion-textarea>
+        <ion-label>领导点评：</ion-label>
+          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_leader_review_content" placeholder="请输入..."></ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-label>子集团布置任务：</ion-label>
-          <ion-textarea rows="5" cols="20" clearOnEdit="true" readonly="{{subGorupEvaluation.layout_task !== ''}}" value="{{subGorupEvaluation.layout_task}}" placeholder="请输入子集团任务内容..."></ion-textarea>
+        <ion-label>布置任务：</ion-label>
+          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_layout_task" placeholder="请输入..."></ion-textarea>
         </ion-item>
     </ion-list>
-    <div class="text-right mr-top-5" *ngIf="">
-      <ion-button size="small" fill="outline">
+    <div class="text-right mr-top-5">
+      <ion-button size="small" fill="outline" (click)="toSubmit()">
         提交
       </ion-button>
     </div>
