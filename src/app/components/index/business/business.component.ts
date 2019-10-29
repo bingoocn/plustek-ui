@@ -6,6 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./business.component.scss'],
 })
 export class BusinessComponent implements OnInit {
+  // 规范评价进度配置
   public slideOpts:any = {
     effect: 'flip', 
     speed: 400, 
@@ -13,6 +14,7 @@ export class BusinessComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
+  // 公告通知配置
   public noticeOpts:any = {
     effect: 'flip', 
     speed: 400, 
@@ -21,6 +23,30 @@ export class BusinessComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
+  // 最新评价
+  public news = {
+    id:'8ae4af936df2617b016df2ce68f10008',
+    notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
+    date:'2019-09-10'
+  };
+  // 公告通知数据
+  public noticeSlides = [
+    {
+      id:'8ae4af936df2617b016df2ce68f10008',
+      notice:'最近频频被点名的“区块链”,到底是个啥?区块链_新浪军事_新浪网',
+      date:'2019-09-10'
+    },
+    {
+      id:'8ae4af936df2617b016df2ce68f10008',
+      notice: '第七届世界军人运动会闭幕式侧记',
+      date: '2019-10-11'
+    },
+    {
+      id:'8ae4af936df2617b016df2ce68f10008',
+      notice: '红杉创始人Don Valentine逝世,沈南鹏悼念硅谷传奇?',
+      date: '2019-11-21'
+    }
+  ];
   // 轮播图数据
   public slides = [
     {

@@ -9,8 +9,6 @@ export class HttpService {
   // readonly baseIp = 'http://10.100.240.200:10008';
   readonly baseIp = 'http://10.100.240.163:10008';
   readonly portalIp = 'http://10.100.240.163:10002';
-  // readonly baseIp = 'http://www.phonegap100.com';
-  // readonly portalIp = 'http://route.showapi.com';
   // 请求头
   public header = new HttpHeaders({
     'X-Requested-With': 'XMLHttpRequest',

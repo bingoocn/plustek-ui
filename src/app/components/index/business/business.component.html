@@ -1,7 +1,7 @@
 <ion-content class="grey" color="grey">
     <div class="mine-item padding-top-10 padding-bottom-5 no-padding">
       <ion-slides #slide mode="ios" pager="ios" [options]="slideOpts" (ionSlideTouchEnd)="touchEnd()">
-        <ion-slide>
+        <ion-slide style="background: #f1f7fe;">
           <div class="slide-item">
             自评个数：{{ slides[0].self }}
           </div>
@@ -12,7 +12,7 @@
             领导审核：{{ slides[0].leader }}
           </div>
         </ion-slide>
-        <ion-slide>
+        <ion-slide style="background: #e8eefd;">
           <div class="slide-item">
             业务部门：{{ slides[1].department }}
           </div>
@@ -20,7 +20,7 @@
             领导：{{ slides[1].leader }}
           </div>
         </ion-slide>
-        <ion-slide>
+        <ion-slide style="background: #fdf6e6;">
           <div class="slide-item">
             业务部门：{{ slides[2].department }}
           </div>
@@ -30,35 +30,18 @@
         </ion-slide>
       </ion-slides>
     </div>
-    <!-- 公告通知 -->
-    <div class="mine-item padding-bottom-5">
-      <ion-grid fixed>
+    <!-- 最新评价 -->
+    <div class="mine-item">
+      <ion-grid fixed class="no-padding">
         <ion-row>
-          <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title">公告通知</ion-label> 
-            <span class="more">更多</span>
-          </ion-col>
-          <ion-col size="2"> 
-            <div class="mine-section linear-lightViolet">111</div>
-          </ion-col>
-          <ion-col size="10"> 
-            <ion-slides class="noticeSlide" #noticeSlide mode="ios" [pager]="false" [options]="noticeOpts" (ionSlideTouchEnd)="touchEnd()">
-              <ion-slide>
-                <div class="slide-item">
-                  公告通知公告通知公告通知公告通知1
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="slide-item">
-                  公告通知公告通知公告通知公告通知公告通知公告通知公告通知2
-                </div>
-              </ion-slide>
-              <ion-slide>
-                <div class="slide-item">
-                  公告通知公告通知公告通知公告通知公告通知公告通知公告通知3
-                </div>
-              </ion-slide>
-            </ion-slides>
+          <ion-col size="12" class="no-padding news"> 
+            <div class="mine-icon">
+              <ion-img class="mine-icon-img" src="./assets/evaluate.png" alt=""></ion-img>
+            </div>
+            <ion-item class="full-width" lines="none" [routerLink]="['notice/notices',news.id]">
+              <ion-label style="font-size: 12px;">{{ news.notice }}</ion-label>
+              <ion-note style="font-size: 12px;" >{{ news.date }}</ion-note>
+            </ion-item>
           </ion-col>
         </ion-row>  
       </ion-grid>
@@ -69,19 +52,18 @@
         <ion-row>
           <ion-col size="12" class="title-pos"> 
             <ion-label class="mine-section-title">自评结果</ion-label> 
-            <span class="more">更多</span>
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightViolet">
+            <div class="mine-section">
               <p>{{ selfEvaluations.level }}</p>
               <p>当前等级</p>
             </div>
           </ion-col>
           <ion-col size="8">
-            <div class="mine-section-item linear-lightViolet">
+            <div class="mine-section-item">
               当前得分：<span>{{ selfEvaluations.score }}</span>
             </div>
-            <div class="mine-section-item linear-lightViolet">
+            <div class="mine-section-item">
               最近评价时间：{{ selfEvaluations.time }}
             </div>
           </ion-col>
@@ -89,55 +71,52 @@
       </ion-grid>
     </div>
     <!-- 亮点推荐 -->
-    <div class="mine-item padding-bottom-5">
+    <div class="mine-item padding-bottom-5 bright">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
             <ion-label class="mine-section-title">亮点推荐</ion-label> 
-            <span class="more">更多</span>
           </ion-col>
           <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
+            <div class="mine-section mini linear-lightGreen">
               <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">集团推荐</ion-col>
+                <ion-col size="4">
+                  <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
+                </ion-col>
+                <ion-col size="8">集团推荐</ion-col>
               </ion-row>
             </div>
           </ion-col>
           <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
+            <div class="mine-section mini linear-lightGreen">
               <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">子集团推荐</ion-col>
+                <ion-col size="4">
+                  <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
+                </ion-col>
+                <ion-col size="8">子集团推荐</ion-col>
               </ion-row>
             </div>
           </ion-col>
         </ion-row>  
       </ion-grid>
     </div>
-    <!-- 亮点推荐 -->
+    <!-- 公告通知 -->
     <div class="mine-item padding-bottom-5">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title">亮点推荐</ion-label> 
+            <ion-label class="mine-section-title">公告通知</ion-label> 
             <span class="more">更多</span>
           </ion-col>
-          <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
-              <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">集团推荐</ion-col>
-              </ion-row>
-            </div>
-          </ion-col>
-          <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
-              <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">子集团推荐</ion-col>
-              </ion-row>
-            </div>
+          <ion-col size="12"> 
+            <ion-slides #slide class="noticeSlide" mode="ios" [options]="noticeOpts" [pager]="false" (ionSlideTouchEnd)="touchEnd()">
+              <ion-slide *ngFor="let item of noticeSlides; let key = index">
+                  <ion-item class="full-width" [routerLink]="['notice/notices',item.id]">
+                    <ion-label style="font-size: 12px;">{{item.notice}}</ion-label>
+                    <ion-note style="font-size: 12px;" >{{item.date}}</ion-note>
+                  </ion-item>
+              </ion-slide>
+            </ion-slides>
           </ion-col>
         </ion-row>  
       </ion-grid>
