@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-overall-evaluation',
@@ -7,23 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverallEvaluationPage implements OnInit {
   public evaluationValue:any = [];
-  constructor() { }
+  
+  constructor(public http:HttpService) { }
 
   ngOnInit() {
-    this.evaluationValue = [
-      {
-        guid:'0',
-        evaluation:'2019年规范评价',
-        grade:100,
-        rank:1
-      },
-      {
-        guid:'1',
-        evaluation:'2018年规范评价',
-        grade:97,
-        rank:2
-      }
-    ]
+    this.getData();
   }
-
+  // 发送请求获取数据
+  getData(){
+    this.http.getRequest('/evaluation_results').then((response:any) => {
+      if(response && response.length > 0){
+        this.evaluationValue = response;
+      }
+    });
+  }
 }
