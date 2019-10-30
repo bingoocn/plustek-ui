@@ -7,77 +7,41 @@
   </ion-toolbar>
 </ion-header>
 <ion-content color="grey">
-  <!-- <div class="mr-top-10 no-padding-top"> -->
-    <ion-list lines="full" class="no-margin" *ngIf="expertReview">
-      <ion-item>
-        <ion-grid fixed>
-          <ion-row>
-            <ion-col size="12">
-              <span>子集团/直管单位：</span>
-              <span>{{ (expertReview.unit && expertReview.unit.group && expertReview.unit.group.name) ? expertReview.unit.group.name:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>单位名称：</span>
-              <span>{{ (expertReview.unit && expertReview.unit.name) ? expertReview.unit.name:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>所属板块：</span>
-              <span>{{ (expertReview.specification_evaluation && expertReview.specification_evaluation.subordinate_plate) ? expertReview.specification_evaluation.subordinate_plate:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>认定自评等级：</span>
-              <span>{{ (expertReview.specification_evaluation && expertReview.specification_evaluation.evaluation_level && expertReview.specification_evaluation.evaluation_level.name) ? expertReview.specification_evaluation.evaluation_level.name:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>自评得分：</span>
-              <span>{{ (expertReview.specification_evaluation && expertReview.specification_evaluation.self_evaluation_score) ? expertReview.specification_evaluation.self_evaluation_score:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>检查起始日期：</span>
-              <span>{{ (expertReview.check_start_time) ? expertReview.check_start_time:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>检查结束日期：</span>
-              <span>{{ (expertReview.check_end_time) ? expertReview.check_end_time:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>达级结果：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.standard_result && expertReview.evaluation_result.standard_result.name) ? expertReview.evaluation_result.standard_result.name:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>要点得分：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.gist_score) ? expertReview.evaluation_result.gist_score:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>加分：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.plus_score) ? expertReview.evaluation_result.plus_score:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>加分说明：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.plus_score_explain) ? expertReview.evaluation_result.plus_score_explain:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>检查分数：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.evaluation_score) ? expertReview.evaluation_result.evaluation_score:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>抽查符合度：</span>
-              <span>{{ (expertReview.evaluation_result && expertReview.evaluation_result.spot_check_coincidence) ? expertReview.evaluation_result.spot_check_coincidence:'' }}</span>
-            </ion-col>
-            <ion-col size="12">
-              <span>评价报告：</span>
-              <span>查看</span>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
-    <div class="section mr-top-10">
-      <div class="text-center">
-        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../reachStandardEvaluation',reviewId]">规范达标评价</ion-button>
-        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button>
-        <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button>
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item>
+          <ion-label position="stacked">单位名称</ion-label>
+          <ion-input readonly type="text" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">所属板块 <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" [(ngModel)]="subordinatePlate"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">评价日期 <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="date" [(ngModel)]="evaluationDate" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">评价级别 <ion-text color="danger">*</ion-text></ion-label>
+          <ion-select required interface="popover" [(ngModel)]="evaluationLevelCode">
+            <ion-select-option value="01">一级</ion-select-option>
+            <ion-select-option value="02">二级</ion-select-option>
+            <ion-select-option value="03">三级</ion-select-option>
+            <ion-select-option value="04">四级</ion-select-option>
+            <ion-select-option value="05">五级</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin"  >开始答题</ion-button>
       </div>
-    </div>
+    <!-- </form> -->
+
+    <!-- <div class="section mr-top-10"> -->
+      <!-- <div class="text-center"> -->
+        <!-- <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../reachStandardEvaluation',reviewId]">规范达标评价</ion-button> -->
+        <!-- <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button> -->
+        <!-- <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button> -->
+      <!-- </div> -->
+    <!-- </div> -->
   <!-- </div> -->
 </ion-content>
