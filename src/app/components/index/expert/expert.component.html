@@ -40,7 +40,7 @@
             最高达级：<span>{{ selfAccess.heighLevel }}</span> ({{selfAccess.heighsum}})家
           </div>
           <div class="mine-section-item linear-lightGreen">
-            最高达级：<span>{{ selfAccess.lowLevel }}</span> ({{selfAccess.lowsum}})家
+            最低达级：<span>{{ selfAccess.lowLevel }}</span> ({{selfAccess.lowsum}})家
           </div>
         </ion-col>
       </ion-row>  
@@ -65,7 +65,7 @@
               最高达级：<span>{{ expertAssess.heighLevel }}</span> ({{expertAssess.heighsum}})家
           </div>
           <div class="mine-section-item linear-lightGreen">
-              最高达级：<span>{{ expertAssess.lowLevel }}</span> ({{expertAssess.lowsum}})家
+              最低达级：<span>{{ expertAssess.lowLevel }}</span> ({{expertAssess.lowsum}})家
           </div>
         </ion-col>
       </ion-row>  
@@ -100,7 +100,7 @@
             <ion-label class="mine-section-title">亮点推荐</ion-label> 
           </ion-col>
           <ion-col size="6">
-            <div class="mine-section mini linear-lightViolets">
+            <div class="mine-section mini linear-lightViolets" [routerLink]="['/show-highlight']">
               <ion-row>
                 <ion-col size="4">
                   <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
@@ -110,7 +110,7 @@
             </div>
           </ion-col>
           <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
+            <div class="mine-section mini linear-lightViolet" [routerLink]="['/show-highlight']">
               <ion-row>
                 <ion-col size="4">
                   <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
