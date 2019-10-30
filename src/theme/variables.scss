@@ -122,6 +122,13 @@
   letter-spacing: 0.5em;
   margin-right: -0.5em;
 }
+
+/*超过长度显示省略号*/
+.text_overflow{
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -188,7 +195,7 @@ ion-button {
 }
 // 浅绿色渐变
 .linear-lightGreen{
-  background: #6d7df6 linear-gradient(-90deg, #7febd2, #6d7df6) !important;
+  background: #7febd2 linear-gradient(-90deg, #6d7df6, #7febd2) !important;
 }
 // 橘色渐变
 .linear-orange{

@@ -9,15 +9,15 @@
 
 <ion-content color="grey">
   <ion-searchbar placeholder="请输入子集团/直管单位关键字" [debounce]="250" (ionInput)="getExpertEvaluations($event)"></ion-searchbar>
-  <ion-list lines="full">
-    <ion-item *ngFor="let item of expertEvaluations; let key = index" detail [routerLink]="['./expertBasicInfo',item.guid]">
+  <ion-list lines="full" *ngIf="expertEvaluations && expertEvaluations.length > 0">
+    <ion-item *ngFor="let item of expertEvaluations; let key = index" detail [routerLink]="['./expertBasicInfo',item.id]">
       <ion-label>
-        <h3>子集团/直管单位：{{ item.subGroup }}</h3>
-        <h3>单位名称：{{ item.unitName }}</h3>
-        <h3>所属板块：{{ item.plate }}</h3>
-        <h3>达级结果：{{ item.levelResult }}</h3>
-        <h3>检查分数：{{ item.checkScore }}</h3>
-        <h3>检查起始日期：{{ item.checkStartDate }}</h3>
+        <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
+        <h3>单位名称：{{ item.unit.name }}</h3>
+        <h3>所属板块：{{ item.specification_evaluation.subordinate_plate }}</h3>
+        <h3>达级结果：{{ item.specification_evaluation.evaluation_level.name }}</h3>
+        <h3>检查分数：{{ item.specification_evaluation.self_evaluation_score }}</h3>
+        <h3>检查起始日期：{{ item.check_strat_time }}</h3>
       </ion-label>
     </ion-item>
   </ion-list>

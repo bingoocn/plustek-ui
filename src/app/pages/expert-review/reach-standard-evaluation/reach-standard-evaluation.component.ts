@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-reach-standard-evaluation',
@@ -11,38 +12,17 @@ export class ReachStandardEvaluationComponent implements OnInit {
   public reviewId:string;
   public points: any = [];
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router) { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.reviewId = params['reviewId']);
-    this.points = [
-      {
-        guid:'01',
-        title:'1.1.1  质量损失率',
-        reachLevel:'五级',
-        score:10
-      },{
-        guid:'02',
-        title:'1.1.2  要点题目2',
-        reachLevel:'四级',
-        score:8
-      },{
-        guid:'03',
-        title:'1.1.3  要点题目3',
-        reachLevel:'三级',
-        score:8
-      },{
-        guid:'03',
-        title:'1.1.3  要点题目3',
-        reachLevel:'三级',
-        score:8
-      },{
-        guid:'03',
-        title:'1.1.3  要点题目3',
-        reachLevel:'三级',
-        score:8
-      }
-    ]
+    if(this.reviewId){
+      this.http.getRequest('/expert_reviews/' + this.reviewId).then((response:any) => {
+        if(response && response.expert_reach_standards && response.expert_reach_standards.length > 0) {
+          this.points = response.expert_reach_standards;
+        }
+      });
+    }
   }
 
 }

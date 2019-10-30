@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-expert-basic-info',
@@ -9,26 +10,19 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 export class ExpertBasicInfoComponent implements OnInit {
 
   public reviewId:string;
-  public expertReview:any = {};
+  public expertReview:any;
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router) { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.reviewId = params['reviewId']);
-    this.expertReview = {
-      subGroup:'北化集团',
-      unitName:'245厂',
-      plate:'板块一',
-      selfEvaluationLevel:'五级',
-      selfEvaluationScore:9,
-      checkStartDate:'2019-08-23',
-      checkEndDate:'2019-09-23',
-      levelResult:'五级',
-      pointScore:6,
-      plusScore:0,
-      checkScore:10,
-      spotCheckCompliance:'100%',
-      ratingReport:'评级报告1'
+    if(this.reviewId){
+      // 查询监控评价基本详细信息和评价结果
+      this.http.getRequest('/expert_reviews/' + this.reviewId).then((response:any) => {
+        if(response) {
+          this.expertReview = response;
+        }
+      });
     }
   }
 

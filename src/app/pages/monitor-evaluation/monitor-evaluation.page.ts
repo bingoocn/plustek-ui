@@ -17,14 +17,14 @@ export class MonitorEvaluationPage implements OnInit {
   ngOnInit() {
     const params = { evaluation_level_code: '' };
     this.getData(params);
-    this.evaluationTabValue = 'notEvaluated';
+    this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
   }
 
   // 发送请求获取数据
   getData(params:any){
     this.http.getRequest('/specification_mon_evaluations', params).then((response:any) => {
       if(response && response.length > 0){
-        // 便利每条数据，区分未评价、已评价
+        // 遍历每条数据，区分未评价、已评价
         response.forEach(element => {
           if(element.id){
             this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_monitor').then((response:any) => {
