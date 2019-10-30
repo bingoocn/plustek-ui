@@ -8,7 +8,11 @@
 </ion-header>
 
 <ion-content color="grey">
-  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getExperiences($event)"></ion-searchbar>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="加载中..." refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getExperiences($event)" [(ngModel)]="title"></ion-searchbar>
   <ion-list lines="full" *ngIf="experiences && experiences.length > 0">
     <ion-item *ngFor="let item of experiences; let key = index" detail [routerLink]="['./experiences',item.id]">
       <ion-grid fixed>
@@ -26,6 +30,20 @@
         </ion-grid>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll threshold="30px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- 页面滑动加载完毕后提示 -->
+  <div *ngIf="!hasMore" >
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-text color="dark">没有更多内容</ion-text>
+      </ion-col>
+    </ion-row>
+  </div>
   <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small" class="no-margin" [routerLink]="['./addExperience']">
       <ion-icon name="add"></ion-icon>
