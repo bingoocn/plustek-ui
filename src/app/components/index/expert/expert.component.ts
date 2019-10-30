@@ -37,7 +37,7 @@ export class ExpertComponent implements OnInit {
     heighsum:'20',
     lowsum:'12'
   };
-  public selfCheck :any = {
+  public expertAssess :any = {
     checkedNum:'35',
     heighLevel:'三级',
     lowLevel:'五级',

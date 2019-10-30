@@ -3,7 +3,9 @@
       <ion-grid fixed>
         <!-- 常用功能 -->
         <ion-row>
-          <ion-col size="12"> <ion-label class="index-title-center text-center">常用功能</ion-label> </ion-col>
+          <ion-col size="12" class="title-pos"> 
+            <ion-label class="mine-section-title">常用功能</ion-label> 
+          </ion-col>
           <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/monitor-evaluation']">
             <div class="mine-icon-circle bg-brightBlue">
               <ion-img class="mine-icon-img" src="./assets/monitor.png" alt=""></ion-img>
@@ -31,23 +33,24 @@
       </ion-grid>
     </div>
     <!-- 企业自评评价统计 -->
-    <div class="mine-item padding-top-10 padding-bottom-5">
+    <div class="mine-item padding-bottom-5 evaluation">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title linear-Violet">企业自评评价统计</ion-label> 
+            <ion-label class="mine-section-title">企业自评评价统计</ion-label> 
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightViolet">
-              <p>{{selfAccess.accessedNum}}</p>
-              <p>家已自评</p>
+            <div class="mine-section linear-lightGreens">
+                <p>{{selfAccess.accessedNum}}</p>
+                <p>家已自评</p>
+              <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
-            <div class="mine-section-item linear-lightViolet">
+            <div class="mine-section-item linear-lightGreen">
               最高达级：<span>{{ selfAccess.heighLevel }}</span> ({{selfAccess.heighsum}})家
             </div>
-            <div class="mine-section-item linear-lightViolet">
+            <div class="mine-section-item linear-lightGreen">
               最高达级：<span>{{ selfAccess.lowLevel }}</span> ({{selfAccess.lowsum}})家
             </div>
           </ion-col>
@@ -59,7 +62,7 @@
       <ion-grid fixed>
           <ion-row>
               <ion-col size="12" class="title-pos"> 
-                <ion-label class="mine-section-title linear-Violet">公告通知</ion-label> 
+                <ion-label class="mine-section-title">公告通知</ion-label> 
                 <span class="more">更多</span>
               </ion-col>
               <ion-col size="12">
@@ -93,50 +96,55 @@
         </ion-grid>
     </div>
     <!-- 亮点展示 -->
-    <div class="mine-item padding-top-10 padding-bottom-5">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title linear-orange">亮点推荐</ion-label> 
-          </ion-col>
-          <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
-              <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">集团推荐</ion-col>
-              </ion-row>
-            </div>
-          </ion-col>
-          <ion-col size="6">
-            <div class="mine-section mini linear-lightViolet">
-              <ion-row>
-                <ion-col size="5">111</ion-col>
-                <ion-col size="7">子集团推荐</ion-col>
-              </ion-row>
-            </div>
-          </ion-col>
-        </ion-row>  
-      </ion-grid>
-    </div>
+    <div class="mine-item padding-bottom-5 highlights">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="12" class="title-pos"> 
+              <ion-label class="mine-section-title">亮点推荐</ion-label> 
+            </ion-col>
+            <ion-col size="6">
+              <div class="mine-section mini linear-lightViolets">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
+                  </ion-col>
+                  <ion-col size="8">集团推荐</ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div class="mine-section mini linear-lightViolet">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-img class="mine-icon-img" src="./assets/highlights.png" alt=""></ion-img>
+                  </ion-col>
+                  <ion-col size="8">子集团推荐</ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+          </ion-row>  
+        </ion-grid>
+      </div>
     <!-- 专家检查结果 -->
-    <div class="mine-item padding-top-10 padding-bottom-5">
+    <div class="mine-item padding-bottom-5 evaluation">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title linear-Violet">自评结果</ion-label> 
+            <ion-label class="mine-section-title">专家检查结果</ion-label> 
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightViolet">
-              <p>{{selfCheck.checkedNum}}</p>
-              <p>家已检查</p>
+            <div class="mine-section linear-lightGreens">
+                <p>{{selfCheck.checkedNum}}</p>
+                <p>家已检查</p>
+              <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
-            <div class="mine-section-item linear-lightViolet">
-              最高达级：<span>{{ selfCheck.heighLevel }}</span> ({{selfCheck.heighsum}})家
+            <div class="mine-section-item linear-lightGreen">
+                最高达级：<span>{{ selfCheck.heighLevel }}</span> ({{selfCheck.heighsum}})家
             </div>
-            <div class="mine-section-item linear-lightViolet">
-              最高达级：<span>{{ selfCheck.lowLevel }}</span> ({{selfCheck.lowsum}})家
+            <div class="mine-section-item linear-lightGreen">
+                最高达级：<span>{{ selfCheck.lowLevel }}</span> ({{selfCheck.lowsum}})家
             </div>
           </ion-col>
         </ion-row>  
