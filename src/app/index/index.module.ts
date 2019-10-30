@@ -9,6 +9,7 @@ import { IndexPage } from './index.page';
 import { BusinessComponent } from '../components/index/business/business.component';
 import { BusinessLeaderComponent } from '../components/index/business-leader/business-leader.component';
 import { GroupComponent } from '../components/index/group/group.component';
+import { GroupLeaderComponent } from '../components/index/group-leader/group-leader.component';
 import { ExpertComponent } from '../components/index/expert/expert.component';
 import { SubGroupLeaderComponent } from '../components/index/sub-group-leader/sub-group-leader.component';
 import { SubGroupBusinessUnitComponent} from '../components/index/sub-group-business-unit/sub-group-business-unit.component'
@@ -32,6 +33,7 @@ const routes: Routes = [
     BusinessComponent,
     BusinessLeaderComponent,
     GroupComponent,
+    GroupLeaderComponent,
     ExpertComponent,
     SubGroupLeaderComponent,
     SubGroupBusinessUnitComponent

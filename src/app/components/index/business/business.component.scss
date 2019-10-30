@@ -197,13 +197,18 @@
     &.evaluation{
         p{
             color: #fff;
-            height: 50%;
-            line-height: 50px;
+            line-height: 30px;
             font-size: .75rem;
             font-weight: bold;
             margin: 0;
             &:first-child{
                 font-size: 1.5rem;
+                padding-top: 20px;
+                span{
+                    font-size: .75rem;
+                    line-height: 0;
+                    margin-left: 5px;
+                }
             }
         }
     }

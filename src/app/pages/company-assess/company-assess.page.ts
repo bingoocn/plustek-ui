@@ -15,13 +15,13 @@ export class CompanyAssessPage implements OnInit {
   ngOnInit() {
     this.getData();
   }
-    // 发送请求获取数据
-    getData() {
-      this.http.getRequest('/specification_evaluations').then((response: any) => {
-        if (response && response.length > 0) {
-          this.assess = response;
-        }
-      });
-    }
+  // 发送请求获取数据
+  getData() {
+    this.http.getRequest('/specification_evaluations').then((response: any) => {
+      if (response && response.length > 0) {
+        this.assess = response;
+      }
+    });
+  }
 
 }
