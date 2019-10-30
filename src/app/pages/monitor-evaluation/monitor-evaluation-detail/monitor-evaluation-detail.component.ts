@@ -49,6 +49,13 @@ export class MonitorEvaluationDetailComponent implements OnInit {
       }
     }
   }
+
+  // 获取当前登录人信息
+  getUser(){
+    this.http.getRequest('/user').then((response => {
+      
+    }))
+  }
   // 亮点推荐-集团
   toRecommend(){
     this.http.putRequest('/specification_evaluations/' + this.evaluationId + '/top_group_recommended' ,'').then((response:any) => {

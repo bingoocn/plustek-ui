@@ -7,7 +7,7 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 })
 export class HttpService {
   // readonly baseIp = 'http://10.100.240.200:10008';
-  readonly baseIp = 'http://10.100.240.163:10008';
+  readonly baseIp = 'http://10.100.240.200:10008';
   readonly portalIp = 'http://10.100.240.163:10002';
   // 请求头
   public header = new HttpHeaders({
@@ -98,6 +98,20 @@ export class HttpService {
     let body = null;
     return new Promise((resolve, reject) => {
       this.http.post(url, body, { params: params }).subscribe(response => {
+        resolve(response);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+
+  /**
+   * 获取当前登录人信息
+   */
+  public getUser(){
+    let url = this.portalIp + '/api/user';
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);

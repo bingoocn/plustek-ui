@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
 
@@ -9,26 +10,35 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class InternalCommunicationPage implements OnInit {
 
-  public topics:any = [];
-  public title:any;
+  @ViewChild(IonInfiniteScroll,null) infiniteScroll: IonInfiniteScroll;
 
-  constructor(public route:ActivatedRoute, public http:HttpService) { 
-    
-  }
+  public topics:any = [];
+  public page:any = 1;
+  public per_page:any = 10;
+  public hasMore:boolean = true;
+  public title:any;
+  public exchange_proceeding:string = '';
+  public mineFlag:boolean = false;
+
+  constructor(public route:ActivatedRoute, public http:HttpService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe((data)=>{ 
       this.title = data.title;
+      if(this.title === '我的主题'){
+        this.mineFlag = true;
+      }
     });
-
-    const params = { exchange_proceeding:'',publish_status_code: '02' };
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.getData(params);
 
   }
 
   // 关键字搜索
   getTopics(ev: any) {
-    const params = { exchange_proceeding:ev.target.value,publish_status_code: '02' };
+    this.page = 1;
+    this.exchange_proceeding = ev.target.value;
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.getData(params);
   }
 
@@ -37,6 +47,47 @@ export class InternalCommunicationPage implements OnInit {
     this.http.getRequest('/communions', params).then((response:any) => {
       if(response && response.length > 0){
         this.topics = response;
+        if(response.length < this.per_page){
+          this.infiniteScroll.disabled = true;
+        }else{
+          ++this.page;
+        }
+      }
+    });
+  }
+
+  // 刷新
+  doRefresh(e) {
+    this.page = 1;
+    this.exchange_proceeding = "";
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
+    this.http.getRequest('/communions', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.topics = response;
+        if(response.length < this.per_page){
+          this.infiniteScroll.disabled = true;
+        }else{
+          ++this.page;
+          this.infiniteScroll.disabled = false;
+          this.hasMore = true;
+        }
+        e.target.complete(); // 告诉ion-refresher 更新数据
+      }
+    });
+  }
+  // 加载更多
+  loadMore(e){
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
+    this.http.getRequest('/communions', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.topics = this.topics.concat(response);
+        ++this.page;
+        //判断下一页有没有数据
+        if(response.length < this.per_page){
+          e.target.disabled = true;
+          this.hasMore = false;
+        }
+        e.target.complete(); //请求完成数据以后告诉ion-infinite-scroll更新数据
       }
     });
   }
