@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'show-highlight', loadChildren: './pages/show-highlight/show-highlight.module#ShowHighlightPageModule' },
   { path: 'message-interaction', loadChildren: './pages/message-interaction/message-interaction.module#MessageInteractionPageModule' },
   { path: 'overall-evaluation', loadChildren: './pages/overall-evaluation/overall-evaluation.module#OverallEvaluationPageModule' },
+  { path: 'company-assess', loadChildren: './pages/company-assess/company-assess.module#CompanyAssessPageModule' },
 
 
 
