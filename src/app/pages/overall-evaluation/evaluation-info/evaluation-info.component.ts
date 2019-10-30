@@ -10,7 +10,7 @@ import { HttpService } from 'src/app/service/http/http.service';
 export class EvaluationInfoComponent implements OnInit {
   public evaluationValue:any = {};
   public evaluationId : string;
-  public viewPage : boolean = true;
+  // public viewPage : boolean = true;
   
   constructor(public routeInfo:ActivatedRoute,private router: Router,public http:HttpService) { }
 
@@ -26,13 +26,13 @@ export class EvaluationInfoComponent implements OnInit {
       }
     });
   }
-  toEdit() {
-    this.viewPage = false;
-  }
-  toView() {
-    this.viewPage = true;
-  }
-  toSave() {
+  // toEdit() {
+  //   this.viewPage = false;
+  // }
+  // toView() {
+  //   this.viewPage = true;
+  // }
+  // toSave() {
 
-  }
+  // }
 }
