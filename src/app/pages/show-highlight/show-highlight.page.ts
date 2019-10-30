@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
 
 @Component({
   selector: 'app-show-highlight',
@@ -11,7 +12,7 @@ export class ShowHighlightPage implements OnInit {
   public subGroupHighlights:any = [];
   highlightTabValue: string;
 
-  constructor() { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router) { }
 
   ngOnInit() {
     this.highlightTabValue = 'group';
@@ -49,6 +50,11 @@ export class ShowHighlightPage implements OnInit {
         time:'2019.11.10'
       }
     ]
+    this.getHighlightTabValue();
+    // this.routeInfo.params.subscribe((params: Params) => this.highlightTabValue = params['highlightTabValue']);
+  }
+  getHighlightTabValue() {
+    console.log(this.routeInfo.params.subscribe)
   }
   // tab切换事件
   tabChanged(ev: any) {

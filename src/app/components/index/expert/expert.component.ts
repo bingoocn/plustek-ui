@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-expert',
@@ -13,29 +14,16 @@ export class ExpertComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     direction:'vertical'
   }
-  public slides = [
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice:'最近频频被点名的“区块链”,到底是个啥?|区块链_新浪军事_新浪网',
-      date:'2019-09-10'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '第七届世界军人运动会闭幕式侧记',
-      date: '2019-10-11'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '红杉创始人Don Valentine逝世,沈南鹏悼念硅谷传奇',
-      date: '2019-11-21'
-    }
-  ];
+  public expertNotices = [];
+  //企业自评信息
   public selfAccess :any = {
-    accessedNum:'39',
-    heighLevel:'二级',
-    lowLevel:'四级',
-    heighsum:'20',
-    lowsum:'12'
+    accessedNum:0,
+    heighLevel:'',
+    heighLevel_code:'',
+    lowLevel:'',
+    lowLevel_code:'',
+    heighsum:0,
+    lowsum:0
   };
   public expertAssess :any = {
     checkedNum:'35',
@@ -45,8 +33,85 @@ export class ExpertComponent implements OnInit {
     lowsum:'23'
   };
  
-  constructor() { }
+  constructor( public http:HttpService) { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.getNotice();
+    this.getSelfAssess();
+    this.getExpertAssess();
+  }
+  // 获取企业自评数据
+  getSelfAssess(){
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.accessedNum = response.length;
+      }
+    });
+    //统计最高达级信息
+    this.http.getRequest('/specification_evaluations?sort=-evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.heighLevel = response[0].evaluation_level.name;
+        this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            this.selfAccess.heighsum = response.length;
+          }
+        });
+      }
+    });
+    //统计最低达级信息
+    this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.lowLevel = response[0].evaluation_level.name;
+        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            // console.log(response)
+            this.selfAccess.lowsum = response.length;
+          }
+        });
+      }
+    });
+  }
+  // 获取专家评价数据
+  getExpertAssess(){
+    this.http.getRequest('/expert_reviews').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.accessedNum = response.length;
+      }
+    });
+    //统计最高达级信息
+    this.http.getRequest('/expert_reviews?sort=-evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.heighLevel = response[0].evaluation_result.standard_rusult.name;
+        this.selfAccess.heighLevel_code = response[0].evaluation_result.standard_rusult.code;
+        this.http.getRequest('/expert_reviews?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            this.selfAccess.heighsum = response.length;
+          }
+        });
+      }
+    });
+    //统计最低达级信息
+    this.http.getRequest('/expert_reviews?sort=evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.lowLevel = response[0].evaluation_level.name;
+        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/expert_reviews?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            // console.log(response)
+            this.selfAccess.lowsum = response.length;
+          }
+        });
+      }
+    });
+  }
+  // 获取公告通知数据
+  getNotice(){
+    this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+      if(response && response.length > 0){
+        this.expertNotices = response;
+      }
+    });
+  }
 }

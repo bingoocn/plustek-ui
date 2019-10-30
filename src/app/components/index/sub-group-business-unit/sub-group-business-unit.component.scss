@@ -207,4 +207,24 @@
             }
         }
     }
+    // 我的工作
+    &.work{
+        .mine-section{
+            ion-img{
+                width: auto;
+                height: 55%;
+                margin-top: .4rem;
+            }
+            p{
+                height: 20px;
+                line-height: 15px;
+                font-weight: bold;
+                margin: 0;
+                &:last-child{
+                    font-size: 18px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
 }
