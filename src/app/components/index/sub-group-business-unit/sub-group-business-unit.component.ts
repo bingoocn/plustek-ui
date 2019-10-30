@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-sub-group-business-unit',
@@ -13,23 +14,7 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     direction:'vertical'
   }
-  public slides = [
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice:'最近频频被点名的“区块链”,到底是个啥?|区块链_新浪军事_新浪网',
-      date:'2019-09-10'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '第七届世界军人运动会闭幕式侧记',
-      date: '2019-10-11'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '红杉创始人Don Valentine逝世,沈南鹏悼念硅谷传奇',
-      date: '2019-11-21'
-    }
-  ];
+  public businessNotices = [];
   public selfAccess :any = {
     accessedNum:'39',
     heighLevel:'二级',
@@ -44,8 +29,17 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     heighsum:'30',
     lowsum:'23'
   };
-  constructor() { }
+  constructor( public http:HttpService) { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.getData();
+  }
+  // 发送请求获取数据
+  getData(){
+    this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+      if(response && response.length > 0){
+        this.businessNotices = response;
+      }
+    });
+  }
 }

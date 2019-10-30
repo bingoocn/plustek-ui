@@ -77,14 +77,14 @@
         <ion-row>
             <ion-col size="12" class="title-pos"> 
               <ion-label class="mine-section-title">公告通知</ion-label> 
-              <span class="more">更多</span>
+              <span class="more" [routerLink]="['/notice']">更多</span>
             </ion-col>
             <ion-col size="12">
               <ion-slides #slide mode="ios" pager="ios" [options]="noticeOpts" [pager]="false" style="height:30px;">
-                <ion-slide *ngFor="let item of slides; let key = index">
-                    <ion-item class="full-width" [routerLink]="['notice/notices',item.id]">
-                      <ion-label style="font-size: 12px;">{{item.notice}}</ion-label>
-                      <ion-note style="font-size: 12px;" slot="end">{{item.date}}</ion-note>
+                <ion-slide *ngFor="let item of expertNotices; let key = index">
+                    <ion-item class="full-width" [routerLink]="['/notice/notices',item.id]">
+                      <ion-label style="font-size: 12px;">{{item.title}}</ion-label>
+                      <ion-note style="font-size: 12px;" slot="end">{{item.publish_time}}</ion-note>
                     </ion-item>
                 </ion-slide>
               </ion-slides>
