@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-evaluation-info',
@@ -7,19 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EvaluationInfoComponent implements OnInit {
   public evaluationValue:any = {};
-  constructor() { }
+  public evaluationId : string;
+  // public viewPage : boolean = true;
+  
+  constructor(public routeInfo:ActivatedRoute,private router: Router,public http:HttpService) { }
 
   ngOnInit() {
-    this.evaluationValue = {
-      subGroup:'北化集团',
-      unitName:'245厂',
-      plate:'板块一',
-      selfEvaluationLevel:'五级',
-      selfEvaluationScore:9,
-      checkStartDate:'2019-08-23',
-      checkEndDate:'2019-09-23',
-      pointScore:6,
-    }
+    this.routeInfo.params.subscribe((params: Params) => this.evaluationId = params['evaluationId']);
+    this.getData();
   }
+  // 发送请求获取数据
+  getData(){
+    this.http.getRequest('/evaluation_results/' + this.evaluationId).then((response:any) => {
+      if(response){
+        this.evaluationValue = response;
+      }
+    });
+  }
+  // toEdit() {
+  //   this.viewPage = false;
+  // }
+  // toView() {
+  //   this.viewPage = true;
+  // }
+  // toSave() {
 
+  // }
 }
