@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-group',
-  templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss'],
+  selector: 'app-group-leader',
+  templateUrl: './group-leader.component.html',
+  styleUrls: ['./group-leader.component.scss'],
 })
-export class GroupComponent implements OnInit {
+export class GroupLeaderComponent implements OnInit {
   // 规范评价进度配置
   public slideOpts:any = {
     effect: 'flip', 
