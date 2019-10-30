@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-business',
-  templateUrl: './business.component.html',
-  styleUrls: ['./business.component.scss'],
+  selector: 'app-business-leader',
+  templateUrl: './business-leader.component.html',
+  styleUrls: ['./business-leader.component.scss'],
 })
-export class BusinessComponent implements OnInit {
+export class BusinessLeaderComponent implements OnInit {
   // 规范评价进度配置
   public slideOpts:any = {
     effect: 'flip', 
@@ -71,7 +71,7 @@ export class BusinessComponent implements OnInit {
   }
 
   @ViewChild("slide", { static: false }) slide;
-  
+
   constructor() { }
 
   ngOnInit() {}
@@ -83,4 +83,5 @@ export class BusinessComponent implements OnInit {
   update() {
     this.slide.update();
   }
+
 }
