@@ -187,19 +187,34 @@ ion-button {
 // 紫色渐变
 .linear-Violet{
   background: #635df5 linear-gradient(-90deg, #b657e9, #635df5) !important;
+  color: #fff !important;
+}
+.linear-Violets{
+  background: #b657e9 linear-gradient(-90deg, #635df5, #b657e9) !important;
+  color: #fff !important;
 }
 // 浅紫色渐变
 .linear-lightViolet{
-  // background: #9ee0fb linear-gradient(-90deg, #a4adf9, #9ee0fb) !important;
-  background: rgba(0, 0, 0, .3) !important;
+  background: #9ee0fb linear-gradient(-90deg, #a4adf9, #9ee0fb) !important;
+  color: #fff !important;
+}
+.linear-lightViolets{
+  background: #9ee0fb linear-gradient(-90deg, #9ee0fb, #a4adf9) !important;
+  color: #fff !important;
 }
 // 浅绿色渐变
 .linear-lightGreen{
   background: #7febd2 linear-gradient(-90deg, #6d7df6, #7febd2) !important;
+  color: #fff !important;
+}
+.linear-lightGreens{
+  background: #6d7df6 linear-gradient(-90deg, #7febd2, #6d7df6) !important;
+  color: #fff !important;
 }
 // 橘色渐变
 .linear-orange{
   background: #f5c577 linear-gradient(-90deg, #f09563, #f5c577) !important;
+  color: #fff !important;
 }
 /*  重置原有样式  */
 
