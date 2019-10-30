@@ -21,7 +21,7 @@
   <ion-list class="bg-LightGrey">
     <ion-item class="mr-top-10" lines="none">
       <ion-label class="ion-text-wrap">级别</ion-label>
-      <ion-select class="size-xs" placeholder="请选择" [(ngModel)]="selectedLevel" [compareWith]="compareWwithFn" interface="action-sheet" cancelText="取消" okText="确定">
+      <ion-select class="size-xs" placeholder="请选择" [(ngModel)]="selectedLevel" (ionChange)="changeLevel($event)" [compareWith]="compareWwithFn" interface="action-sheet" cancelText="取消" okText="确定">
         <ion-select-option [value]="level.value" *ngFor="let level of levels">{{ level.label }}</ion-select-option>
       </ion-select>
     </ion-item>

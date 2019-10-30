@@ -88,4 +88,9 @@ export class ModelDetailComponent implements OnInit {
     })
   }
 
+  // 切换级别
+  changeLevel(e){
+
+  }
+
 }
