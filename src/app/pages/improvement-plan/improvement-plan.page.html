@@ -8,7 +8,11 @@
 </ion-header>
 
 <ion-content color="grey">
-  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getImprovements($event)"></ion-searchbar>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="加载中..." refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getImprovements($event)" [(ngModel)]="title"></ion-searchbar>
   <ion-list lines="full">
     <ion-item *ngFor="let item of improvements; let key = index" detail [routerLink]="['./plans',item.id]">
       <ion-label>
@@ -19,6 +23,20 @@
       </ion-label>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll threshold="30px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- 页面滑动加载完毕后提示 -->
+  <div *ngIf="!hasMore" >
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-text color="dark">没有更多内容</ion-text>
+      </ion-col>
+    </ion-row>
+  </div>
   <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small" class="no-margin" [routerLink]="['./addPlan']">
       <ion-icon name="add"></ion-icon>

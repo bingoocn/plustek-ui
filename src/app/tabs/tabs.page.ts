@@ -9,4 +9,7 @@ export class TabsPage {
 
   constructor() {}
 
+  ngOnInit() {
+    console.log(JSON.parse(localStorage.getItem('currentRole')))
+  }
 }

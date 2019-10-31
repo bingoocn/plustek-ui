@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-plan-detail',
@@ -13,7 +14,7 @@ export class PlanDetailComponent implements OnInit {
   public improvement:any;
   public planTabValue: string;
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService, public common:CommonService) { }
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.planId = params['planId']);
@@ -21,6 +22,13 @@ export class PlanDetailComponent implements OnInit {
       this.http.getRequest('/improvements/' + this.planId).then((response:any) => {
         if(response) {
           this.improvement = response;
+          if(this.improvement.attachments && this.improvement.attachments.length > 0){
+            this.improvement.attachments.forEach(element => {
+              if(element.size){
+                element.size = this.common.getFileSize(element.size);
+              }
+            })
+          }
         }
       })
     }

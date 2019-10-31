@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-mine',
@@ -8,9 +9,20 @@ import { NavController } from '@ionic/angular';
 })
 export class MinePage implements OnInit {
 
-  constructor(private el: ElementRef, public nav: NavController) { }
+  public user:any;
+
+  constructor(private el: ElementRef, public nav: NavController, public http:HttpService) { }
 
   ngOnInit() {
+    // 获取当前登录人信息
+    this.http.getUser().then((response:any) => {
+      if(response){
+        this.user = response;
+        if(this.user.guid){
+          // this.http.getRequest('')
+        }
+      }
+    });
     // 通过延时操作更改shadow dom的样式
     setTimeout(() => {
       const toolbar = this.el.nativeElement.querySelectorAll('ion-item');
