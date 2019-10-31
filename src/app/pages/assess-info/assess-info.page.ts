@@ -15,11 +15,10 @@ export class AssessInfoPage implements OnInit {
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.assessId = params['assessId']);
-    if(this.assessId) {
-      // 查询监控评价基本详细信息和评价结果
+    if (this.assessId) {
+      // 查询企业自评
       this.http.getRequest('/specification_evaluations/' + this.assessId).then((response: any) => {
         if (response) {
-          console.log(response, '结果')
           this.assessInfo = response;
         }
       });

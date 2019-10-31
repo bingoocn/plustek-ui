@@ -10,7 +10,7 @@
 <ion-content color="grey">
     <div class="mr-top-10 no-padding-top">
       <ion-list lines="full"  *ngIf ="assess && assess.length > 0">
-        <ion-item  *ngFor ="let item of assess; let key = index" detail [routerLink]="['./assess-info',item.id]">
+        <ion-item  *ngFor ="let item of assess; let key = index" detail [routerLink]="['../assess-info',item.id]">
         <ion-grid fixed>
             <ion-row>
               <ion-col size="9">
@@ -38,9 +38,9 @@
       </ion-item>
       </ion-list>
     </div>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button size="small" class="no-margin" [routerLink]="['./']">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
   </ion-content>
