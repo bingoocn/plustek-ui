@@ -26,8 +26,12 @@ export class HttpService {
    * @param apiName 
    * @param params 
    */
-  public getRequest(apiName: string, params?: {[key: string]: any}):any {
-    let url = this.baseIp + apiName;
+  public getRequest(apiName: string, params?: {[key: string]: any}, poralIp?: string,):any {
+    // 处理轻应用与业务系统请求地址
+    let baseUrl;
+    poralIp ? baseUrl = poralIp : baseUrl = this.baseIp;
+    // 拼接请求接口
+    let url = baseUrl + apiName;
     return new Promise((resolve, reject) => {
       this.http.get(url, { params: params }).subscribe(response => {
         resolve(response);

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>切换角色</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="doClose()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngFor="let item of roles; let key = index">
+    <ion-button size="small" (click)="onClick(item)">
+      {{ item.roleName }}
+    </ion-button>
+  </div>
+</ion-content>

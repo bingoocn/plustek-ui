@@ -17,7 +17,8 @@ const routes: Routes = [
   // 具体业务模块
   { path: 'case', loadChildren: './pages/case/case.module#CasePageModule' },
   { path: 'internal-communication', loadChildren: './pages/internal-communication/internal-communication.module#InternalCommunicationPageModule' },
-  { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },  { path: 'improvement-plan', loadChildren: './pages/improvement-plan/improvement-plan.module#ImprovementPlanPageModule' },
+  { path: 'experience', loadChildren: './pages/experience/experience.module#ExperiencePageModule' },
+  { path: 'improvement-plan', loadChildren: './pages/improvement-plan/improvement-plan.module#ImprovementPlanPageModule' },
   { path: 'evaluation-index', loadChildren: './pages/evaluation-index/evaluation-index.module#EvaluationIndexPageModule' },
   { path: 'evaluation-model', loadChildren: './pages/evaluation-model/evaluation-model.module#EvaluationModelPageModule' },
   { path: 'expert-review', loadChildren: './pages/expert-review/expert-review.module#ExpertReviewPageModule' },
@@ -28,10 +29,6 @@ const routes: Routes = [
   { path: 'message-interaction', loadChildren: './pages/message-interaction/message-interaction.module#MessageInteractionPageModule' },
   { path: 'overall-evaluation', loadChildren: './pages/overall-evaluation/overall-evaluation.module#OverallEvaluationPageModule' },
   { path: 'company-assess', loadChildren: './pages/company-assess/company-assess.module#CompanyAssessPageModule' },
-
-
-
-
 ];
 @NgModule({
   imports: [
