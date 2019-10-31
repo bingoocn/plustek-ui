@@ -5,14 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPage } from './login.page';
-// 引入login组件
-import { RolesComponent } from '../../components/modal/roles/roles.component';
+import { DepartmentCheckPage } from './department-check.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginPage
+    component: DepartmentCheckPage
   }
 ];
 
@@ -23,7 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginPage, RolesComponent],
-  entryComponents: [RolesComponent]
+  declarations: [DepartmentCheckPage]
 })
-export class LoginPageModule {}
+export class DepartmentCheckPageModule {}

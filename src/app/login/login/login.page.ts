@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+// 引入modal依赖
+import { ModalController } from '@ionic/angular';
+import { RolesComponent } from '../../components/modal/roles/roles.component';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +17,18 @@ export class LoginPage implements OnInit {
   public userFlag: boolean = false;
   public pwdFlag: boolean = false;
   public status: boolean = false;
+  readonly PortalIp = 'http://10.100.240.163:10002/api';
 
-  constructor(private nav: NavController, private router: Router, public http:HttpService) { }
+  constructor(
+    private nav: NavController, 
+    private router: Router, 
+    public http: HttpService,
+    public modalController: ModalController
+  ) { }
 
   ngOnInit() {
+    // 至登陆页清除用户及系统所有信息
+    localStorage.clear();
   }
   // 表单校验
   validate(type: number) {
@@ -41,30 +52,78 @@ export class LoginPage implements OnInit {
       if(this.password == undefined || this.password.length == 0) {
         this.http.presentToast('密码不能为空！', 'bottom');
       }
-      // else if (this.password.length < 6 || this.password.length > 20) {
-      //   this.http.presentToast('密码长度为6~20位', 'bottom');
-      // } else if (!pwdReg.test(this.password)) {
-      //   this.http.presentToast('密码由字母、数字组成', 'bottom');
-      // }
       else{
         this.pwdFlag = true;
       }
     }
     this.userFlag && this.pwdFlag ? this.status = true : this.status = false;
   }
-
+  // 登入系统
   onLogin() {
     if(this.status){
-      this.http.presentLoading('努力登录中...');
       const params = { username: this.username, password: this.password,grant_type:"password" }
+      // 执行登录操作
+      this.http.presentLoading('登录中...');
       this.http.loginRequest('/oauth/token', params).then(response => {
-        this.http.hideLoading();
-        window.localStorage.setItem("token", response['access_token']);
-        this.nav.navigateRoot("/tabs/index");
+        localStorage.setItem("token", response['access_token']);
+        // 存储登录人相关信息后进入系统
+        this.getInfo().then(res => {
+          this.http.hideLoading();
+          // 根据角色多少进行分发
+          if(res['length'] > 1) {
+            this.showModal(res);
+            return;
+          }
+          localStorage.setItem("currentRole", JSON.stringify(res[0]));
+          this.nav.navigateRoot("/tabs/index");
+        });
       })
     }
   }
+  // 获取登录人相关信息
+  getInfo() {
+    return new Promise((resolve, reject) => {
+      // 当前登录人所具有角色列表
+      const mineRoles = [];
+
+      // 获取当前登录人所具有系统
+      this.http.getRequest("/user/systems", null, this.PortalIp).then(systems => {
+        for(let i=0; i<systems.length; i++) {
+          // App标识校验
+          if(systems[i].businessSystemCode != "A001") continue;
+          // 存储当前系统信息
+          localStorage.setItem("currentSystem", JSON.stringify(systems[i]));
+
+          // 获取当前登录人具有角色列表
+          this.http.getUser().then(userInfo => {
+            this.http.getRequest("/users/"+userInfo['guid']+"/roles", null, this.PortalIp).then(response => {
+              for(let k=0; k<response.length; k++) {
+                if(response[k].subordinateSystemId != systems[i].guid) continue;
+                mineRoles.push(response[k]);
+                localStorage.setItem("roles", JSON.stringify(mineRoles));
+                resolve(mineRoles)
+              }
+            })
+          })
+          // 获取并存储App菜单数据
+          this.http.getRequest("/user/"+systems[i]['guid']+"/menus", null, this.PortalIp).then(menus => {
+            localStorage.setItem("menu", JSON.stringify(menus));
+          })
+        }
+      })
+    })
+  }
+  // 前往注册
   toRegister() {
     this.nav.navigateForward('/register');
+  }
+  async showModal(val) {
+    const modal = await this.modalController.create({
+      component: RolesComponent, 
+      componentProps: { 
+        'roles': val,
+      }
+    });
+    await modal.present();
   }
 }

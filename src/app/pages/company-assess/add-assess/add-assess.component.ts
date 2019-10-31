@@ -9,21 +9,21 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class AddAssessComponent implements OnInit {
 
-  public reviewId: string;
-  public expertReview: any;
+  public subordinatePlate: string;
+  public evaluationDate: string;
+  public evaluationLevelCode: string;
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public routeInfo: ActivatedRoute, private router: Router, public http:HttpService) { }
 
   ngOnInit() {
-    this.routeInfo.params.subscribe((params: Params) => this.reviewId = params['reviewId']);
-    if(this.reviewId){
-      // 查询监控评价基本详细信息和评价结果
-      this.http.getRequest('/expert_reviews/' + this.reviewId).then((response:any) => {
-        if(response) {
-          this.expertReview = response;
-        }
-      });
-    }
+
+  };
+
+  handleLastNameValue(event) {
+    console.log(event);
   }
+  processForm(event) {}
+
+
 
 }

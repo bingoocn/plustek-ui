@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-case-detail',
@@ -13,7 +14,7 @@ export class CaseDetailComponent implements OnInit {
   public case:any;
   public caseTabValue: string;
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService, public common:CommonService) { }
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.caseId = params['caseId']);
@@ -21,6 +22,13 @@ export class CaseDetailComponent implements OnInit {
       this.http.getRequest('/cases/' + this.caseId).then((response:any) => {
         if(response) {
           this.case = response;
+          if(this.case.attachments && this.case.attachments.length > 0){
+            this.case.attachments.forEach(element => {
+              if(element.size){
+                element.size = this.common.getFileSize(element.size);
+              }
+            })
+          }
         }
       })
     }

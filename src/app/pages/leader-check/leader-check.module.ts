@@ -5,15 +5,19 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPage } from './login.page';
-// 引入login组件
-import { RolesComponent } from '../../components/modal/roles/roles.component';
+import { LeaderCheckPage } from './leader-check.page';
+// import { AssessInfoPage } from '../assess-info/assess-info.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginPage
+    component: LeaderCheckPage
   }
+  // ,
+  // {
+  //   path: 'assessInfo/:assessId',
+  //   component: AssessInfoPage,
+  // }
 ];
 
 @NgModule({
@@ -23,7 +27,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginPage, RolesComponent],
-  entryComponents: [RolesComponent]
+  declarations: [LeaderCheckPage ]
 })
-export class LoginPageModule {}
+export class LeaderCheckPageModule {}
