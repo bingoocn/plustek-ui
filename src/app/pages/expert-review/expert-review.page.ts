@@ -21,13 +21,13 @@ export class ExpertReviewPage implements OnInit {
   getExpertEvaluations(ev: any) {
     // this.ngOnInit();
 
-    // const val = ev.target.value;
+    const val = ev.target.value;
 
-    // if (val && val.trim() != '') {
-    //   this.expertEvaluations = this.expertEvaluations.filter((item:any) => {
-    //     return (item.subGroup.indexOf(val) > -1);
-    //   })
-    // }
+    if (val && val.trim() != '') {
+      this.expertEvaluations = this.expertEvaluations.filter((item:any) => {
+        return (item.unit.group.name.indexOf(val) > -1);
+      })
+    }
   }
 
   // 发送请求获取数据

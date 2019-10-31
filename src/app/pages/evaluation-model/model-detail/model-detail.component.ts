@@ -18,9 +18,6 @@ export class ModelDetailComponent implements OnInit {
   public topic_detail:any; // 题目详情
   public levels:any = [];
   public selectedLevel:string = 'level01'; // 默认选中一级
-  compareWwithFn = (o1, o2) => {
-    return o1 && o2 ? o1.value === o2.value : o1 === o2;
-  };
 
   constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService) { }
 
@@ -90,7 +87,7 @@ export class ModelDetailComponent implements OnInit {
 
   // 切换级别
   changeLevel(e){
-
+    this.selectedLevel = e.target.value;
   }
 
 }
