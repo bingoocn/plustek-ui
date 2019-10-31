@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-group-leader',
@@ -6,6 +7,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./group-leader.component.scss'],
 })
 export class GroupLeaderComponent implements OnInit {
+  public echarts : any;
+  public options :any;
   // 规范评价进度配置
   public slideOpts:any = {
     effect: 'flip', 
@@ -23,58 +26,182 @@ export class GroupLeaderComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
-  // 最新评价
-  public news = {
-    id:'8ae4af936df2617b016df2ce68f10008',
-    notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
-    date:'2019-09-10'
-  };
   // 公告通知数据
-  public noticeSlides = [
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice:'最近频频被点名的“区块链”,到底是个啥?区块链_新浪军事_新浪网',
-      date:'2019-09-10'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '第七届世界军人运动会闭幕式侧记',
-      date: '2019-10-11'
-    },
-    {
-      id:'8ae4af936df2617b016df2ce68f10008',
-      notice: '红杉创始人Don Valentine逝世,沈南鹏悼念硅谷传奇?',
-      date: '2019-11-21'
-    }
-  ];
-  // 轮播图数据
-  public slides = [
-    {
-      self: '5',
-      department: '5',
-      leader: '3'
-    },
-    {
-      department: '5',
-      leader: '3'
-    },
-    {
-      department: '5',
-      leader: '3'
-    }
-  ];
-  // 自评结果数据
-  public selfEvaluations = {
-    level: '四级',
-    score: '80',
-    time: '2019-10-28'
-  }
+  public groupLeaderNotices = [];
+
+  //企业自评信息
+  public selfAccess :any = {
+    accessedNum:0,
+    heighLevel:'',
+    heighLevel_code:'',
+    lowLevel:'',
+    lowLevel_code:'',
+    heighsum:0,
+    lowsum:0
+  };
 
   @ViewChild("slide", { static: false }) slide;
 
-  constructor() { }
+  constructor( public http:HttpService) { }
 
-  ngOnInit() {}
+
+  ngOnInit() {
+    this.getEcharts();
+    this.getNotice();
+    this.getSelfAssess();
+  }
+  getEcharts() {
+    this.echarts = echarts.init(document.querySelector('#main'));
+    this.options = {
+        baseOption: { // 这里是基本的『原子option』。
+          tooltip: {
+              trigger: 'item',
+              formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+        // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
+        stillShowZeroSum: false,
+        legend: {
+          orient: 'vertical',
+          x: 'right',
+          y: 'top',
+          itemWidth: 15,   // 设置图例图形的宽
+          itemHeight: 8,  // 设置图例图形的高
+          textStyle: {
+            color: '#000000'  // 图例文字颜色
+          },
+          itemGap: 12,
+          data: ['一级','二级','三级','四级','五级']
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '55%',
+                center: ['40%', '50%'],
+                data: [
+                    {value: 1, name: '一级'},
+                    {value: 3, name: '二级'},
+                    {value: 7, name: '三级'},
+                    {value: 4, name: '四级'},
+                    {value: 5, name: '五级'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(128, 128, 128, 0.5)'
+                    }
+                }
+            }
+        ],
+        label:{
+          normal: {
+            position: 'inner', 
+            formatter: '{c}'
+          }
+        }
+      },
+      // media: [ 
+      //   {
+          // query: {
+            // minWidth: 0,
+            // minWidth: 310,
+            // maxHeight: 310,
+            // minAspectRatio: 1.3
+          // },   
+      //     option: {       
+      //       tooltip: {
+      //         trigger: 'item',
+      //         formatter: "{a} <br/>{b} : {c} ({d}%)"
+      //     },
+      //     // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
+      //     stillShowZeroSum: false,
+      //     legend: {
+      //       orient: 'vertical',
+      //       x: 'left',
+      //       y: 'top',
+      //       itemWidth: 15,   // 设置图例图形的宽
+      //       itemHeight: 8,  // 设置图例图形的高
+      //       textStyle: {
+      //         color: '#000000'  // 图例文字颜色
+      //       },
+      //       itemGap: 12,
+      //       data: ['一级','二级','三级','四级','五级']
+      //     },
+      //     series: [
+      //         {
+      //             type: 'pie',
+      //             radius: '55%',
+      //             center: ['50%', '50%'],
+      //             data: [
+      //                 {value: 1, name: '一级'},
+      //                 {value: 3, name: '二级'},
+      //                 {value: 7, name: '三级'},
+      //                 {value: 4, name: '四级'},
+      //                 {value: 5, name: '五级'}
+      //             ],
+      //             itemStyle: {
+      //                 emphasis: {
+      //                     shadowBlur: 10,
+      //                     shadowOffsetX: 0,
+      //                     shadowColor: 'rgba(128, 128, 128, 0.5)'
+      //                 }
+      //             }
+      //         }
+      //     ],
+      //     label:{
+      //       normal: {
+      //         position: 'inner', 
+      //         formatter: '{c}'
+      //       }
+      //     }
+      //     }
+      //   }
+      // ]
+    }
+    this.echarts.setOption(this.options)
+    window.onresize = this.echarts.resize; 
+  }
+  // 获取企业自评数据
+  getSelfAssess(){
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.accessedNum = response.length;
+      }
+    });
+    //统计最高达级信息
+    this.http.getRequest('/specification_evaluations?sort=-evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.heighLevel = response[0].evaluation_level.name;
+        this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            this.selfAccess.heighsum = response.length;
+          }
+        });
+      }
+    });
+    //统计最低达级信息
+    this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.lowLevel = response[0].evaluation_level.name;
+        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            // console.log(response)
+            this.selfAccess.lowsum = response.length;
+          }
+        });
+      }
+    });
+  }
+  // 获取公告通知数据
+  getNotice(){
+    this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+      if(response && response.length > 0){
+        this.groupLeaderNotices = response;
+      }
+    });
+  }
   // 解决手动滑动后轮播图无法正常轮播
   touchEnd() {
     this.slide.startAutoplay();

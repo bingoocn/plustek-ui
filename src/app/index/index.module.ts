@@ -14,6 +14,7 @@ import { ExpertComponent } from '../components/index/expert/expert.component';
 import { SubGroupLeaderComponent } from '../components/index/sub-group-leader/sub-group-leader.component';
 import { SubGroupBusinessUnitComponent} from '../components/index/sub-group-business-unit/sub-group-business-unit.component'
 
+
 const routes: Routes = [
   {
     path: '',
@@ -26,7 +27,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
   declarations: [
     IndexPage, 
@@ -36,7 +37,7 @@ const routes: Routes = [
     GroupLeaderComponent,
     ExpertComponent,
     SubGroupLeaderComponent,
-    SubGroupBusinessUnitComponent
+    SubGroupBusinessUnitComponent,
   ]
 })
 export class IndexPageModule {}

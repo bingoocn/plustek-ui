@@ -95,8 +95,8 @@ export class ExpertComponent implements OnInit {
     //统计最低达级信息
     this.http.getRequest('/expert_reviews?sort=evaluation_level_code').then((response:any) => {
       if(response && response.length > 0){
-        this.selfAccess.lowLevel = response[0].evaluation_level.name;
-        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+        this.selfAccess.lowLevel = response[0].evaluation_result.standard_rusult.name;
+        this.selfAccess.lowLevel_code = response[0].evaluation_result.standard_rusult.code;
         this.http.getRequest('/expert_reviews?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
           if(response && response.length > 0){
             // console.log(response)
