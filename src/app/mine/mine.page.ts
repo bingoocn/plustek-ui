@@ -9,11 +9,19 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class MinePage implements OnInit {
 
+  public user:any;
+
   constructor(private el: ElementRef, public nav: NavController, public http:HttpService) { }
 
   ngOnInit() {
+    // 获取当前登录人信息
     this.http.getUser().then((response:any) => {
-      console.log(response);
+      if(response){
+        this.user = response;
+        if(this.user.guid){
+          // this.http.getRequest('')
+        }
+      }
     });
     // 通过延时操作更改shadow dom的样式
     setTimeout(() => {

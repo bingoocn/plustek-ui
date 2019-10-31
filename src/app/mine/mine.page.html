@@ -5,17 +5,17 @@
 </ion-header>
 
 <ion-content color="grey">
-  <div class="section">
-      <ion-item lines="none">
-        <ion-avatar class="avatar-lg mr-right-20">
-          <img src="assets/defaultHeadPortrait.png">
-        </ion-avatar>
-        <ion-label color="dark">
-          <h3>{{ user.personName }}<span class="grey">（{{ }}）</span></h3>
-          <p class="grey">{{ user.subordinateOrgName }}</p>
-          <p class="grey">智慧运营部</p>
-        </ion-label>
-      </ion-item>
+  <div class="section" *ngIf="user">
+    <ion-item lines="none">
+      <ion-avatar class="avatar-lg mr-right-20">
+        <img src="assets/defaultHeadPortrait.png">
+      </ion-avatar>
+      <ion-label color="dark">
+        <h3>{{ user.personName }}<span class="grey">（角色名称）</span></h3>
+        <p class="grey">{{ user.subordinateOrgName }}</p>
+        <p class="grey">{{ user.mail }}</p>
+      </ion-label>
+    </ion-item>
   </div>
   <div class="section mr-top-10 no-padding">
     <ion-list class="no-margin">
