@@ -13,7 +13,7 @@
           <ion-input readonly type="text" ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">所属板块 <ion-text color="danger">*</ion-text></ion-label>
+          <ion-label position="stacked">所属板块 </ion-label>
           <ion-input required type="text" [(ngModel)]="subordinatePlate"></ion-input>
         </ion-item>
         <ion-item>
@@ -32,7 +32,7 @@
         </ion-item>
       </ion-list>
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin"  >开始答题</ion-button>
+        <ion-button expand="block" type="submit" class="ion-no-margin"  [routerLink]="['../questionPage']" [queryParams] ="{ evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate}" >开始答题</ion-button>
       </div>
     <!-- </form> -->
 
