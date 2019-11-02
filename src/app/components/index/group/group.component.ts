@@ -48,19 +48,61 @@ export class GroupComponent implements OnInit {
       leader: '3'
     }
   ];
-  // 自评结果数据
-  public selfEvaluations = {
-    level: '四级',
-    score: '80',
-    time: '2019-10-28'
-  }
-
+   //企业自评信息
+   public selfAccess :any = {
+    accessedNum:0,
+    heighLevel:'',
+    heighLevel_code:'',
+    lowLevel:'',
+    lowLevel_code:'',
+    heighsum:0,
+    lowsum:0
+  };
+  //专家检查信息
+  public expertAssess :any = {
+    checkedNum:0,
+    heighLevel:'',
+    lowLevel:'',
+    heighsum:0,
+    lowsum:0
+  };
   @ViewChild("slide", { static: false }) slide;
 
   constructor( public http:HttpService) { }
 
   ngOnInit() {
+    this.getData();
     this.getNotice();
+  }
+  getData() {
+    this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
+      if(response && response.length > 0){
+        // console.log(response)
+        //根据单位去重
+        let resArr = response;
+        let unitArr = [];
+        let standard_Level = [];
+
+        unitArr = resArr.reduce(function(prev,element){
+          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+            prev.push(element)
+          }
+          return prev
+        },[])
+        this.expertAssess.checkedNum = unitArr.length;
+        //获取最高达级
+        response.forEach(item => {
+          console.log(item.evaluation_result.standard_result)
+          if(item.evaluation_result.standard_result !== null){
+            standard_Level.push(item.evaluation_result.standard_result.code);
+          }
+        });
+        if(standard_Level.length > 0){
+
+        }
+        // console.log(standard_Level)
+      }
+    });
   }
    // 获取公告通知数据
    getNotice(){

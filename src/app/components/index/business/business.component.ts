@@ -27,7 +27,7 @@ export class BusinessComponent implements OnInit {
   // 最新评价
   public news = {
     id:'01',
-    notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
+    notice:'该单位精益管理工作良好，继续努力',
     date:'2019-09-10'
   };
   // 公告通知数据
@@ -36,17 +36,17 @@ export class BusinessComponent implements OnInit {
   // 轮播图数据
   public slides = [
     {
-      self: '5',
-      department: '5',
-      leader: '3'
+      self: 0,
+      department: 0,
+      leader: 0
     },
     {
-      department: '5',
-      leader: '3'
+      subGroup: 0,
+      group: 0
     },
     {
-      department: '5',
-      leader: '3'
+      department: 0,
+      leader: 0
     }
   ];
   // 自评结果数据
@@ -62,9 +62,79 @@ export class BusinessComponent implements OnInit {
   constructor( public http:HttpService) { }
 
   ngOnInit() {
+    this.getSlides();
+    // this.getNews();
     this.getNotice();
     this.getSelfAssess();
   }
+  getSlides() {
+    //规范评价
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].self = response.length;
+        response.forEach(item=>{
+          //子集团
+          if(item.evaluation_status.code == '03'){
+            this.slides[0].department ++
+          }
+          //集团
+          if(item.evaluation_status.code == '05'){
+            this.slides[0].leader ++
+          }
+        })
+      }
+    });
+    //监控评价
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        for(let i=0;i<response.length;i++){
+          if(response[i].ent_self_eva_mon_approvals.length > 0){
+            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+              //子集团评价
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
+                this.slides[1].subGroup ++
+              }
+              //集团评价
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
+                this.slides[1].group ++
+              }
+            }
+          }
+        }
+      }
+    });
+    //领导阅评 等待接口中
+    // this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+    //   if(response && response.length > 0){
+    //     for(let i=0;i<response.length;i++){
+    //       if(response[i].ent_self_eva_mon_approvals.length > 0){
+    //         for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+    //           //子集团评价
+    //           if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
+    //             this.slides[1].subGroup ++
+    //           }
+    //           //集团评价
+    //           if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
+    //             this.slides[1].group ++
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
+  }
+  // 获取最新评价
+  // getNews(){
+  //   this.http.getRequest('/specification_mon_evaluations?sort=-evaluation_date').then((response:any) => {
+  //     if(response && response.length > 0){
+        // this.http.getRequest('/specification_evaluations/'+ response.id +'/sub_group_monitor').then((response:any) => {
+        //   if(response && response.length > 0){
+        //     this.noticeSlides = response;
+        //   }
+        // });
+  //     }
+  //   });
+  // }
   // 获取公告通知数据
   getNotice(){
     this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
