@@ -5,9 +5,9 @@
 </ion-header> -->
 
 <ion-content>
-  <app-business *ngIf="!flag"></app-business>
+  <app-business *ngIf="flag"></app-business>
   <app-business-leader *ngIf="flag"></app-business-leader>
-  <app-group *ngIf="flag"></app-group>
+  <app-group *ngIf="!flag"></app-group>
   <app-group-leader *ngIf="flag"></app-group-leader>
   <app-expert *ngIf="flag"></app-expert>
   <app-sub-group-leader *ngIf="flag"></app-sub-group-leader>

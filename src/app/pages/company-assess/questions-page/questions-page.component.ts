@@ -41,7 +41,7 @@ export class QuestionsPageComponent implements OnInit {
         if (response[0].id) {
           this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then(( response: any) => {
             if (response && response.length > 0) {
-              this.indexes = this.common.forma2Tree(response, 'pid', 'id');
+              // this.indexes = this.common.forma2Tree(response, 'pid', 'id');
             }
           })
         }

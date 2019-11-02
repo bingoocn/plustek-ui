@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-interation-info',
@@ -7,19 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterationInfoComponent implements OnInit {
   public interationInfo : any = {};
+  public interationId : string;
 
-  constructor() { }
+  constructor( public routeInfo:ActivatedRoute,private router: Router,public http:HttpService) { }
 
   ngOnInit() {
+    this.routeInfo.params.subscribe((params: Params) => this.interationId = params['interationId']);
     this.interationInfo = {
-      subGroup:'北化集团',
-      unitName:'241厂',
-      selfEvaluationLevel:'一级',
-      selfEvaluationScore:89,
-      person:'章可',
-      time:'2019-09-20',
-      content:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行'
+      subGroup:'',
+      unitName:'',
+      selfEvaluationLevel:'',
+      selfEvaluationScore:'',
+      person:'',
+      time:'',
+      content:''
     }
+    this.getData();
   }
-
+  // 发送请求获取数据
+  getData(){
+    this.http.getRequest('/specification_evaluations/'+ this.interationId,).then((response:any) => {
+      if(response){
+        
+      }
+    });
+  }
 }
