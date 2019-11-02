@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-group-leader',
@@ -39,21 +40,30 @@ export class GroupLeaderComponent implements OnInit {
     heighsum:0,
     lowsum:0
   };
+  //专家检查信息
+  public expertAssess :any = {
+    checkedNum:0,
+    heighLevel:'',
+    lowLevel:'',
+    heighsum:0,
+    lowsum:0
+  };
 
   @ViewChild("slide", { static: false }) slide;
 
-  constructor( public http:HttpService) { }
+  constructor( public http:HttpService,public common: CommonService) { }
 
 
   ngOnInit() {
     this.getEcharts();
     this.getNotice();
+    this.getExpertAssess();
     this.getSelfAssess();
   }
   getEcharts() {
     this.echarts = echarts.init(document.querySelector('#main'));
     this.options = {
-        baseOption: { // 这里是基本的『原子option』。
+        baseOption: {
           tooltip: {
               trigger: 'item',
               formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -78,11 +88,11 @@ export class GroupLeaderComponent implements OnInit {
                 radius: '55%',
                 center: ['40%', '50%'],
                 data: [
-                    {value: 1, name: '一级'},
-                    {value: 3, name: '二级'},
-                    {value: 7, name: '三级'},
-                    {value: 4, name: '四级'},
-                    {value: 5, name: '五级'}
+                    {value: 0, name: '一级'},
+                    {value: 0, name: '二级'},
+                    {value: 0, name: '三级'},
+                    {value: 0, name: '四级'},
+                    {value: 0, name: '五级'}
                 ],
                 itemStyle: {
                     emphasis: {
@@ -99,67 +109,54 @@ export class GroupLeaderComponent implements OnInit {
             formatter: '{c}'
           }
         }
-      },
-      // media: [ 
-      //   {
-          // query: {
-            // minWidth: 0,
-            // minWidth: 310,
-            // maxHeight: 310,
-            // minAspectRatio: 1.3
-          // },   
-      //     option: {       
-      //       tooltip: {
-      //         trigger: 'item',
-      //         formatter: "{a} <br/>{b} : {c} ({d}%)"
-      //     },
-      //     // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
-      //     stillShowZeroSum: false,
-      //     legend: {
-      //       orient: 'vertical',
-      //       x: 'left',
-      //       y: 'top',
-      //       itemWidth: 15,   // 设置图例图形的宽
-      //       itemHeight: 8,  // 设置图例图形的高
-      //       textStyle: {
-      //         color: '#000000'  // 图例文字颜色
-      //       },
-      //       itemGap: 12,
-      //       data: ['一级','二级','三级','四级','五级']
-      //     },
-      //     series: [
-      //         {
-      //             type: 'pie',
-      //             radius: '55%',
-      //             center: ['50%', '50%'],
-      //             data: [
-      //                 {value: 1, name: '一级'},
-      //                 {value: 3, name: '二级'},
-      //                 {value: 7, name: '三级'},
-      //                 {value: 4, name: '四级'},
-      //                 {value: 5, name: '五级'}
-      //             ],
-      //             itemStyle: {
-      //                 emphasis: {
-      //                     shadowBlur: 10,
-      //                     shadowOffsetX: 0,
-      //                     shadowColor: 'rgba(128, 128, 128, 0.5)'
-      //                 }
-      //             }
-      //         }
-      //     ],
-      //     label:{
-      //       normal: {
-      //         position: 'inner', 
-      //         formatter: '{c}'
-      //       }
-      //     }
-      //     }
-      //   }
-      // ]
+      }
     }
     this.echarts.setOption(this.options)
+    console.log( this.options.baseOption.series[0].data[0])
+
     window.onresize = this.echarts.resize; 
+  }
+  //获取专家检查数据
+  getExpertAssess() {
+    // this.options.series[0].data[0].value = 2
+    this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
+      if(response && response.length > 0){
+        //根据单位去重
+        let resArr = response;
+        let unitArr = [];
+        let standard_Level = [];
+        let unitLevelArr = [];
+
+        unitArr = resArr.reduce(function(prev,element){
+          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+            prev.push(element)
+          }
+          return prev
+        },[])
+        this.expertAssess.checkedNum = unitArr.length;
+        //获取最高/低达级
+        response.forEach(item => {
+          if(item.evaluation_result.standard_result !== null){
+            standard_Level.push(Number(item.evaluation_result.standard_result.code));
+          }
+        });
+        //获取最高/低达级单位数量
+        if(standard_Level.length > 0){
+          let newstandard_Level = standard_Level.reduce(function(prev,element){
+            if(!prev.find(el=>el==element)) {
+              prev.push(element)
+            }
+            return prev
+          },[])
+          this.expertAssess.heighLevel = Math.max(...standard_Level)
+          this.expertAssess.lowLevel = Math.min(...standard_Level)
+          this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
+          this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
+          this.expertAssess.heighLevel = this.common.convertToChinaNum(Math.max(...standard_Level))
+          this.expertAssess.lowLevel = this.common.convertToChinaNum(Math.min(...standard_Level))
+        }
+      }
+    });
   }
   // 获取企业自评数据
   getSelfAssess(){

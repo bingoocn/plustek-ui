@@ -35,17 +35,17 @@ export class BusinessLeaderComponent implements OnInit {
   // 轮播图数据
   public slides = [
     {
-      self: '5',
-      department: '5',
-      leader: '3'
+      self: 0,
+      department: 0,
+      leader: 0
     },
     {
-      department: '5',
-      leader: '3'
+      subGroup: 0,
+      group: 0
     },
     {
-      department: '5',
-      leader: '3'
+      subGroup: 0,
+      group: 0
     }
   ];
   // 自评结果数据
@@ -55,14 +55,99 @@ export class BusinessLeaderComponent implements OnInit {
     score: '',
     time: ''
   }
+  public myWork = {
+    unCheck: 0,
+    checked: 0
+  }
+  public is_business_leader:boolean = false;//部门领导角色
+  public is_apart_leader:boolean = false;//分管领导角色
 
   @ViewChild("slide", { static: false }) slide;
 
-  constructor( public http:HttpService) { }
+  constructor( public http:HttpService) {
+    // 从session里获取当前登录人的当前角色信息
+    const currentRole = JSON.parse(localStorage.getItem('currentRole'));
+    if(currentRole && currentRole.guid){
+      // 获取系统运行参数表查找与当前登录人当前角色id相匹配的信息
+      const params = {param_name:currentRole.guid};
+      this.http.getRequest('/sys_param',params).then((response:any) => {
+        // console.log(response,currentRole)
+        if(response && response.param_value){
+          var role = JSON.parse(response.param_value);
+          if(role.abbreviation){
+            if(role.abbreviation === 'BMLD'){
+              this.is_business_leader = true;
+            }
+            if(role.abbreviation === 'FGLD'){
+              this.is_apart_leader = true;
+            }
+          }
+        }
+      })
+    }
+   }
 
   ngOnInit() {
+    this.getSlides();
     this.getNotice();
     this.getSelfAssess();
+  }
+  getSlides() {
+    //规范评价
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].self = response.length;
+        response.forEach(item=>{
+          //子集团
+          if(item.evaluation_status.code == '03'){
+            this.slides[0].department ++
+          }
+          //集团
+          if(item.evaluation_status.code == '05'){
+            this.slides[0].leader ++
+          }
+        })
+      }
+    });
+    //监控评价
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        for(let i=0;i<response.length;i++){
+          if(response[i].ent_self_eva_mon_approvals.length > 0){
+            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+              //子集团评价
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
+                this.slides[1].subGroup ++
+              }
+              //集团评价
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
+                this.slides[1].group ++
+              }
+            }
+          }
+        }
+      }
+    });
+    //领导阅评 等待接口中
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        // console.log(response)
+        for(let i=0;i<response.length;i++){
+          // if(response[i].ent_self_eva_mon_approvals.length > 0){
+          //   for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+          //     //子集团评价
+          //     if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
+          //       this.slides[2].subGroup ++
+          //     }
+          //     //集团评价
+          //     if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
+          //       this.slides[2].group ++
+          //     }
+          //   }
+          // }
+        }
+      }
+    });
   }
   // 获取企业自评数据
   getSelfAssess(){
