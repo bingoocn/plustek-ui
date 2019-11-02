@@ -32,15 +32,13 @@ export class IndexPage implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.route.queryParams.subscribe((menus)=>{ 
-      menus = JSON.parse(menus.menus);
-      for(let i=0; i<this.munuCode.length; i++) {
-          for(let k=0; k<menus.length; k++) {
-            if(menus[k].menuUrl == this.munuCode[i].name) {
-              this.flag.push(this.munuCode[i].code);
-            }
-          }
+    const menus = JSON.parse(localStorage.getItem("menu"));
+    for(let i=0; i<this.munuCode.length; i++) {
+      for(let k=0; k<menus.length; k++) {
+        if(menus[k].menuUrl == this.munuCode[i].name) {
+          this.flag.push(this.munuCode[i].code);
         }
-    });
+      }
+    }
   }
 }

@@ -19,9 +19,7 @@ export class WorkbenchPage implements OnInit {
         toolbar[i].shadowRoot.querySelector('a').style.padding = '0';
       }
     }, 1000);
-    this.filterMenu(this.menus).then(menu => {
-      this.workbench = menu;
-    });
+    this.filterItem();
   }
 
   filterMenu(menu) {
@@ -29,15 +27,22 @@ export class WorkbenchPage implements OnInit {
       let pId;
       let arr:any = [];
       for(let i=0; i<menu.length; i++) {
-        if(menu[i].menuCode == "workbench") {
-          pId = menu[i].guid;
-          continue;
-        };
-        if(menu[i].superiorMenuId == pId) {
+        if(menu[i].superiorMenuType == '01') {
+          menu[i].children = [];
           arr.push(menu[i]);
         }
       }
       resolve(arr);
+    })
+  }
+
+  filterItem() {
+    return new Promise((resolve, reject) => {
+      this.filterMenu(this.menus).then(menu => {
+        for(let i=0; i<menu['length']; i++) {
+          console.log(menu[i])
+        }
+      });
     })
   }
 }
