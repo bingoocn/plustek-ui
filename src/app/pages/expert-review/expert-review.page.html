@@ -12,12 +12,12 @@
   <ion-list lines="full" *ngIf="expertEvaluations && expertEvaluations.length > 0">
     <ion-item *ngFor="let item of expertEvaluations; let key = index" detail [routerLink]="['./expertBasicInfo',item.id]">
       <ion-label>
-        <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
-        <h3>单位名称：{{ item.unit.name }}</h3>
-        <h3>所属板块：{{ item.specification_evaluation.subordinate_plate }}</h3>
-        <h3>达级结果：{{ item.evaluation_result.standard_rusult.name }}</h3>
-        <h3>检查分数：{{ item.evaluation_result.evaluation_score }}</h3>
-        <h3>检查起始日期：{{ item.check_strat_time }}</h3>
+        <h3>子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</h3>
+        <h3>单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</h3>
+        <h3>所属板块：{{ (item.specification_evaluation && item.specification_evaluation.subordinate_plate) ? item.specification_evaluation.subordinate_plate:'' }}</h3>
+        <h3>达级结果：{{ (item.evaluation_result && item.evaluation_result.standard_rusult && item.evaluation_result.standard_rusult.name) ? item.evaluation_result.standard_rusult.name:'' }}</h3>
+        <h3>检查分数：{{ (item.evaluation_result && item.evaluation_result.evaluation_score) ? item.evaluation_result.evaluation_score:'' }}</h3>
+        <h3>检查起始日期：{{ (item.check_strat_time) ? item.check_strat_time:'' }}</h3>
       </ion-label>
     </ion-item>
   </ion-list>

@@ -12,13 +12,13 @@
     <ion-item>
       <ion-grid fixed>
         <ion-row>
-          <ion-col size="6" *ngIf="selfEvaluation.is_sub_group_recommended">
+          <ion-col size="6" *ngIf="is_sub_group_recommended">
             <ion-chip color="secondary">
               <ion-icon name="star"></ion-icon>
               <ion-label>子集团推荐</ion-label>
             </ion-chip>
           </ion-col>
-          <ion-col size="6" *ngIf="selfEvaluation.is_group_recommended">
+          <ion-col size="6" *ngIf="is_group_recommended">
             <ion-chip color="tertiary">
               <ion-icon name="thumbs-up"></ion-icon>
               <ion-label>集团推荐</ion-label>
@@ -26,35 +26,35 @@
           </ion-col>
           <ion-col size="12">
             <span>子集团/直管单位：</span>
-            <span>{{ selfEvaluation.unit.group.name }}</span>
+            <span>{{ (selfEvaluation.unit && selfEvaluation.unit.group && selfEvaluation.unit.group.name) ? selfEvaluation.unit.group.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>单位名称：</span>
-            <span>{{ selfEvaluation.unit.name }}</span>
+            <span>{{ (selfEvaluation.unit && selfEvaluation.unit.name) ? selfEvaluation.unit.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>所属板块：</span>
-            <span>{{ selfEvaluation.subordinate_plate }}</span>
+            <span>{{ (selfEvaluation.subordinate_plate) ? selfEvaluation.subordinate_plate:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>认定自评等级：</span>
-            <span>{{ selfEvaluation.questionnaire.evaluation_level.name }}</span>
+            <span>{{ (selfEvaluation.questionnaire && selfEvaluation.questionnaire.evaluation_level && selfEvaluation.questionnaire.evaluation_level.name) ? selfEvaluation.questionnaire.evaluation_level.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>自评得分：</span>
-            <span>{{ selfEvaluation.self_score }}</span>
+            <span>{{ (selfEvaluation.self_score) ? selfEvaluation.self_score:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>自评时间：</span>
-            <span>{{ selfEvaluation.evaluation_date }}</span>
+            <span>{{ (selfEvaluation.evaluation_date) ? selfEvaluation.evaluation_date:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>主要亮点：</span>
-            <span>{{ selfEvaluation.main_highlight }}</span>
+            <span>{{ (selfEvaluation.main_highlight) ? selfEvaluation.main_highlight:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>主要不足：</span>
-            <span>{{ selfEvaluation.major_deficiency }}</span>
+            <span>{{ (selfEvaluation.major_deficiency) ? selfEvaluation.major_deficiency:'' }}</span>
           </ion-col>
           <ion-col size="12" *ngIf="is_evaluated && is_sub_group_evaluated">
             <span>子集团留言：</span>

@@ -14,35 +14,35 @@
         <ion-row>
           <ion-col size="12">
             <span>子集团/直管单位：</span>
-            <span>{{ selfEvaluation.unit.group.name }}</span>
+            <span>{{ (selfEvaluation.unit && selfEvaluation.unit.group && selfEvaluation.unit.group.name) ? selfEvaluation.unit.group.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>单位名称：</span>
-            <span>{{ selfEvaluation.unit.name }}</span>
+            <span>{{ (selfEvaluation.unit && selfEvaluation.unit.name) ? selfEvaluation.unit.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>所属板块：</span>
-            <span>{{ selfEvaluation.subordinate_plate }}</span>
+            <span>{{ (selfEvaluation.subordinate_plate) ? selfEvaluation.subordinate_plate:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>认定自评等级：</span>
-            <span>{{ selfEvaluation.questionnaire.evaluation_level.name }}</span>
+            <span>{{ (selfEvaluation.questionnaire && selfEvaluation.questionnaire.evaluation_level && selfEvaluation.questionnaire.evaluation_level.name) ? selfEvaluation.questionnaire.evaluation_level.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>自评得分：</span>
-            <span>{{ selfEvaluation.self_score }}</span>
+            <span>{{ (selfEvaluation.self_score) ? selfEvaluation.self_score:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>自评时间：</span>
-            <span>{{ selfEvaluation.evaluation_date }}</span>
+            <span>{{ (selfEvaluation.evaluation_date) ? selfEvaluation.evaluation_date:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>主要亮点：</span>
-            <span>{{ selfEvaluation.main_highlight }}</span>
+            <span>{{ (selfEvaluation.main_highlight) ? selfEvaluation.main_highlight:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>主要不足：</span>
-            <span>{{ selfEvaluation.major_deficiency }}</span>
+            <span>{{ (selfEvaluation.major_deficiency) ? selfEvaluation.major_deficiency:'' }}</span>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -60,12 +60,13 @@
           cols="20" 
           clearOnEdit="true" 
           [(ngModel)]="group_leader_review_content" 
-          placeholder="请输入...">
+          placeholder="请输入..."
+          [readonly]="is_sub_group_role">
         </ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label>布置任务：</ion-label>
-        <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="group_layout_task" placeholder="请输入..."></ion-textarea>
+        <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="group_layout_task" placeholder="请输入..." [readonly]="is_sub_group_role"></ion-textarea>
       </ion-item>
     </ion-list>
     <ion-list class="no-margin">
@@ -74,11 +75,11 @@
       </ion-list-header>
       <ion-item>
         <ion-label>领导点评：</ion-label>
-          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_leader_review_content" placeholder="请输入..."></ion-textarea>
+          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_leader_review_content" placeholder="请输入..." [readonly]="is_group_role"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label>布置任务：</ion-label>
-          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_layout_task" placeholder="请输入..."></ion-textarea>
+          <ion-textarea rows="3" cols="20" clearOnEdit="true" [(ngModel)]="sub_group_layout_task" placeholder="请输入..." [readonly]="is_group_role"></ion-textarea>
         </ion-item>
     </ion-list>
     <div class="text-right mr-top-5">

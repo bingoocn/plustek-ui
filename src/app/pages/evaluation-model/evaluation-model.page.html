@@ -13,9 +13,9 @@
       <span>{{ indicator_name }}</span>
     </ion-label>
   </div>
-  <ion-list class="bg-LightGrey" *ngIf="indexes && indexes.length > 0">
-    <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index" [routerLink]="['./evaluationIndexes',item.id]" [queryParams]="{indicatorId:indicator_id}">
-      <ion-label>{{ item.index_num + "&nbsp;&nbsp;" + item.index_name }}</ion-label>
+  <ion-list class="bg-LightGrey" *ngIf="indicators && indicators.length > 0">
+    <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indicators; let key = index" [routerLink]="['./evaluationIndexes',item.id]">
+      <ion-label>{{ (item.evaluation_level && item.evaluation_level.name) ? item.evaluation_level.name:'' }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

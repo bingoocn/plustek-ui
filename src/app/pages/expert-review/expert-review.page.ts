@@ -13,7 +13,7 @@ export class ExpertReviewPage implements OnInit {
   constructor(public http:HttpService) { }
 
   ngOnInit() {
-    const params = { };
+    const params = { sort:'-year,data_unit_code'};
     this.getData(params);
   }
 

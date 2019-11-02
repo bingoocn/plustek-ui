@@ -31,11 +31,7 @@ export class IndexDetailComponent implements OnInit {
     if(this.indicator_id){
       this.http.getRequest('/indicator_sets/' + this.indicator_id).then((response:any) => {
         if(response && response.index_name){
-          if(response.year){
-            this.indicator_name = response.year + '年' + response.index_name;
-          }else{
-            this.indicator_name = response.index_name;
-          }
+          this.indicator_name = response.index_name;
         }
       })
     }

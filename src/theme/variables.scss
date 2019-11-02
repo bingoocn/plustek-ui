@@ -129,6 +129,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/*不显示省略号*/
+.no_text_overflow{
+  white-space: normal !important;
+}
 /*  重置原有样式  */
 
 // 移除ion-list的背景颜色
@@ -477,11 +481,11 @@ a{
   line-height: 44px;
 }
 .dropdown-list{
-  padding-left: 1em;
+  padding-left: 10px;
 }
 .dropdown-list-item{
-  height:44px;
-  line-height: 44px;
+  // height:44px;
+  // line-height: 44px;
 }
 .full-width{
   width:100%;
