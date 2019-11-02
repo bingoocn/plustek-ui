@@ -48,6 +48,55 @@ export class GroupLeaderComponent implements OnInit {
     heighsum:0,
     lowsum:0
   };
+  public option: any = {
+    baseOption: {
+      tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+      },
+    // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
+    stillShowZeroSum: false,
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      y: 'top',
+      itemWidth: 15,   // 设置图例图形的宽
+      itemHeight: 8,  // 设置图例图形的高
+      textStyle: {
+        color: '#000000'  // 图例文字颜色
+      },
+      itemGap: 12,
+      data: ['一级','二级','三级','四级','五级']
+    },
+    series: [
+        {
+            type: 'pie',
+            radius: '55%',
+            center: ['40%', '50%'],
+            data: [
+                {value: 0, name: '一级'},
+                {value: 0, name: '二级'},
+                {value: 0, name: '三级'},
+                {value: 0, name: '四级'},
+                {value: 0, name: '五级'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(128, 128, 128, 0.5)'
+                }
+            }
+        }
+    ],
+    label:{
+      normal: {
+        position: 'inner', 
+        formatter: '{c}'
+      }
+    }
+  }
+}
 
   @ViewChild("slide", { static: false }) slide;
 
@@ -62,63 +111,26 @@ export class GroupLeaderComponent implements OnInit {
   }
   getEcharts() {
     this.echarts = echarts.init(document.querySelector('#main'));
-    this.options = {
-        baseOption: {
-          tooltip: {
-              trigger: 'item',
-              formatter: "{a} <br/>{b} : {c} ({d}%)"
-          },
-        // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
-        stillShowZeroSum: false,
-        legend: {
-          orient: 'vertical',
-          x: 'right',
-          y: 'top',
-          itemWidth: 15,   // 设置图例图形的宽
-          itemHeight: 8,  // 设置图例图形的高
-          textStyle: {
-            color: '#000000'  // 图例文字颜色
-          },
-          itemGap: 12,
-          data: ['一级','二级','三级','四级','五级']
-        },
-        series: [
-            {
-                type: 'pie',
-                radius: '55%',
-                center: ['40%', '50%'],
-                data: [
-                    {value: 0, name: '一级'},
-                    {value: 0, name: '二级'},
-                    {value: 0, name: '三级'},
-                    {value: 0, name: '四级'},
-                    {value: 0, name: '五级'}
-                ],
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(128, 128, 128, 0.5)'
-                    }
-                }
-            }
-        ],
-        label:{
-          normal: {
-            position: 'inner', 
-            formatter: '{c}'
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        let levelCodeArr = [];
+        response.forEach(item => {
+          if(item.evaluation_level !== null){
+            levelCodeArr.push(item.evaluation_level.code);
           }
-        }
+        });
+        this.option.baseOption.series[0].data[0].value = this.common.countNum(levelCodeArr,'01')
+        this.option.baseOption.series[0].data[1].value = this.common.countNum(levelCodeArr,'02')
+        this.option.baseOption.series[0].data[2].value = this.common.countNum(levelCodeArr,'03')
+        this.option.baseOption.series[0].data[3].value = this.common.countNum(levelCodeArr,'04')
+        this.option.baseOption.series[0].data[4].value = this.common.countNum(levelCodeArr,'05')
+        this.echarts.setOption(this.option)
       }
-    }
-    this.echarts.setOption(this.options)
-    console.log( this.options.baseOption.series[0].data[0])
-
+    });
     window.onresize = this.echarts.resize; 
   }
   //获取专家检查数据
   getExpertAssess() {
-    // this.options.series[0].data[0].value = 2
     this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
       if(response && response.length > 0){
         //根据单位去重
