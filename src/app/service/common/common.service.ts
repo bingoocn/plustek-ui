@@ -19,4 +19,16 @@ export class CommonService {
     else fileSizeMsg = "文件超过1TB";
     return fileSizeMsg;
   }
+  // 校验是否分配相应底部菜单
+  checkMenu(menu) {
+    return new Promise((resolve, reject) => {
+      const arr:any = [];
+      for(let i=0; i<menu.length; i++) {
+        if(menu[i].superiorMenuType == '01') {
+          arr.push(menu[i]);
+        }
+      }
+      resolve(arr);
+    }) 
+  }
 }

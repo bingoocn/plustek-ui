@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 // 引入modal依赖
 import { ModalController } from '@ionic/angular';
 import { RolesComponent } from '../../components/modal/roles/roles.component';
@@ -23,6 +24,7 @@ export class LoginPage implements OnInit {
     private nav: NavController, 
     private router: Router, 
     public http: HttpService,
+    public fn: CommonService,
     public modalController: ModalController
   ) { }
 
@@ -74,9 +76,34 @@ export class LoginPage implements OnInit {
             this.showModal(res);
             return;
           }
-          localStorage.setItem("currentRole", JSON.stringify(res[0]));
-          this.nav.navigateRoot("/tabs/index");
+          // 根据当前登录人角色获取系统菜单
+          const systemId = JSON.parse(localStorage.getItem("currentSystem")).guid;
+          this.http.getRequest("/roles/"+res[0].guid+"/menus", null, this.PortalIp).then(menus => {
+            // 校验是否分配底部菜单
+            this.fn.checkMenu(menus).then(res => {
+              if(res['length'] != 4) {
+                this.http.presentAlert('提示', '', '未分配菜单，请联系管理员配置！');
+                localStorage.clear();
+                return;
+              }
+              // 存储当前登录人角色信息
+              localStorage.setItem("currentRole", JSON.stringify(res[0]));
+              // 存储菜单信息
+              localStorage.setItem("menu", JSON.stringify(menus));
+              this.nav.navigateRoot("/tabs/index", {
+                queryParams:{
+                    menus: JSON.stringify(menus)
+                }
+              });
+            });
+          })
         });
+      }, error => {
+        localStorage.clear();
+        if(error.error) {
+          this.http.hideLoading();
+          this.http.presentAlert('提示', '', error.error.error_description)
+        }
       })
     }
   }
@@ -85,7 +112,6 @@ export class LoginPage implements OnInit {
     return new Promise((resolve, reject) => {
       // 当前登录人所具有角色列表
       const mineRoles = [];
-
       // 获取当前登录人所具有系统
       this.http.getRequest("/user/systems", null, this.PortalIp).then(systems => {
         for(let i=0; i<systems.length; i++) {
@@ -93,21 +119,17 @@ export class LoginPage implements OnInit {
           if(systems[i].businessSystemCode != "A001") continue;
           // 存储当前系统信息
           localStorage.setItem("currentSystem", JSON.stringify(systems[i]));
-
           // 获取当前登录人具有角色列表
           this.http.getUser().then(userInfo => {
             this.http.getRequest("/users/"+userInfo['guid']+"/roles", null, this.PortalIp).then(response => {
               for(let k=0; k<response.length; k++) {
+                // 处理App端角色
                 if(response[k].subordinateSystemId != systems[i].guid) continue;
                 mineRoles.push(response[k]);
                 localStorage.setItem("roles", JSON.stringify(mineRoles));
                 resolve(mineRoles)
               }
             })
-          })
-          // 获取并存储App菜单数据
-          this.http.getRequest("/user/"+systems[i]['guid']+"/menus", null, this.PortalIp).then(menus => {
-            localStorage.setItem("menu", JSON.stringify(menus));
           })
         }
       })
@@ -117,6 +139,7 @@ export class LoginPage implements OnInit {
   toRegister() {
     this.nav.navigateForward('/register');
   }
+  // 前往角色选择页
   async showModal(val) {
     const modal = await this.modalController.create({
       component: RolesComponent, 
