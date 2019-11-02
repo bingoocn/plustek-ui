@@ -31,4 +31,30 @@ export class CommonService {
       resolve(arr);
     }) 
   }
+  // 通用数组转树的的方法
+  forma2Tree(json: any, pId: any, Id: any) {
+    let pid = pId;
+    let id = Id;
+    let _arr = [];
+    let _obj = {};
+    if (!Array.isArray(json)) {
+      return _arr;
+    }
+    json.forEach(x => {
+      delete x.children;
+    });
+    json.forEach(x => {
+      _obj[x[id]] = x;
+    });
+    json.forEach(x => {
+      let parent = _obj[x[pid]];
+      if (parent) {
+        (parent.children || (parent.children = [])).push(x);
+      } else {
+        _arr.push(x);
+      }
+    });
+    return _arr;
+
+  }
 }
