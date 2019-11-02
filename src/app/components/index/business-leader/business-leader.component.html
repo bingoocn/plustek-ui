@@ -16,19 +16,19 @@
         <ion-slide>
           <div class="slide-item">监控评价</div>
           <div class="slide-item">
-            子集团-业务部门：<span>{{ slides[1].department }}</span>
+            子集团-业务部门：<span>{{ slides[1].subGroup }}</span>
           </div>
           <div class="slide-item">
-            集&nbsp;&nbsp;&nbsp;&nbsp;团-业务部门：<span>{{ slides[1].leader }}</span>
+            集&nbsp;&nbsp;&nbsp;&nbsp;团-业务部门：<span>{{ slides[1].group }}</span>
           </div>
         </ion-slide>
         <ion-slide>
           <div class="slide-item">领导阅评</div>
           <div class="slide-item">
-            子集团-领导：<span>{{ slides[2].department }}</span>
+            子集团-领导：<span>{{ slides[2].subGroup }}</span>
           </div>
           <div class="slide-item">
-            集&nbsp;&nbsp;&nbsp;&nbsp;团-领导：<span>{{ slides[2].leader }}</span>
+            集&nbsp;&nbsp;&nbsp;&nbsp;团-领导：<span>{{ slides[2].group }}</span>
           </div>
         </ion-slide>
       </ion-slides>
@@ -75,7 +75,7 @@
             <div class="mine-icon linear-lightGreens">
               最新评价
             </div>
-            <ion-item class="full-width" lines="none" [routerLink]="['notice/notices',news.id]">
+            <ion-item class="full-width" lines="none" [routerLink]="['/message-interaction/interationInfo',news.id]">
               <ion-label style="font-size: 12px;">{{ news.notice }}</ion-label>
               <ion-note style="font-size: 12px;" >{{ news.date }}</ion-note>
             </ion-item>
@@ -123,7 +123,7 @@
                 </ion-col>
                 <ion-col size="8">
                   <p>待审核</p>
-                  <p>10</p>
+                  <p>{{myWork.unCheck}}</p>
                 </ion-col>
               </ion-row>
             </div>
@@ -136,7 +136,7 @@
                 </ion-col>
                 <ion-col size="8">
                   <p>已审核</p>
-                  <p>20</p>
+                  <p>{{myWork.checked}}</p>
                 </ion-col>
               </ion-row>
             </div>

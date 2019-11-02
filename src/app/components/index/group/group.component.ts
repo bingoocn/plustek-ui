@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-group',
@@ -68,20 +69,55 @@ export class GroupComponent implements OnInit {
   };
   @ViewChild("slide", { static: false }) slide;
 
-  constructor( public http:HttpService) { }
+  constructor( public http:HttpService,public common: CommonService) { }
 
   ngOnInit() {
-    this.getData();
+    this.getExpertAssess();
+    this.getSelfAssess();
     this.getNotice();
   }
-  getData() {
+  // 获取企业自评数据
+  getSelfAssess(){
+    this.http.getRequest('/specification_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.accessedNum = response.length;
+      }
+    });
+    //统计最高达级信息
+    this.http.getRequest('/specification_evaluations?sort=-evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.heighLevel = response[0].evaluation_level.name;
+        this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            this.selfAccess.heighsum = response.length;
+          }
+        });
+      }
+    });
+    //统计最低达级信息
+    this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
+      if(response && response.length > 0){
+        this.selfAccess.lowLevel = response[0].evaluation_level.name;
+        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+          if(response && response.length > 0){
+            // console.log(response)
+            this.selfAccess.lowsum = response.length;
+          }
+        });
+      }
+    });
+  }
+  //获取专家检查数据
+  getExpertAssess() {
     this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
       if(response && response.length > 0){
-        // console.log(response)
         //根据单位去重
         let resArr = response;
         let unitArr = [];
         let standard_Level = [];
+        let unitLevelArr = [];
 
         unitArr = resArr.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -90,17 +126,25 @@ export class GroupComponent implements OnInit {
           return prev
         },[])
         this.expertAssess.checkedNum = unitArr.length;
-        //获取最高达级
+        //获取最高/低达级
         response.forEach(item => {
-          console.log(item.evaluation_result.standard_result)
           if(item.evaluation_result.standard_result !== null){
-            standard_Level.push(item.evaluation_result.standard_result.code);
+            standard_Level.push(Number(item.evaluation_result.standard_result.code));
           }
         });
+        //获取最高/低达级单位数量
         if(standard_Level.length > 0){
-
+          let newstandard_Level = standard_Level.reduce(function(prev,element){
+            if(!prev.find(el=>el==element)) {
+              prev.push(element)
+            }
+            return prev
+          },[])
+          this.expertAssess.heighLevel = Math.max(...standard_Level)
+          this.expertAssess.lowLevel = Math.min(...standard_Level)
+          this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
+          this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
         }
-        // console.log(standard_Level)
       }
     });
   }

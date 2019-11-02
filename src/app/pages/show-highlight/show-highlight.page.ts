@@ -44,25 +44,26 @@ export class ShowHighlightPage implements OnInit {
     // this.routeInfo.params.subscribe((params: Params) => this.highlightTabValue = params['highlightTabValue']);
   }
   getData() {
-    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
-      if(response && response.length > 0){
-        console.log(response)
-        for(let i=0;i<response.length;i++){
-          if(response[i].ent_self_eva_mon_approvals.length > 0){
-            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-              //子集团评价
-              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
-              
-              }
-              //集团评价
-              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
-              
-              }
+    // 获取当前登录人信息
+    this.http.getUser().then((response:any) => {
+      console.log(response)
+      if(response){
+        if(response.guid){
+          this.http.getRequest('/specification_evaluations_lightsopt?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=02').then((response:any) => {
+            if(response && response.length > 0){
+              this.groupHighlights = response;
             }
-          }
+          });
+          this.http.getRequest('/specification_evaluations_lightsopt?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=01').then((response:any) => {
+            if(response && response.length > 0){
+              this.subGroupHighlights = response;
+            }
+          });
         }
       }
     });
+    
+    
   }
   getHighlightTabValue() {
     // console.log(this.routeInfo.params.subscribe)
