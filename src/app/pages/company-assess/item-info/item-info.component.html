@@ -7,7 +7,57 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="grey">
+
+<ion-content fullscreen padding scroll-y="false" *ngIf="items" >
+    
+  <ion-slides  #slide class="banner" mode="ios" pager="ios" [options]="slideOpts" >
+    <ion-slide *ngFor="let item of items; let key = index">
+      <div class='slider-style'>
+        <!-- <ion-item>
+          <ion-label>Unread</ion-label>
+          <ion-badge color="light" slot="end">24</ion-badge>
+        </ion-item>
+        <p>{{item}}</p> -->
+        <p><span>{{item.indicator.index_num}}}</span>{{item.indicator.index_name}}</p>
+        <p>
+          {{item.topics_describe}}
+        </p>
+        <ion-list>
+          <ion-item *ngFor="let entry of item.options">
+            <ion-label>{{entry.topics_content}}</ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="schedule">
+        <ion-icon name="calendar"></ion-icon>
+        <ion-label>上一题</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon name="contacts"></ion-icon>
+        <ion-label>下一题</ion-label>
+      </ion-tab-button>
+
+      <!-- <ion-tab-button tab="map">
+        <ion-icon name="map"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="about">
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label>About</ion-label>
+      </ion-tab-button> -->
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
+
+<!-- <ion-content color="grey">
   <div class="section">
     <ion-item>
       <ion-label class="lightgrey size-sm">
@@ -47,4 +97,4 @@
         </ion-tab-bar>
     
     </ion-tabs>
-</ion-content>
+</ion-content> -->
