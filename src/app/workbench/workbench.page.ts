@@ -6,7 +6,8 @@ import {Component, ElementRef, OnInit} from '@angular/core';
   styleUrls: ['./workbench.page.scss'],
 })
 export class WorkbenchPage implements OnInit {
-
+  readonly menus:any = JSON.parse(localStorage.getItem("menu"));
+  public workbench:any = [];
   constructor(private el: ElementRef) {
 　}
 
@@ -18,6 +19,30 @@ export class WorkbenchPage implements OnInit {
         toolbar[i].shadowRoot.querySelector('a').style.padding = '0';
       }
     }, 1000);
+    this.filterItem();
   }
 
+  filterMenu(menu) {
+    return new Promise((resolve, reject) => {
+      let pId;
+      let arr:any = [];
+      for(let i=0; i<menu.length; i++) {
+        if(menu[i].superiorMenuType == '01') {
+          menu[i].children = [];
+          arr.push(menu[i]);
+        }
+      }
+      resolve(arr);
+    })
+  }
+
+  filterItem() {
+    return new Promise((resolve, reject) => {
+      this.filterMenu(this.menus).then(menu => {
+        for(let i=0; i<menu['length']; i++) {
+          console.log(menu[i])
+        }
+      });
+    })
+  }
 }
