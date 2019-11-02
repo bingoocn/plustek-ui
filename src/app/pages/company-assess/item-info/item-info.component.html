@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>答题</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <div class="section">
+    <ion-item>
+      <ion-label class="lightgrey size-sm">
+      <span>1.11</span>
+    </ion-label>
+    <p>阿三大苏打的阿三大多数动阿三发生发物的去</p>
+    </ion-item>
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let entry of form">
+      <ion-label>{{entry.content}}</ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-tabs>
+
+      <ion-tab-bar slot="bottom">
+          <ion-tab-button tab="schedule">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>Schedule</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="speakers">
+            <ion-icon name="contacts"></ion-icon>
+            <ion-label>Speakers</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="map">
+            <ion-icon name="map"></ion-icon>
+            <ion-label>Map</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="about">
+            <ion-icon name="information-circle"></ion-icon>
+            <ion-label>About</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+    
+    </ion-tabs>
+</ion-content>

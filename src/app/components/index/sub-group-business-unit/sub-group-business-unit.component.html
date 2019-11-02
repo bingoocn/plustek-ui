@@ -12,7 +12,7 @@
             </div>
             <ion-label class="mine-icon-label">监控评价</ion-label>
           </ion-col>
-          <ion-col class="col-20 text-center ion-align-self-center" >
+          <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/company-assess']">
             <div class="mine-icon-circle bg-lightRed">
               <ion-img class="mine-icon-img" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
@@ -40,17 +40,17 @@
             <ion-label class="mine-section-title">企业自评评价统计</ion-label> 
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightGreens">
+            <div class="mine-section linear-lightGreens" [routerLink]="['/company-assess']">
                 <p>{{selfAccess.accessedNum}}</p>
                 <p>家已自评</p>
               <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
-            <div class="mine-section-item linear-lightGreen">
+            <div class="mine-section-item linear-lightGreen" [routerLink]="['/company-assess']">
               最高达级：<span>{{ selfAccess.heighLevel }}</span> ({{selfAccess.heighsum}})家
             </div>
-            <div class="mine-section-item linear-lightGreen">
+            <div class="mine-section-item linear-lightGreen" [routerLink]="['/company-assess']">
               最低达级：<span>{{ selfAccess.lowLevel }}</span> ({{selfAccess.lowsum}})家
             </div>
           </ion-col>
@@ -119,7 +119,7 @@
         <ion-grid fixed>
           <ion-row>
             <ion-col size="12" class="title-pos"> 
-              <ion-label class="mine-section-title">亮点推荐</ion-label> 
+              <ion-label class="mine-section-title">亮点展示</ion-label> 
             </ion-col>
             <ion-col size="6">
               <div class="mine-section mini linear-lightViolets" [routerLink]="['/show-highlight']">
@@ -152,17 +152,17 @@
             <ion-label class="mine-section-title">专家检查结果</ion-label> 
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightGreens">
+            <div class="mine-section linear-lightGreens" [routerLink]="['/expert-review']">
                 <p>{{selfCheck.checkedNum}}</p>
                 <p>家已检查</p>
               <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
-            <div class="mine-section-item linear-lightGreen">
+            <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
                 最高达级：<span>{{ selfCheck.heighLevel }}</span> ({{selfCheck.heighsum}})家
             </div>
-            <div class="mine-section-item linear-lightGreen">
+            <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
                 最低达级：<span>{{ selfCheck.lowLevel }}</span> ({{selfCheck.lowsum}})家
             </div>
           </ion-col>

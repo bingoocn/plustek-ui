@@ -18,7 +18,7 @@ export class InterationInfoComponent implements OnInit {
       selfEvaluationScore:89,
       person:'章可',
       time:'2019-09-20',
-      content:'这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容这是留言内容'
+      content:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行'
     }
   }
 
