@@ -1,4 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-workbench',
@@ -8,7 +9,14 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 export class WorkbenchPage implements OnInit {
   readonly menus:any = JSON.parse(localStorage.getItem("menu"));
   public workbench:any = [];
-  constructor(private el: ElementRef) {
+  public learn:any = [];
+  public evaluation:any = [];
+  public examination:any = [];
+
+  constructor(
+    private el: ElementRef,
+    public fn: CommonService,
+  ) {
 　}
 
   ngOnInit() {
@@ -19,30 +27,13 @@ export class WorkbenchPage implements OnInit {
         toolbar[i].shadowRoot.querySelector('a').style.padding = '0';
       }
     }, 1000);
-    this.filterItem();
-  }
-
-  filterMenu(menu) {
-    return new Promise((resolve, reject) => {
-      let pId;
-      let arr:any = [];
-      for(let i=0; i<menu.length; i++) {
-        if(menu[i].superiorMenuType == '01') {
-          menu[i].children = [];
-          arr.push(menu[i]);
-        }
-      }
-      resolve(arr);
-    })
-  }
-
-  filterItem() {
-    return new Promise((resolve, reject) => {
-      this.filterMenu(this.menus).then(menu => {
-        for(let i=0; i<menu['length']; i++) {
-          console.log(menu[i])
-        }
-      });
-    })
+    this.workbench = this.fn.forma2Tree(this.menus, 'superiorMenuId', 'guid');
+    // 学习交流
+    this.learn = this.workbench[2]['children'][0]['children'];
+    // 规范评价
+    this.evaluation = this.workbench[2]['children'][1]['children'];
+    // 评价考核
+    this.examination = this.workbench[2]['children'][2]['children'];
+    localStorage.setItem("a", JSON.stringify(this.workbench))
   }
 }
