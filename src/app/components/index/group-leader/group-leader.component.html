@@ -50,19 +50,8 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
-<<<<<<< HEAD
-            <ion-label class="mine-section-title">企业自评统计(集团领导)</ion-label> 
-          </ion-col>
-          <ion-col size="4">
-            <div class="mine-section linear-lightGreens">
-              <p>35<span>家</span></p>
-              <p>已自评</p>
-              <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
-            </div>
-=======
             <ion-label class="mine-section-title">公告通知</ion-label> 
             <span class="more" [routerLink]="['/notice']">更多</span>
->>>>>>> 65506d04facbe42691fecf5de38c8aff976a036f
           </ion-col>
           <ion-col size="12"> 
             <ion-slides #slide class="noticeSlide" mode="ios" [options]="noticeOpts" [pager]="false" (ionSlideTouchEnd)="touchEnd()">
@@ -143,21 +132,21 @@
       <ion-grid fixed>
         <ion-row>
           <ion-col size="12" class="title-pos"> 
-            <ion-label class="mine-section-title">专家检查结果</ion-label> 
+            <ion-label class="mine-section-title">专家评价统计</ion-label> 
           </ion-col>
           <ion-col size="4">
             <div class="mine-section linear-lightGreens" [routerLink]="['/expert-review']">
-                <p>35<span>家</span></p>
-                <p>已检查</p>
-              <ion-img class="mine-icon-bg" src="./assets/expert.png" alt=""></ion-img>
+                <p>{{expertAssess.checkedNum}}</p>
+                <p>家已检查</p>
+              <ion-img class="mine-icon-bg" src="./assets/evaluation.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
             <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-              最高达级：<span>四级（11家）</span>
+                最高达级：<span>{{ expertAssess.heighLevel }}级</span> ({{expertAssess.heighsum}})家
             </div>
             <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-              最低达级：<span>二级（5家）</span>
+                最低达级：<span>{{ expertAssess.lowLevel }}级</span> ({{expertAssess.lowsum}})家
             </div>
           </ion-col>
         </ion-row>  

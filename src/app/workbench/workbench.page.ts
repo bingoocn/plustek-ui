@@ -1,4 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
+import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-workbench',
@@ -7,8 +10,18 @@ import {Component, ElementRef, OnInit} from '@angular/core';
 })
 export class WorkbenchPage implements OnInit {
   readonly menus:any = JSON.parse(localStorage.getItem("menu"));
+  // 定义工作台各模块变量
   public workbench:any = [];
-  constructor(private el: ElementRef) {
+  public learn:any = [];
+  public evaluation:any = [];
+  public examination:any = [];
+
+  constructor(
+    private el: ElementRef,
+    private nav: NavController, 
+    public fn: CommonService,
+    public http:HttpService
+  ) {
 　}
 
   ngOnInit() {
@@ -19,25 +32,18 @@ export class WorkbenchPage implements OnInit {
         toolbar[i].shadowRoot.querySelector('a').style.padding = '0';
       }
     }, 1000);
-    this.filterMenu(this.menus).then(menu => {
-      this.workbench = menu;
-    });
-  }
-
-  filterMenu(menu) {
-    return new Promise((resolve, reject) => {
-      let pId;
-      let arr:any = [];
-      for(let i=0; i<menu.length; i++) {
-        if(menu[i].menuCode == "workbench") {
-          pId = menu[i].guid;
-          continue;
-        };
-        if(menu[i].superiorMenuId == pId) {
-          arr.push(menu[i]);
-        }
-      }
-      resolve(arr);
-    })
+    // 处理工作台菜单数据
+    this.workbench = this.fn.forma2Tree(this.menus, 'superiorMenuId', 'guid');
+     // 学习交流
+     this.learn = this.workbench[2]['children'][0]['children'];
+     // 规范评价
+     this.evaluation = this.workbench[2]['children'][1]['children'];
+    if(this.workbench[2]['children']['length'] == '3'){
+      // 评价考核
+      this.examination = this.workbench[2]['children'][2]['children'];
+    }else{
+      // 评价考核
+      this.examination = [];
+    }
   }
 }

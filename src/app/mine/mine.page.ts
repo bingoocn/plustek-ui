@@ -32,7 +32,7 @@ export class MinePage implements OnInit {
       for(let i=0; i<toolbar.length; i++) {
         toolbar[i].shadowRoot.querySelector('.item-inner').style.borderBottomColor = '#eeeeee';
       }
-    }, 500);
+    }, 1000);
   }
   // 退出登录
   logout() {

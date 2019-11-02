@@ -90,11 +90,7 @@ export class LoginPage implements OnInit {
               localStorage.setItem("currentRole", JSON.stringify(res[0]));
               // 存储菜单信息
               localStorage.setItem("menu", JSON.stringify(menus));
-              this.nav.navigateRoot("/tabs/index", {
-                queryParams:{
-                    menus: JSON.stringify(menus)
-                }
-              });
+              this.nav.navigateRoot("/tabs/index");
             });
           })
         });

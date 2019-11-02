@@ -36,11 +36,7 @@ export class RolesComponent implements OnInit {
         localStorage.setItem('currentRole', JSON.stringify(e));
         // 存储并登入系统
         localStorage.setItem("menu", JSON.stringify(menus));
-        this.nav.navigateRoot("/tabs/index", {
-          queryParams:{
-              menus: JSON.stringify(menus)
-          }
-        });
+        this.nav.navigateRoot("/tabs/index");
       });
       this.navParams.data.modal.dismiss();
     })

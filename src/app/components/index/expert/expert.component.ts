@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-expert',
@@ -25,6 +26,7 @@ export class ExpertComponent implements OnInit {
     heighsum:0,
     lowsum:0
   };
+  //专家检查信息
   public expertAssess :any = {
     checkedNum:'35',
     heighLevel:'三级',
@@ -33,7 +35,7 @@ export class ExpertComponent implements OnInit {
     lowsum:'23'
   };
  
-  constructor( public http:HttpService) { }
+  constructor( public http:HttpService,public common: CommonService) { }
 
   ngOnInit() {
     this.getNotice();
@@ -73,36 +75,44 @@ export class ExpertComponent implements OnInit {
       }
     });
   }
-  // 获取专家评价数据
-  getExpertAssess(){
-    this.http.getRequest('/expert_reviews').then((response:any) => {
+  //获取专家检查数据
+  getExpertAssess() {
+    this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
       if(response && response.length > 0){
-        this.selfAccess.accessedNum = response.length;
-      }
-    });
-    //统计最高达级信息
-    this.http.getRequest('/expert_reviews?sort=-evaluation_level_code').then((response:any) => {
-      if(response && response.length > 0){
-        this.selfAccess.heighLevel = response[0].evaluation_result.standard_rusult.name;
-        this.selfAccess.heighLevel_code = response[0].evaluation_result.standard_rusult.code;
-        this.http.getRequest('/expert_reviews?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
-          if(response && response.length > 0){
-            this.selfAccess.heighsum = response.length;
+        //根据单位去重
+        let resArr = response;
+        let unitArr = [];
+        let standard_Level = [];
+        let unitLevelArr = [];
+
+        unitArr = resArr.reduce(function(prev,element){
+          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+            prev.push(element)
+          }
+          return prev
+        },[])
+        this.expertAssess.checkedNum = unitArr.length;
+        //获取最高/低达级
+        response.forEach(item => {
+          if(item.evaluation_result.standard_result !== null){
+            standard_Level.push(Number(item.evaluation_result.standard_result.code));
           }
         });
-      }
-    });
-    //统计最低达级信息
-    this.http.getRequest('/expert_reviews?sort=evaluation_level_code').then((response:any) => {
-      if(response && response.length > 0){
-        this.selfAccess.lowLevel = response[0].evaluation_result.standard_rusult.name;
-        this.selfAccess.lowLevel_code = response[0].evaluation_result.standard_rusult.code;
-        this.http.getRequest('/expert_reviews?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
-          if(response && response.length > 0){
-            // console.log(response)
-            this.selfAccess.lowsum = response.length;
-          }
-        });
+        //获取最高/低达级单位数量
+        if(standard_Level.length > 0){
+          let newstandard_Level = standard_Level.reduce(function(prev,element){
+            if(!prev.find(el=>el==element)) {
+              prev.push(element)
+            }
+            return prev
+          },[])
+          this.expertAssess.heighLevel = Math.max(...standard_Level)
+          this.expertAssess.lowLevel = Math.min(...standard_Level)
+          this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
+          this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
+          this.expertAssess.heighLevel = this.common.convertToChinaNum(Math.max(...standard_Level))
+          this.expertAssess.lowLevel = this.common.convertToChinaNum(Math.min(...standard_Level))
+        }
       }
     });
   }
