@@ -23,12 +23,12 @@
       <ion-list lines="full" class="no-margin">
         <ion-item class="mr-top-10" *ngFor="let item of noEvaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]" [queryParams]="{isEvaluated:false}">
           <ion-label>
-            <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
-            <h3>单位名称：{{ item.unit.name }}</h3>
-            <h3>所属板块：{{ item.subordinate_plate }}</h3>
-            <h3>认定自评等级：{{ item.questionnaire.evaluation_level.name }}</h3>
-            <h3>自评得分：{{ item.self_score }}</h3>
-            <h3>自评时间：{{ item.evaluation_date }}</h3>
+            <h3>子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</h3>
+            <h3>单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</h3>
+            <h3>所属板块：{{ (item.subordinate_plate) ? item.subordinate_plate:'' }}</h3>
+            <h3>认定自评等级：{{ (item.questionnaire && item.questionnaire.evaluation_level && item.questionnaire.evaluation_level.name) ? item.questionnaire.evaluation_level.name:'' }}</h3>
+            <h3>自评得分：{{ (item.self_score) ? item.self_score:'' }}</h3>
+            <h3>自评时间：{{ (item.evaluation_date) ? item.evaluation_date:'' }}</h3>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -37,12 +37,12 @@
       <ion-list lines="full">
         <ion-item class="mr-top-10" *ngFor="let item of evaluations; let key = index" detail [routerLink]="['./leaderReviews',item.id]" [queryParams]="{isEvaluated:true}">
           <ion-label>
-            <h3>子集团/直管单位：{{ item.unit.group.name }}</h3>
-            <h3>单位名称：{{ item.unit.name }}</h3>
-            <h3>所属板块：{{ item.subordinate_plate }}</h3>
-            <h3>认定自评等级：{{ item.questionnaire.evaluation_level.name }}</h3>
-            <h3>自评得分：{{ item.self_score }}</h3>
-            <h3>自评时间：{{ item.evaluation_date }}</h3>
+            <h3>子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</h3>
+            <h3>单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</h3>
+            <h3>所属板块：{{ (item.subordinate_plate) ? item.subordinate_plate:'' }}</h3>
+            <h3>认定自评等级：{{ (item.questionnaire && item.questionnaire.evaluation_level && item.questionnaire.evaluation_level.name) ? item.questionnaire.evaluation_level.name:'' }}</h3>
+            <h3>自评得分：{{ (item.self_score) ? item.self_score:'' }}</h3>
+            <h3>自评时间：{{ (item.evaluation_date) ? item.evaluation_date:'' }}</h3>
           </ion-label>
         </ion-item>
       </ion-list>

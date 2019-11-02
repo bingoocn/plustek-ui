@@ -15,6 +15,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HttpService } from './service/http/http.service';
 import { TabsService } from './service/tabs/tabs.service';
 
+import { NgxEchartsModule } from 'ngx-echarts'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -23,7 +25,7 @@ import { TabsService } from './service/tabs/tabs.service';
     backButtonText: '', /*配置返回按钮*/
     backButtonIcon: 'ios-arrow-back-outline',//统一返回按钮图标
     mode: 'ios' /*配置android ios使用一套样式*/
-  }), AppRoutingModule, HttpClientModule],
+  }), AppRoutingModule, HttpClientModule,NgxEchartsModule],
   providers: [
     StatusBar,
     SplashScreen,

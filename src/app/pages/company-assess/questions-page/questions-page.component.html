@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>答题</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <div class="section" *ngIf="indicator_name">
+    <ion-label class="lightgrey size-sm">
+      <span>{{ indicator_name }}</span>
+    </ion-label>
+  </div>
+  <ion-list class="bg-LightGrey" *ngIf="indexes && indexes.length > 0">
+    <ion-item  lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index">
+      <ion-label class="no-margin">
+        <div class="list-item">{{ item.index_num + item.index_name }}</div>
+        <div *ngIf="item.children && item.children.length > 0" class="dropdown-list">
+          <div detail class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../itemInfo']" >{{ i.index_num + "&nbsp;" + i.index_name }}</div>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

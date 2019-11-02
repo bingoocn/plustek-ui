@@ -10,8 +10,8 @@
       <ion-avatar class="avatar-lg mr-right-20">
         <img src="assets/defaultHeadPortrait.png">
       </ion-avatar>
-      <ion-label color="dark">
-        <h3>{{ user.personName }}<span class="grey">（角色名称）</span></h3>
+      <ion-label color="dark no_text_overflow">
+        <h3>{{ user.personName }}<span class="grey">（{{ user.currentRole}}）</span></h3>
         <p class="grey">{{ user.subordinateOrgName }}</p>
         <p class="grey">{{ user.mail }}</p>
       </ion-label>
@@ -45,6 +45,7 @@
       </ion-item> -->
     </ion-list>
   </div>
+
   <div class="section mr-top-10 no-padding">
     <ion-item lines="none" (click)="logout()">
       <ion-label align="center">退出登录</ion-label>

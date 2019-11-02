@@ -16,8 +16,9 @@ export class AddAssessComponent implements OnInit {
   constructor(public routeInfo: ActivatedRoute, private router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    // console.log(this.evaluationLevelCode,'日期',
 
-  };
+  }
 
   handleLastNameValue(event) {
     console.log(event);

@@ -24,11 +24,7 @@ export class EvaluationIndexPage implements OnInit {
       if(response && response.length > 0){
         this.indicator_id = response[0].id;
         if(response[0].index_name){
-          if(response[0].year){
-            this.indicator_name = response[0].year + '年' + response[0].index_name;
-          }else{
-            this.indicator_name = response[0].index_name;
-          }
+          this.indicator_name = response[0].index_name;
         }
         if(response[0].id){
           this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {

@@ -12,37 +12,39 @@ export class EvaluationModelPage implements OnInit {
   public indicator_name:string;
   public indicator_id:string;
 
+  public indicators:any = [];
+
   constructor(public http:HttpService) { }
 
   ngOnInit() {
-    const params = { index_type_code:'01',start_status_code:'01'};
+    const params = { index_type_code:'01',publish_status_code:'02'};
     this.getIndicator(params);
   }
 
-  // 获取当前使用的《规范》评价指标及其下的第一层维度
+  // 获取当前发布的《规范》评价模型
   getIndicator(params:any){
-    this.http.getRequest('/indicator_sets', params).then((response:any) => {
+    this.http.getRequest('/evaluation_models', params).then((response:any) => {
       if(response && response.length > 0){
-        this.indicator_id = response[0].id;
-        if(response[0].index_name){
-          if(response[0].year){
-            this.indicator_name = response[0].year + '年' + response[0].index_name;
-          }else{
-            this.indicator_name = response[0].index_name;
-          }
+        this.indicators = response;
+        if(response[0].indicator_sets && response[0].indicator_sets.index_name){
+          this.indicator_name = response[0].indicator_sets.index_name;
         }
-        if(response[0].id){
-          this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {
-            if(response && response.length > 0){
-              this.indexes = [];
-              response.forEach(element => {
-                if(element.index_level_type && element.index_level_type.code && element.index_level_type.code == '01'){
-                  this.indexes.push({id:element.id,index_name:element.index_name,index_num:element.index_num});
-                }
-              });
-            }
-          })
-        }
+        // this.indicator_id = response[0].id;
+        // if(response[0].index_name){
+        //   this.indicator_name = response[0].index_name;
+        // }
+        // if(response[0].id){
+        //   this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {
+        //     if(response && response.length > 0){
+        //       this.indexes = [];
+        //       response.forEach(element => {
+        //         if(element.index_level_type && element.index_level_type.code && element.index_level_type.code == '01'){
+        //           this.indexes.push({id:element.id,index_name:element.index_name,index_num:element.index_num});
+        //         }
+        //       });
+        //     }
+        //   })
+        // }
       }
     })
   }

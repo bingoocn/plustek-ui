@@ -29,6 +29,9 @@ const routes: Routes = [
   { path: 'message-interaction', loadChildren: './pages/message-interaction/message-interaction.module#MessageInteractionPageModule' },
   { path: 'overall-evaluation', loadChildren: './pages/overall-evaluation/overall-evaluation.module#OverallEvaluationPageModule' },
   { path: 'company-assess', loadChildren: './pages/company-assess/company-assess.module#CompanyAssessPageModule' },
+  { path: 'assess-info/:assessId', loadChildren: './pages/assess-info/assess-info.module#AssessInfoPageModule' },
+  { path: 'leader-check', loadChildren: './pages/leader-check/leader-check.module#LeaderCheckPageModule' },
+  { path: 'department-check', loadChildren: './pages/department-check/department-check.module#DepartmentCheckPageModule' }
 ];
 @NgModule({
   imports: [

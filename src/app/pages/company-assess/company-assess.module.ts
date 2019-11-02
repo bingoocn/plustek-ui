@@ -8,6 +8,9 @@ import { IonicModule } from '@ionic/angular';
 import { CompanyAssessPage } from './company-assess.page';
 
 import {AddAssessComponent} from './add-assess/add-assess.component';
+import {QuestionsPageComponent} from './questions-page/questions-page.component';
+import {ItemInfoComponent} from './item-info/item-info.component';
+import { from } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -16,6 +19,12 @@ const routes: Routes = [
   }, {
     path: 'addAssess',
     component: AddAssessComponent
+  }, {
+    path: 'questionPage',
+    component: QuestionsPageComponent
+  }, {
+    path: 'itemInfo',
+    component: ItemInfoComponent
   }
 ];
 
@@ -26,6 +35,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CompanyAssessPage, AddAssessComponent]
+  declarations: [CompanyAssessPage, AddAssessComponent, QuestionsPageComponent, ItemInfoComponent]
 })
 export class CompanyAssessPageModule {}

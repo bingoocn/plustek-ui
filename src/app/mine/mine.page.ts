@@ -14,22 +14,25 @@ export class MinePage implements OnInit {
   constructor(private el: ElementRef, public nav: NavController, public http:HttpService) { }
 
   ngOnInit() {
-    // 获取当前登录人信息
+    // 获取当前登录人信息以及当前角色信息
     this.http.getUser().then((response:any) => {
       if(response){
         this.user = response;
         if(this.user.guid){
-          // this.http.getRequest('')
+          const role = JSON.parse(localStorage.getItem("currentRole"));
+          this.user.currentRole = role.roleName;
         }
       }
     });
+  }
+  ngAfterViewInit(){
     // 通过延时操作更改shadow dom的样式
     setTimeout(() => {
       const toolbar = this.el.nativeElement.querySelectorAll('ion-item');
       for(let i=0; i<toolbar.length; i++) {
         toolbar[i].shadowRoot.querySelector('.item-inner').style.borderBottomColor = '#eeeeee';
       }
-    }, 1000);
+    }, 500);
   }
   // 退出登录
   logout() {
