@@ -32,7 +32,7 @@
         </ion-item>
       </ion-list>
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin"  [routerLink]="['../questionPage']" [queryParams] ="{ evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate}" >开始答题</ion-button>
+        <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin"  [routerLink]="['../questionPage']" [queryParams] ="{ evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate, subordinatePlate:subordinatePlate}" >开始答题</ion-button>
       </div>
     <!-- </form> -->
 
