@@ -8,8 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { MinePage } from './mine.page';
 import { SetupComponent } from './setup/setup.component';
 import { ModifyPasswordComponent } from './modify-password/modify-password.component';
-import { InternalCommunicationPageModule } from '../pages/internal-communication/internal-communication.module';
 import { MyreportComponent } from './myreport/myreport.component';
+import { MytopicComponent } from './mytopic/mytopic.component';
+import { MyreplyComponent } from './myreply/myreply.component';
+import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 
 const routes: Routes = [
   {
@@ -19,11 +21,17 @@ const routes: Routes = [
     path: 'setup',
     component: SetupComponent
   },{
-    path: 'internal-communication',
-    component: InternalCommunicationPageModule
+    path: 'mytopic',
+    component: MytopicComponent
+  },{
+    path: 'myreply',
+    component: MyreplyComponent
   },{
     path: 'myreport',
     component: MyreportComponent
+  },{
+    path: 'topicDetail/:topicId',
+    component: TopicDetailComponent
   }
 ];
 
@@ -34,7 +42,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MinePage, SetupComponent, ModifyPasswordComponent, MyreportComponent],
+  declarations: [MinePage, SetupComponent, ModifyPasswordComponent, MyreportComponent, MytopicComponent,TopicDetailComponent,MyreplyComponent],
   entryComponents: [ModifyPasswordComponent]
 })
 export class MinePageModule {}

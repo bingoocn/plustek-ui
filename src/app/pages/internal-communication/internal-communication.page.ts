@@ -16,35 +16,14 @@ export class InternalCommunicationPage implements OnInit {
   public page:any = 1;
   public per_page:any = 10;
   public hasMore:boolean = true;
-  public title:any;
+  // public title:any;
   public exchange_proceeding:string = '';
-  public person_id:string = '';
-  public mineFlag:boolean = false;
 
   constructor(public route:ActivatedRoute, public http:HttpService) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((data)=>{ 
-      this.title = data.title;
-      if(this.title === '我的主题'){
-        this.mineFlag = true;
-      }
-    });
-    if(this.mineFlag){
-      // 获取当前登录人信息
-      this.http.getUser().then((response:any) => {
-        if(response){
-          if(response.guid){
-            this.person_id = response.guid;
-            const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time',person_id:this.person_id };
-            this.getData(params);
-          }
-        }
-      });
-    }else{
-      const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time',person_id:this.person_id };
-      this.getData(params);
-    }
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
+    this.getData(params);
 
   }
 
@@ -52,7 +31,7 @@ export class InternalCommunicationPage implements OnInit {
   getTopics(ev: any) {
     this.page = 1;
     this.exchange_proceeding = ev.target.value;
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time',person_id:this.person_id };
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.getData(params);
   }
 
@@ -74,7 +53,7 @@ export class InternalCommunicationPage implements OnInit {
   doRefresh(e) {
     this.page = 1;
     this.exchange_proceeding = "";
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time',person_id:this.person_id };
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.http.getRequest('/communions', params).then((response:any) => {
       if(response && response.length > 0){
         this.topics = response;
@@ -91,7 +70,7 @@ export class InternalCommunicationPage implements OnInit {
   }
   // 加载更多
   loadMore(e){
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time',person_id:this.person_id };
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.http.getRequest('/communions', params).then((response:any) => {
       if(response && response.length > 0){
         this.topics = this.topics.concat(response);
