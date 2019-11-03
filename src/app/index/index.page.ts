@@ -32,13 +32,24 @@ export class IndexPage implements OnInit {
   ) { }
 
   ngOnInit() { 
-    const menus = JSON.parse(localStorage.getItem("menu"));
-    for(let i=0; i<this.munuCode.length; i++) {
-      for(let k=0; k<menus.length; k++) {
-        if(menus[k].menuUrl == this.munuCode[i].name) {
-          this.flag.push(this.munuCode[i].code);
+    this.filterIndex().then(res => {
+      if(res['length']>1) {
+        this.http.presentAlert('提示', '', '菜单配置有误，请联系管理员修改配置！');
+        this.nav.navigateRoot("/login");
+      }
+    })
+  }
+  filterIndex() {
+    return new Promise((resolve, reject) => {
+      const menus = JSON.parse(localStorage.getItem("menu"));
+      for(let i=0; i<this.munuCode.length; i++) {
+        for(let k=0; k<menus.length; k++) {
+          if(menus[k].menuUrl == this.munuCode[i].name) {
+            this.flag.push(this.munuCode[i].code);
+          }
         }
       }
-    }
+      resolve(this.flag)
+    })
   }
 }
