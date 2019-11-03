@@ -44,8 +44,8 @@ export class BusinessLeaderComponent implements OnInit {
       group: 0
     },
     {
-      subGroup: 0,
-      group: 0
+      lesdersubGroup: 0,
+      lesdergroup: 0
     }
   ];
   // 自评结果数据
@@ -66,21 +66,47 @@ export class BusinessLeaderComponent implements OnInit {
 
   constructor( public http:HttpService) {
     // 从session里获取当前登录人的当前角色信息
-    const currentRole = JSON.parse(localStorage.getItem('currentRole'));
-    if(currentRole && currentRole.guid){
+    const currentRole = JSON.parse(localStorage.getItem('roles'));
+
+    if(currentRole && currentRole[0].guid){
       // 获取系统运行参数表查找与当前登录人当前角色id相匹配的信息
-      const params = {param_name:currentRole.guid};
+      const params = {param_name:currentRole[0].guid};
       this.http.getRequest('/sys_param',params).then((response:any) => {
-        console.log(0,response,currentRole)
         if(response && response.param_value){
           var role = JSON.parse(response.param_value);
           if(role.abbreviation){
-            if(role.abbreviation === 'BMLD'){
-              this.is_business_leader = true;
-            }
-            if(role.abbreviation === 'FGLD'){
-              this.is_apart_leader = true;
-            }
+            this.http.getRequest('/specification_evaluations').then((response:any) => {
+              if(response){
+                let checkedArr = [];
+                let unCheckedArr = [];
+                if(role.abbreviation === 'QYBMLD'){
+                  this.is_business_leader = true;
+                  response.forEach( item=>{
+                    if(item.evaluation_status !== null && item.evaluation_status.code == '03'){
+                      checkedArr.push(item);
+                    }
+                    if(item.evaluation_status !== null && item.evaluation_status.code == '01' || item.evaluation_status.code == '02'){
+                      unCheckedArr.push(item);
+                    }
+                  })
+                  this.myWork.checked = checkedArr.length;
+                  this.myWork.unCheck = unCheckedArr.length;
+                }
+                if(role.abbreviation === 'QYFGLD'){
+                  this.is_apart_leader = true;
+                  response.forEach( item=>{
+                    if(item.evaluation_status !== null && item.evaluation_status.code == '03'){
+                      checkedArr.push(item);
+                    }
+                    if(item.evaluation_status !== null && item.evaluation_status.code == '01' || item.evaluation_status.code == '02'){
+                      unCheckedArr.push(item);
+                    }
+                  })
+                  this.myWork.checked = checkedArr.length;
+                  this.myWork.unCheck = unCheckedArr.length;
+                }
+              }
+            })
           }
         }
       })
@@ -130,10 +156,10 @@ export class BusinessLeaderComponent implements OnInit {
     });
     //领导阅评
     this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=01').then((response:any) => {
-        this.slides[2].group = response.lenth;
+        this.slides[2].group = response.length;
     });
     this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=02').then((response:any) => {
-        this.slides[2].subGroup = response.lenth;
+        this.slides[2].subGroup = response.length;
     });
   }
   // 获取企业自评数据

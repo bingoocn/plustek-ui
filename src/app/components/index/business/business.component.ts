@@ -45,8 +45,8 @@ export class BusinessComponent implements OnInit {
       group: 0
     },
     {
-      department: 0,
-      leader: 0
+      subGroup: 0,
+      group: 0
     }
   ];
   // 自评结果数据
@@ -103,25 +103,13 @@ export class BusinessComponent implements OnInit {
         }
       }
     });
-    //领导阅评 等待接口中
-    // this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
-    //   if(response && response.length > 0){
-    //     for(let i=0;i<response.length;i++){
-    //       if(response[i].ent_self_eva_mon_approvals.length > 0){
-    //         for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-    //           //子集团评价
-    //           if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
-    //             this.slides[1].subGroup ++
-    //           }
-    //           //集团评价
-    //           if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
-    //             this.slides[1].group ++
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // });
+    //领导阅评
+    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=01').then((response:any) => {
+      this.slides[2].group = response.length;
+    });
+    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=02').then((response:any) => {
+        this.slides[2].subGroup = response.length;
+    });
   }
   // 获取最新评价
   // getNews(){

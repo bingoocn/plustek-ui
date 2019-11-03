@@ -67,6 +67,10 @@ export class GroupComponent implements OnInit {
     heighsum:0,
     lowsum:0
   };
+  public myWork :any = {
+    unAssess:0,
+    assessed:0
+  }
   @ViewChild("slide", { static: false }) slide;
 
   constructor( public http:HttpService,public common: CommonService) { }
@@ -74,6 +78,7 @@ export class GroupComponent implements OnInit {
   ngOnInit() {
     this.getExpertAssess();
     this.getSelfAssess();
+    this.getMyWork();
     this.getNotice();
   }
   // 获取企业自评数据
@@ -148,13 +153,32 @@ export class GroupComponent implements OnInit {
       }
     });
   }
-   // 获取公告通知数据
-   getNotice(){
-    this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+  getMyWork(){
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
       if(response && response.length > 0){
-        this.GroupNotice = response;
+        let contentArr = [];
+        let a = []
+        for(let i=0;i<response.length;i++){
+          if(response[i].ent_self_eva_mon_approvals.length > 0){
+            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_content !== ''){
+                contentArr.push(response[i].ent_self_eva_mon_approvals[n])
+              }
+            }
+          }
+        }
+        this.myWork.assessed = contentArr.length;
+        this.myWork.unAssess = (response.length)*2 - contentArr.length;
       }
-    });
+    })
+  }
+  // 获取公告通知数据
+  getNotice(){
+  this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+    if(response && response.length > 0){
+      this.GroupNotice = response;
+    }
+  });
   }
   // 解决手动滑动后轮播图无法正常轮播
   touchEnd() {
