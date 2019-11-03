@@ -13,7 +13,7 @@ export class ItemInfoComponent implements OnInit {
   public indexId: String;
   public form: any = [];
   public questId: string; //问卷的ID
-  public items: array = []; //试卷列表
+  public items: any = []; //试卷列表
   public slideOpts:any = {
     effect: 'flip', 
     speed: 400, 
