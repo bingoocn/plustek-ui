@@ -32,7 +32,7 @@ export class QuestionsPageComponent implements OnInit {
      this.http.getRequest(`/questionnaires`, params).then((response: any)=>{
        this.questId = response[0].id;
        this.indicator_name = response[0].indicator_sets.index_name;
-     this.saveForm(this.questId);
+    //  this.saveForm(this.questId);
        this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
         if (response[0].id) {
           this.indicatorId = response[0].id
@@ -47,11 +47,9 @@ export class QuestionsPageComponent implements OnInit {
   }
 
   saveForm(questId: any) {
-    console.log('报窜数据');
     const params = {questionnaire_id: questId, subordinate_plate: this.subordinatePlate, evaluation_level_code : this.evaluationLevelCode, evaluation_date: this.evaluationDate, };
     this.http.postRequest(`/specification_evaluations`, params).then((response: any) => {
       // this.http.presentToast('保存成功！', 'bottom', 'success');
-      console.log(response,'保存得到的数据')
     }, (error: any) => {
     })
     
