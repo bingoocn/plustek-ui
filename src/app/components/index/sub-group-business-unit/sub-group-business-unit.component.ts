@@ -31,10 +31,15 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     heighsum:'30',
     lowsum:'23'
   };
+  public myWork: any = {
+    unAssess:0,
+    assessed:0,
+  }
   constructor( public http:HttpService) { }
 
   ngOnInit() {
     this.getData();
+    this.getMyWork();
     this.getBusinessAssess();
   }
   // 获取企业自评数据
@@ -69,6 +74,25 @@ export class SubGroupBusinessUnitComponent implements OnInit {
         });
       }
     });
+  }
+  getMyWork(){
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+      if(response && response.length > 0){
+        let contentArr = [];
+        let a = []
+        for(let i=0;i<response.length;i++){
+          if(response[i].ent_self_eva_mon_approvals.length > 0){
+            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
+              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_content !== ''){
+                contentArr.push(response[i].ent_self_eva_mon_approvals[n])
+              }
+            }
+          }
+        }
+        this.myWork.assessed = contentArr.length;
+        this.myWork.unAssess = (response.length)*2 - contentArr.length;
+      }
+    })
   }
   // 发送请求获取数据
   getData(){
