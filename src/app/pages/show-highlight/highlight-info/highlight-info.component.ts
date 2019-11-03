@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-highlight-info',
@@ -7,19 +9,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HighlightInfoComponent implements OnInit {
   public highlightInfo:any = {};
+  public hightLightId : string;
+  public code : string;
 
-  constructor() { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router,public http:HttpService) { }
 
   ngOnInit() {
-    this.highlightInfo = {
-        subGroup:'北化集团',
-        unitName:'245厂',
-        selfEvaluationLevel:'五级',
-        selfEvaluationScore:89,
-        person:'章可',
-        pointScore:'2019-09-10',
-        plusScore:'这是主要亮点信息这是主要亮点信息这是主要亮点信息这是主要亮点信息这是主要亮点信息这是主要亮点信息这是主要亮点信息这是主要亮点信息'
-      }
+    this.highlightInfo = {}
+    this.routeInfo.queryParams.subscribe((data) => {this.hightLightId = data.hightLightId,this.code = data.code});
+    this.getData();
   }
-
+   // 发送请求获取数据
+   getData(){
+    this.http.getRequest('/specification_evaluations/' + this.hightLightId).then((response:any) => {
+      if(response){
+          response.ent_self_eva_mon_approvals.forEach( el=>{
+            if(el.mon_approval_type.code == '01'){
+              this.highlightInfo.push={
+                unitName:el.data_unit.name,
+                selfEvaluationLevel:response.evaluation_level.name,
+                self_score:response.self_score,
+                person:el.mon_approval_person,
+                time:el.mon_approval_date,
+                main_light:el.mon_approval_content
+              }
+            }
+            if(el.mon_approval_type.code == '02'){
+              this.highlightInfo = {
+                unitName:el.data_unit.name,
+                selfEvaluationLevel:response.evaluation_level.name,
+                self_score:response.self_score,
+                person:el.mon_approval_person,
+                time:el.mon_approval_date,
+                main_light:el.mon_approval_content
+              }
+            }
+          })
+      }
+    });
+  }
 }

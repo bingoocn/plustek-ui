@@ -7,41 +7,31 @@
   </ion-toolbar>
 </ion-header>
 <ion-content color="grey">
-      <ion-list lines="full" class="ion-no-margin ion-no-padding">
-        <ion-item>
-          <ion-label position="stacked">单位名称</ion-label>
-          <ion-input readonly type="text" ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">所属板块 </ion-label>
-          <ion-input required type="text" [(ngModel)]="subordinatePlate"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">评价日期 <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="date" [(ngModel)]="evaluationDate" ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">评价级别 <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select required interface="popover" [(ngModel)]="evaluationLevelCode">
-            <ion-select-option value="01">一级</ion-select-option>
-            <ion-select-option value="02">二级</ion-select-option>
-            <ion-select-option value="03">三级</ion-select-option>
-            <ion-select-option value="04">四级</ion-select-option>
-            <ion-select-option value="05">五级</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-      <div class="ion-padding">
-        <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin"  [routerLink]="['../questionPage']" [queryParams] ="{ evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate, subordinatePlate:subordinatePlate}" >开始答题</ion-button>
-      </div>
-    <!-- </form> -->
-
-    <!-- <div class="section mr-top-10"> -->
-      <!-- <div class="text-center"> -->
-        <!-- <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../reachStandardEvaluation',reviewId]">规范达标评价</ion-button> -->
-        <!-- <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button> -->
-        <!-- <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button> -->
-      <!-- </div> -->
-    <!-- </div> -->
-  <!-- </div> -->
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <ion-item>
+      <ion-label position="stacked">单位名称</ion-label>
+      <ion-input readonly type="text" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">所属板块 </ion-label>
+      <ion-input required type="text" [(ngModel)]="subordinatePlate"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">评价日期 <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required type="date" [(ngModel)]="evaluationDate" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">评价级别 <ion-text color="danger">*</ion-text></ion-label>
+      <ion-select required interface="popover" [(ngModel)]="evaluationLevelCode">
+        <ion-select-option value="01">一级</ion-select-option>
+        <ion-select-option value="02">二级</ion-select-option>
+        <ion-select-option value="03">三级</ion-select-option>
+        <ion-select-option value="04">四级</ion-select-option>
+        <ion-select-option value="05">五级</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin" [routerLink]="['../questionPage']" [queryParams] ="{ evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate, subordinatePlate:subordinatePlate}" >开始答题</ion-button>
+  </div>
 </ion-content>
