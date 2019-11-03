@@ -80,8 +80,8 @@ export class LoginPage implements OnInit {
           const systemId = JSON.parse(localStorage.getItem("currentSystem")).guid;
           this.http.getRequest("/roles/"+res[0].guid+"/menus", null, this.PortalIp).then(menus => {
             // 校验是否分配底部菜单
-            this.fn.checkMenu(menus).then(res => {
-              if(res['length'] != 4) {
+            this.fn.checkMenu(menus).then(tabs => {
+              if(tabs['length'] != 4) {
                 this.http.presentAlert('提示', '', '未分配菜单，请联系管理员配置！');
                 localStorage.clear();
                 return;
