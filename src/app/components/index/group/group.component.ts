@@ -149,6 +149,8 @@ export class GroupComponent implements OnInit {
           this.expertAssess.lowLevel = Math.min(...standard_Level)
           this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
           this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
+          this.expertAssess.heighLevel = this.common.convertToChinaNum(Math.max(...standard_Level))
+          this.expertAssess.lowLevel = this.common.convertToChinaNum(Math.min(...standard_Level))
         }
       }
     });

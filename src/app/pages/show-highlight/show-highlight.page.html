@@ -21,11 +21,11 @@
     </div>
     <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getHighlights($event)"></ion-searchbar>
     <ion-list lines="full" *ngIf=" highlightTabValue == 'group'">
-      <ion-item *ngFor="let item of groupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
+      <ion-item *ngFor="let item of groupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]" [queryParams]="{hightLightId:item.guid,code:'01'}">
         <ion-label>
-          <!-- <h3> 子集团/直管单位：{{ item.group }}</h3> -->
+          <h3> 子集团/直管单位：{{ item.guid }}</h3>
           <h3>单位名称：{{ item.unit }}</h3>
-          <h3>认定自评等级：{{ item.evaluation_level.name }}</h3>
+          <h3>认定自评等级：{{ item.level }}</h3>
           <h3>自评得分：{{ item.grade }}</h3>
           <h3>推荐人：{{ item.person }}</h3>
           <h3>推荐时间：{{ item.time }}</h3>
@@ -33,11 +33,11 @@
       </ion-item>
     </ion-list>
     <ion-list lines="full" *ngIf=" highlightTabValue == 'subGroup'">
-      <ion-item *ngFor="let item of subGroupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]">
+      <ion-item *ngFor="let item of subGroupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]" [queryParams]="{hightLightId:item.guid,code:'02'}">
         <ion-label>
           <!-- <h3> 子集团/直管单位：{{ item.group }}</h3> -->
           <h3>单位名称：{{ item.unit }}</h3>
-          <h3>认定自评等级：{{ item.evaluation_level.name }}</h3>
+          <h3>认定自评等级：{{ item.level }}</h3>
           <h3>自评得分：{{ item.grade }}</h3>
           <h3>推荐人：{{ item.person }}</h3>
           <h3>推荐时间：{{ item.time }}</h3>
