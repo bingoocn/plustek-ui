@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-mine',
@@ -9,9 +10,11 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class MinePage implements OnInit {
 
+  readonly menus:any = JSON.parse(localStorage.getItem("menu"));
+  public mine:any = [];
   public user:any;
 
-  constructor(private el: ElementRef, public nav: NavController, public http:HttpService) { }
+  constructor(private el: ElementRef, public nav: NavController, public http:HttpService,public fn: CommonService) { }
 
   ngOnInit() {
     // 获取当前登录人信息以及当前角色信息
