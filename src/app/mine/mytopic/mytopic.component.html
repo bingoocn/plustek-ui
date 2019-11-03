@@ -3,15 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>内部交流</ion-title>
+    <ion-title>我的主题</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="grey">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="加载中..." refreshingSpinner="circles" refreshingText="刷新...">
-    </ion-refresher-content>
-  </ion-refresher>
   <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getTopics($event)" [(ngModel)]="exchange_proceeding"></ion-searchbar>
   <ion-list lines="full" *ngIf="topics && topics.length > 0">
     <ion-item *ngFor="let item of topics; let key = index">
@@ -40,7 +36,7 @@
             </ion-col>
             <ion-col size="3">
               <div class="item-foot">
-                <div [routerLink]="['./topicDetail',item.id]">
+                <div [routerLink]="['../topicDetail',item.id]">
                   <i class="iconfont icon-text"></i>
                   <span class="grey mr-left-5">详情</span>
                 </div>
@@ -50,23 +46,4 @@
         </ion-grid>
     </ion-item>
   </ion-list>
-  <ion-infinite-scroll threshold="30px" (ionInfinite)="loadMore($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="加载更多...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  <!-- 页面滑动加载完毕后提示 -->
-  <div *ngIf="!hasMore" >
-    <ion-row>
-      <ion-col class="ion-text-center">
-        <ion-text color="dark">没有更多内容</ion-text>
-      </ion-col>
-    </ion-row>
-  </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" class="no-margin" [routerLink]="['./topicAdd']">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
