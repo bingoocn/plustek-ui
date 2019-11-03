@@ -13,6 +13,7 @@ import { MytopicComponent } from './mytopic/mytopic.component';
 import { MyreplyComponent } from './myreply/myreply.component';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 import { MyreviewComponent } from './myreview/myreview.component';
+import { ReviewDetailComponent } from './myreview/review-detail/review-detail.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,9 @@ const routes: Routes = [
   },{
     path: 'topicDetail/:topicId',
     component: TopicDetailComponent
+  },{
+    path: 'reviewDetail/:reviewId',
+    component: ReviewDetailComponent
   }
 ];
 
@@ -46,7 +50,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MinePage, SetupComponent, ModifyPasswordComponent, MyreportComponent, MytopicComponent,TopicDetailComponent,MyreplyComponent,MyreviewComponent],
+  declarations: [MinePage, SetupComponent, ModifyPasswordComponent, MyreportComponent, MytopicComponent,TopicDetailComponent,MyreplyComponent,MyreviewComponent,ReviewDetailComponent],
   entryComponents: [ModifyPasswordComponent]
 })
 export class MinePageModule {}

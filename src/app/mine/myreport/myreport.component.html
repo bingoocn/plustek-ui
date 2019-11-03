@@ -8,9 +8,9 @@
 </ion-header>
 
 <ion-content color="grey">
-  <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getReports($event)"></ion-searchbar>
+  <!-- <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getReports($event)"></ion-searchbar> -->
   <ion-list lines="full">
-    <ion-item *ngFor="let item of reports; let key = index" detail [routerLink]="['./reports',item.id]">
+    <!-- <ion-item *ngFor="let item of reports; let key = index" detail [routerLink]="['./reports',item.id]">
       <ion-label>
         <h3>《规范》评级：{{ item.level }}</h3>
         <h3>自评得分：{{ item.score }}</h3>
@@ -21,6 +21,6 @@
           <ion-label>{{ item.process }}</ion-label>
         </ion-chip>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 </ion-content>
