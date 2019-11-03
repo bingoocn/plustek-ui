@@ -17,13 +17,5 @@
     <ion-item detail lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index" [routerLink]="['../../indexes',item.indicator.id]" [queryParams]="{indicatorId:indicator_id}">
       <ion-label>{{ (item.indicator && item.indicator.index_num) ? item.indicator.index_num:'' }} {{ (item.indicator && item.indicator.index_name) ? item.indicator.index_name:'' }}</ion-label>
     </ion-item>
-    <!-- <ion-item lines="none" class="mr-top-10" *ngFor="let item of indexes; let key = index">
-      <ion-label class="no-margin">
-        <div class="list-item">{{ item.index_num + item.index_name }}</div>
-        <div *ngIf="item.children != undefined" class="dropdown-list">
-          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../../indexes',i.id]" [queryParams]="{indicatorId:indicator_id,indexId:index_id}">{{ i.index_num + "&nbsp;" + i.index_name }}</div>
-        </div>
-      </ion-label>
-    </ion-item> -->
   </ion-list>
 </ion-content>
