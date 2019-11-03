@@ -52,7 +52,6 @@ export class GroupLeaderComponent implements OnInit {
     baseOption: {
       tooltip: {
           trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
       },
     // color: ['#CD5C5C', '#00CED1', '#9ACD32', '#FFC0CB'],
     stillShowZeroSum: false,
@@ -137,7 +136,6 @@ export class GroupLeaderComponent implements OnInit {
         let resArr = response;
         let unitArr = [];
         let standard_Level = [];
-        let unitLevelArr = [];
 
         unitArr = resArr.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -177,7 +175,6 @@ export class GroupLeaderComponent implements OnInit {
         let accessArr = [];
         response.forEach( item=>{
           if(item.evaluation_level && item.evaluation_level.name !== ''){
-            console.log(item.evaluation_level)
             accessArr.push(item);
             this.selfAccess.accessedNum = accessArr.length;
           }
@@ -202,6 +199,7 @@ export class GroupLeaderComponent implements OnInit {
     });
     //统计最低达级信息
     this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
+      response = response.filter( item => item.evaluation_level.name !== '')
       if(response && response.length > 0){
         this.selfAccess.lowLevel = response[0].evaluation_level.name;
         if(response[0].evaluation_level.name == ''){
