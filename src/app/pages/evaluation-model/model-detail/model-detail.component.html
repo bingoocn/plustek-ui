@@ -10,7 +10,7 @@
 <ion-content color="grey">
   <div class="section">
     <ion-label class="lightgrey size-sm">
-      <span>{{ indicator_name }}（{{ level_name }}）</span>
+      <span [routerLink]="['../../evaluationIndexes',indicator_id]" class="primary">{{ indicator_name }}（{{ level_name }}）</span>
       <i class="iconfont icon-single-arrow-right"></i>
       <span>{{ dimension_name }}</span>
     </ion-label>
