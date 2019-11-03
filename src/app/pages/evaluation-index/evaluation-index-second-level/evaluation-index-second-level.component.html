@@ -20,7 +20,7 @@
       <ion-label class="no-margin">
         <div class="list-item">{{ item.index_num + item.index_name }}</div>
         <div *ngIf="item.children && item.children.length > 0" class="dropdown-list">
-          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../../indexes',i.id]" [queryParams]="{indicatorId:indicator_id,indexId:index_id}">{{ i.index_num + "&nbsp;" + i.index_name }}</div>
+          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index" [routerLink]="['../../indexes',i.id]" [queryParams]="{indicatorId:indicator_id,indexId:index_id}"><div class="list-item">{{ i.index_num + "&nbsp;" + i.index_name }}</div></div>
         </div>
       </ion-label>
     </ion-item>

@@ -74,10 +74,10 @@
         </ion-col>
         <ion-col size="8">
           <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-              最高达级：<span>{{ expertAssess.heighLevel }}</span> ({{expertAssess.heighsum}})家
+              最高达级：<span>{{ expertAssess.heighLevel }}级</span> ({{expertAssess.heighsum}})家
           </div>
           <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-              最低达级：<span>{{ expertAssess.lowLevel }}</span> ({{expertAssess.lowsum}})家
+              最低达级：<span>{{ expertAssess.lowLevel }}级</span> ({{expertAssess.lowsum}})家
           </div>
         </ion-col>
       </ion-row>  
@@ -155,7 +155,7 @@
       <ion-row>
         <ion-col size="12" class="title-pos"> 
           <ion-label class="mine-section-title">公告通知</ion-label> 
-          <span class="more" [routerLink]="['/notice']">更多</span>
+          <span class="more" [routerLink]="['/tabs/notice']">更多</span>
         </ion-col>
         <ion-col size="12"> 
           <ion-slides #slide class="noticeSlide" mode="ios" [options]="noticeOpts" [pager]="false" (ionSlideTouchEnd)="touchEnd()">

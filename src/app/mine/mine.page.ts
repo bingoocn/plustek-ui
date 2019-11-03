@@ -12,6 +12,7 @@ export class MinePage implements OnInit {
 
   readonly menus:any = JSON.parse(localStorage.getItem("menu"));
   public mine:any = [];
+  public myMenus:any = [];
   public user:any;
 
   constructor(private el: ElementRef, public nav: NavController, public http:HttpService,public fn: CommonService) { }
@@ -27,6 +28,11 @@ export class MinePage implements OnInit {
         }
       }
     });
+    // 处理我的菜单数据
+    this.mine = this.fn.forma2Tree(this.menus, 'superiorMenuId', 'guid');
+    if(this.mine && this.mine[3] && this.mine[3].children && this.mine[3].children.length > 0){
+      this.myMenus = this.mine[3].children;
+    }
   }
   ngAfterViewInit(){
     // 通过延时操作更改shadow dom的样式

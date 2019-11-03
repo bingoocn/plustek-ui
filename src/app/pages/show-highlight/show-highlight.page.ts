@@ -17,17 +17,7 @@ export class ShowHighlightPage implements OnInit {
 
   ngOnInit() {
     this.highlightTabValue = 'group';
-    this.groupHighlights = [
-      // {
-      //   guid:'01',
-      //   group:'',
-      //   unit:'',
-      //   level:'三级',
-      //   grade:'80',
-      //   person:'张平',
-      //   time:'2019.9.10'
-      // }
-    ];
+    this.groupHighlights = [];
     this.subGroupHighlights = [
       // {
       //   guid:'01',
@@ -46,15 +36,69 @@ export class ShowHighlightPage implements OnInit {
   getData() {
     // 获取当前登录人信息
     this.http.getUser().then((response:any) => {
-      console.log(response)
       if(response){
         if(response.guid){
-          this.http.getRequest('/specification_evaluations_lightsopt?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=02').then((response:any) => {
+          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid=&recommended_unit_type_code=01').then((response:any) => {
             if(response && response.length > 0){
-              this.groupHighlights = response;
+              let dataArr = [];
+              let groupArr = [];
+              let sunGroupArr = [];
+
+              response.forEach( item=>{
+                if(item.ent_self_eva_mon_approvals.length == 1){
+                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '01'){
+                    groupArr.push({
+                      guid:item.id,
+                      unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
+                      level:item.evaluation_level.name,
+                      grade:item.self_score,
+                      person:item.ent_self_eva_mon_approvals[0].mon_approval_person,
+                      time:item.ent_self_eva_mon_approvals[0].mon_approval_date,
+                    })
+                  }
+                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '02'){
+                    sunGroupArr.push({
+                      guid:item.id,
+                      unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
+                      level:item.evaluation_level.name,
+                      grade:item.self_score,
+                      person:item.ent_self_eva_mon_approvals[0].mon_approval_person,
+                      time:item.ent_self_eva_mon_approvals[0].mon_approval_date,
+                    })
+                  }
+                }
+                if(item.ent_self_eva_mon_approvals.length == 2){
+                  item.ent_self_eva_mon_approvals.forEach( el=>{
+                    if(el.mon_approval_type.code == '01'){
+                      groupArr.push({
+                        guid:item.id,
+                        unit:el.data_unit.name,
+                        level:item.evaluation_level.name,
+                        grade:item.self_score,
+                        person:el.mon_approval_person,
+                        time:el.mon_approval_date,
+                      })
+                    }
+                  })
+                  item.ent_self_eva_mon_approvals.forEach( el=>{
+                    if(el.mon_approval_type.code == '02'){
+                      sunGroupArr.push({
+                        guid:item.id,
+                        unit:el.data_unit.name,
+                        level:item.evaluation_level.name,
+                        grade:item.self_score,
+                        person:el.mon_approval_person,
+                        time:el.mon_approval_date,
+                      })
+                    }
+                  })
+                }
+              })
+              this.groupHighlights = groupArr;
+              this.subGroupHighlights = sunGroupArr;
             }
           });
-          this.http.getRequest('/specification_evaluations_lightsopt?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=01').then((response:any) => {
+          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=02').then((response:any) => {
             if(response && response.length > 0){
               this.subGroupHighlights = response;
             }
@@ -70,7 +114,7 @@ export class ShowHighlightPage implements OnInit {
   }
   // tab切换事件
   tabChanged(ev: any) {
-    console.log('Tab changed', ev);
+
   }
 
   // 关键字搜索
