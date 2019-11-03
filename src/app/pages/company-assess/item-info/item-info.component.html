@@ -9,22 +9,15 @@
 
 
 <ion-content fullscreen padding scroll-y="false" *ngIf="items" >
-    
   <ion-slides  #slide class="banner" mode="ios" pager="ios" [options]="slideOpts" >
-    <ion-slide *ngFor="let item of items; let key = index">
-      <div class='slider-style'>
-        <!-- <ion-item>
-          <ion-label>Unread</ion-label>
-          <ion-badge color="light" slot="end">24</ion-badge>
-        </ion-item>
-        <p>{{item}}</p> -->
-        <p><span>{{item.indicator.index_num}}}</span>{{item.indicator.index_name}}</p>
-        <p>
-          {{item.topics_describe}}
-        </p>
-        <ion-list>
+    <ion-slide *ngFor = "let item of items; let key = index">
+      <div class = 'slider-style' *ngIf='item'>
+        <p  *ngIf='item.indicator'><span>{{item.indicator.index_num}}</span>{{item.indicator.index_name}}</p>
+        <p>{{item.topics_describe}}</p>
+        <ion-list class="item-label size-sm" *ngIf ="item.options">
           <ion-item *ngFor="let entry of item.options">
-            <ion-label>{{entry.topics_content}}</ion-label>
+            <ion-label *ngIf="entry.topics_type.code ==='01'">{{entry.topics_content}}</ion-label>
+            <ion-input *ngIf="entry.topics_type.code ==='02'"  placeholder="请输入……" [(ngModel)]="entry.topics_content"></ion-input>
             <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
           </ion-item>
         </ion-list>
@@ -44,57 +37,7 @@
         <ion-label>下一题</ion-label>
       </ion-tab-button>
 
-      <!-- <ion-tab-button tab="map">
-        <ion-icon name="map"></ion-icon>
-        <ion-label>Map</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="about">
-        <ion-icon name="information-circle"></ion-icon>
-        <ion-label>About</ion-label>
-      </ion-tab-button> -->
+     
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>
-
-<!-- <ion-content color="grey">
-  <div class="section">
-    <ion-item>
-      <ion-label class="lightgrey size-sm">
-      <span>1.11</span>
-    </ion-label>
-    <p>阿三大苏打的阿三大多数动阿三发生发物的去</p>
-    </ion-item>
-  </div>
-  <ion-list>
-    <ion-item *ngFor="let entry of form">
-      <ion-label>{{entry.content}}</ion-label>
-      <ion-checkbox slot="start" [(ngModel)]="entry.isChecked"></ion-checkbox>
-    </ion-item>
-  </ion-list>
-  <ion-tabs>
-
-      <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="schedule">
-            <ion-icon name="calendar"></ion-icon>
-            <ion-label>Schedule</ion-label>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="speakers">
-            <ion-icon name="contacts"></ion-icon>
-            <ion-label>Speakers</ion-label>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="map">
-            <ion-icon name="map"></ion-icon>
-            <ion-label>Map</ion-label>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="about">
-            <ion-icon name="information-circle"></ion-icon>
-            <ion-label>About</ion-label>
-          </ion-tab-button>
-        </ion-tab-bar>
-    
-    </ion-tabs>
-</ion-content> -->
