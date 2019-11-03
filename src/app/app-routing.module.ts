@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'company-assess', loadChildren: './pages/company-assess/company-assess.module#CompanyAssessPageModule' },
   { path: 'assess-info/:assessId', loadChildren: './pages/assess-info/assess-info.module#AssessInfoPageModule' },
   { path: 'leader-check', loadChildren: './pages/leader-check/leader-check.module#LeaderCheckPageModule' },
-  { path: 'department-check', loadChildren: './pages/department-check/department-check.module#DepartmentCheckPageModule' }
+  { path: 'department-check', loadChildren: './pages/department-check/department-check.module#DepartmentCheckPageModule' },
 ];
 @NgModule({
   imports: [

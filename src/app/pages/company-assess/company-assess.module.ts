@@ -10,7 +10,7 @@ import { CompanyAssessPage } from './company-assess.page';
 import {AddAssessComponent} from './add-assess/add-assess.component';
 import {QuestionsPageComponent} from './questions-page/questions-page.component';
 import {ItemInfoComponent} from './item-info/item-info.component';
-import { from } from 'rxjs';
+import {ModalPageComponent} from './item-info/modal-page/modal-page.component'
 
 const routes: Routes = [
   {
@@ -25,6 +25,9 @@ const routes: Routes = [
   }, {
     path: 'itemInfo',
     component: ItemInfoComponent
+  }, {
+    path: 'modalPage',
+    component: ModalPageComponent
   }
 ];
 
@@ -35,6 +38,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CompanyAssessPage, AddAssessComponent, QuestionsPageComponent, ItemInfoComponent]
+  declarations: [CompanyAssessPage, ModalPageComponent, AddAssessComponent, QuestionsPageComponent, ItemInfoComponent]
 })
 export class CompanyAssessPageModule {}
