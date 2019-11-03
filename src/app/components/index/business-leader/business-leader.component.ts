@@ -71,7 +71,7 @@ export class BusinessLeaderComponent implements OnInit {
       // 获取系统运行参数表查找与当前登录人当前角色id相匹配的信息
       const params = {param_name:currentRole.guid};
       this.http.getRequest('/sys_param',params).then((response:any) => {
-        // console.log(response,currentRole)
+        console.log(0,response,currentRole)
         if(response && response.param_value){
           var role = JSON.parse(response.param_value);
           if(role.abbreviation){
@@ -128,25 +128,12 @@ export class BusinessLeaderComponent implements OnInit {
         }
       }
     });
-    //领导阅评 等待接口中
-    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
-      if(response && response.length > 0){
-        // console.log(response)
-        for(let i=0;i<response.length;i++){
-          // if(response[i].ent_self_eva_mon_approvals.length > 0){
-          //   for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-          //     //子集团评价
-          //     if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
-          //       this.slides[2].subGroup ++
-          //     }
-          //     //集团评价
-          //     if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
-          //       this.slides[2].group ++
-          //     }
-          //   }
-          // }
-        }
-      }
+    //领导阅评
+    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=01').then((response:any) => {
+        this.slides[2].group = response.lenth;
+    });
+    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=02').then((response:any) => {
+        this.slides[2].subGroup = response.lenth;
     });
   }
   // 获取企业自评数据
