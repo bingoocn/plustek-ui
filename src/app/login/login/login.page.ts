@@ -80,8 +80,8 @@ export class LoginPage implements OnInit {
           const systemId = JSON.parse(localStorage.getItem("currentSystem")).guid;
           this.http.getRequest("/roles/"+res[0].guid+"/menus", null, this.PortalIp).then(menus => {
             // 校验是否分配底部菜单
-            this.fn.checkMenu(menus).then(res => {
-              if(res['length'] != 4) {
+            this.fn.checkMenu(menus).then(tabs => {
+              if(tabs['length'] != 4) {
                 this.http.presentAlert('提示', '', '未分配菜单，请联系管理员配置！');
                 localStorage.clear();
                 return;
@@ -112,7 +112,7 @@ export class LoginPage implements OnInit {
       this.http.getRequest("/user/systems", null, this.PortalIp).then(systems => {
         for(let i=0; i<systems.length; i++) {
           // App标识校验
-          if(systems[i].businessSystemCode != "A001") continue;
+          if(systems[i].businessSystemCode.split('-')[0] != "App") continue;
           // 存储当前系统信息
           localStorage.setItem("currentSystem", JSON.stringify(systems[i]));
           // 获取当前登录人具有角色列表

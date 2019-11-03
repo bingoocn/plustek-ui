@@ -29,16 +29,6 @@
       <ion-label slot="end" class="grey subtitle" align="right">访问<span class="mr-left-10">5000</span></ion-label>
     </ion-item>
   </div>
-  <div class="section">
-    <ion-item lines="none" class="comment-box">
-      <ion-textarea [(ngModel)]="content" rows="3" cols="20" clearOnEdit="true" placeholder="写评论..."></ion-textarea>
-    </ion-item>
-    <div class="text-right mr-top-5">
-      <ion-button size="small" fill="outline" (click)="comment()">
-        评论
-      </ion-button>
-    </div>
-  </div>
   <div class="section no-padding" *ngIf="comments">
     <ion-list class="no-margin" *ngIf="comments.length > 0">
       <ion-item *ngFor="let item of comments; let key = index">

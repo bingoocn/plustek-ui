@@ -84,10 +84,7 @@ export class LeaderReviewDetailComponent implements OnInit {
       const group_params = {leader_review_content:this.group_leader_review_content,layout_task:this.group_layout_task};
       this.http.postRequest('/specification_evaluations/' + this.reviewId + this.review,group_params).then((response:any) => {
         this.http.presentToast('保存成功！', 'bottom', 'success');
-        // this.ngOnInit();
-        // this.nav.navigateForward('/leader-review');
-        location.replace('/leader-review');
-        location.reload();
+        this.ngOnInit();
       })
     }
   }

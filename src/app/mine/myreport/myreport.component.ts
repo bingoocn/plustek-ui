@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
   selector: 'app-myreport',
@@ -8,34 +10,30 @@ import { Component, OnInit } from '@angular/core';
 export class MyreportComponent implements OnInit {
 
   public reports:any = [];
+  public person_id:string = '';
 
-  constructor() { }
+  constructor(public route:ActivatedRoute, public http:HttpService) { }
 
   ngOnInit() {
-    this.reports = [
-      {
-        guid:'01',
-        level:'三级',
-        score:'10',
-        status:'已提交',
-        time:'2019-10-21',
-        process:'部门审核'
-      },{
-        guid:'02',
-        level:'二级',
-        score:'20',
-        status:'已提交',
-        time:'2019-10-10',
-        process:'领导审核'
-      },{
-        guid:'02',
-        level:'二级',
-        score:'20',
-        status:'已提交',
-        time:'2019-10-09',
-        process:'领导已审核'
+    // 获取当前登录人信息
+    this.http.getUser().then((response:any) => {
+      if(response){
+        if(response.guid){
+          this.person_id = response.guid;
+          const params = { fill_person_id:this.person_id };
+          this.getData(params);
+        }
       }
-    ];
+    })
+  }
+
+  // 发送请求获取数据
+  getData(params:any){
+    this.http.getRequest('/specification_self_evaluations', params).then((response:any) => {
+      if(response && response.length > 0){
+        this.reports = response;
+      }
+    });
   }
 
 }

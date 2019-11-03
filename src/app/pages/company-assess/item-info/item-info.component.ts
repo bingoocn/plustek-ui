@@ -10,15 +10,14 @@ import { CommonService } from 'src/app/service/common/common.service';
 })
 export class ItemInfoComponent implements OnInit {
   public indicatorId: string;
-  public indexId: String;
-  public form: any = [];
-  public questId: string; //问卷的ID
-  public items: any = []; //试卷列表
+  public indexId: string;
+  public questId: string; // 问卷的ID
+  public items: any = []; // 试卷列表
   public slideOpts:any = {
-    effect: 'flip', 
-    speed: 400, 
-    loop:false, 
-    autoplay: { delay: 2000 }, 
+    effect: 'flip',
+    speed: 400,
+    loop: false,
+    // autoplay: { delay: 2000 },
     pager: false
   }
 
@@ -27,58 +26,32 @@ export class ItemInfoComponent implements OnInit {
   ngOnInit() {
     // 获取传递过来的规范评价id
     this.routeInfo.queryParams.subscribe((data) => {this.questId = data.questId, this.indicatorId = data.indicatorId; this.indexId = data.indexId});
-    const params = { indicator_pid: this.indexId, index_level_type_code: '03'};
-    // const params2 = { indicator_id: this.indexId, index_level_type_code: '03'};
+    const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code'};
     this.getIndicator(params);
-    this.form = [
-      {
-        isChecked: true,
-        content: 'sdawrqrqrsd'
-      },
-      {
-        isChecked: true,
-        content: 'sdawrqrqrsd'
-      }, {
-        isChecked: true,
-        content: 'sdawrqrqrsd'
-      }
-    ]
   }
 
-  // 获取当前使用的《规范》评价指标及其下的第一层维度
-  getIndicator(params) {
-    this.http.getRequest(`/indicator_sets/${this.indicatorId}/indicators`,params).then((response: any) => {
+  // 获取当前试题得到具体的题目
+  getIndicator(params: any) {
+    this.http.getRequest(`/indicator_sets/${this.indicatorId}/indicators`, params).then((response: any) => {
       if (response && response.length > 0) {
-        let res = response;
-        console.log(response, '结果是不是想要的值')
-        res.forEach((e,i)=>{
-          this.http.getRequest(`/questionnaires/${this.questId}/topics?indicator_id=`+e.id).then((response: any)=>{
-            console.log(response[0],'asdfafafaf')
-            if(response && response.length > 0){
-              this.items.push(response[0])
+        const res: any = response;
+        res.forEach((e: any, i: any) => {
+          this.http.getRequest(`/questionnaires/${this.questId}/topics?scort=&indicator_id=` + e.id).then((response: any)=>{
+            if (response && response.length > 0) {
+              this.items[i] = response[0];
             }
           })
         })
-        
-
-
-        // this.indicator_id = response[0].id;
-        // if (response[0].index_name) {
-        //   if (response[0].year) {
-        //     this.indicator_name = response[0].index_name;
-        //   } else {
-        //     this.indicator_name = response[0].index_name;
-        //   }
-        // }
-        // if (response[0].id) {
-        //   this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then(( response: any) => {
-        //     if (response && response.length > 0) {
-        //       this.indexes = this.common.forma2Tree(response, 'pid', 'id');
-        //     }
-        //   })
-        // }
       }
     })
   }
-
+  postForm() {
+    const params = {};
+    const id = '';
+    this.http.postRequest(`/specification_evaluations/${id}/self_evaluations`, params).then((response: any) => {
+      this.http.presentToast('保存成功！', 'bottom', 'success');
+      this.ngOnInit();
+      // this.mon_approval_content = '';
+    })
+  }
 }
