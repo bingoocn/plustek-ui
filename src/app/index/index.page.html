@@ -9,7 +9,7 @@
   <app-business-leader *ngIf="role == 'QYBMLD' || role == 'QYFGLD'"></app-business-leader>
   <app-group *ngIf="role == 'JTYWBM'"></app-group>
   <app-group-leader *ngIf="role == 'JTLD'"></app-group-leader>
-  <app-expert *ngIf="flag[0] == '4'"></app-expert>
-  <app-sub-group-leader *ngIf="flag[0] == '5'"></app-sub-group-leader>
-  <app-sub-group-business-unit *ngIf="flag[0] == '6'"></app-sub-group-business-unit>
+  <app-expert *ngIf="role == 'JTLD'"></app-expert>
+  <app-sub-group-leader *ngIf="role == 'JTLD'"></app-sub-group-leader>
+  <app-sub-group-business-unit *ngIf="role == 'JTLD'"></app-sub-group-business-unit>
 </ion-content>
