@@ -12,21 +12,21 @@
     <ion-slide *ngFor = "let item of items; let key = index">
       <div class = 'slider-style' *ngIf='item'>        
         
-        <p *ngIf='item.indicator' class="size-sm"><span>{{item.indicator.index_num}}</span>{{item.indicator.index_name}} 
-        <ion-chip outline color="primary" (click)="presentModal(item.indicator.index_notes)">
+        <p class="size-sm"><span>{{item.label}}</span>
+        <ion-chip outline color="primary" (click)="presentModal(item.index_notes)">
           <ion-label>注释</ion-label>
         </ion-chip></p>
-        <p class="size-sm">{{item.topics_describe}}</p>
-        <ion-list class="item-label size-sm" *ngIf ="item.options">
+        <p class="size-sm">{{item.description}}</p>
+        <ion-list class="item-label size-sm" *ngIf ="(item.options && item.options.length>0 )">
           <ion-item *ngFor="let entry of item.options">
             <ion-label *ngIf="entry.topics_type.code ==='01'">{{entry.topics_content}}</ion-label>
             <ion-input *ngIf="entry.topics_type.code ==='02'"  placeholder="请输入……" [(ngModel)]="entry.topics_content"></ion-input>
-            <ion-checkbox slot="start" [(ngModel)]="entry.flag" (ionChange)="changeOption(entry, item.id)"></ion-checkbox>
+            <ion-checkbox slot="start" [(ngModel)]="entry.checked" (ionChange)="changeOption(entry)"></ion-checkbox>
           </ion-item>
         </ion-list>
       </div>
     </ion-slide>
-  </ion-slides>
+  </ion-slides> 
   
   <ion-tabs>
     <ion-tab-bar slot="bottom">
@@ -39,7 +39,6 @@
         <ion-icon name="arrow-round-forward"></ion-icon>
         <ion-label>下一题</ion-label>
       </ion-tab-button>
-
      
     </ion-tab-bar>
   </ion-tabs>
