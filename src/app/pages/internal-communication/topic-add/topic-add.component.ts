@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-topic-add',
@@ -14,7 +15,7 @@ export class TopicAddComponent implements OnInit {
     remark:''
   }
 
-  constructor(public http:HttpService) { }
+  constructor(public http:HttpService,public nav: NavController) { }
 
   ngOnInit() {}
 
@@ -23,6 +24,7 @@ export class TopicAddComponent implements OnInit {
     const params = this.communication;
     this.http.postRequest('/communions',params).then((response:any) => {
       this.http.presentToast('保存成功！', 'bottom', 'success');
+      this.back();
     })
   }
 
@@ -33,9 +35,17 @@ export class TopicAddComponent implements OnInit {
       if(response && response.id){
         this.http.putRequest('/communions/' + response.id + '/published','').then((res:any) => {
           this.http.presentToast('保存并发布成功！', 'bottom', 'success');
+          this.back();
         })
       }
     })
+  }
+
+  // 返回
+  back(){
+    this.nav.navigateRoot(['/internal-communication']).then(() => {
+      location.reload();
+    });
   }
 
 }
