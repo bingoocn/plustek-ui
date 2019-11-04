@@ -48,6 +48,7 @@ export class ShowHighlightPage implements OnInit {
                 if(item.ent_self_eva_mon_approvals.length == 1){
                   if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '01'){
                     groupArr.push({
+                      subGroup:item.unit.group.name,
                       guid:item.id,
                       unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
                       level:item.evaluation_level.name,
@@ -58,6 +59,7 @@ export class ShowHighlightPage implements OnInit {
                   }
                   if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '02'){
                     sunGroupArr.push({
+                      subGroup:item.unit.group.name,
                       guid:item.id,
                       unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
                       level:item.evaluation_level.name,
@@ -71,6 +73,7 @@ export class ShowHighlightPage implements OnInit {
                   item.ent_self_eva_mon_approvals.forEach( el=>{
                     if(el.mon_approval_type.code == '01'){
                       groupArr.push({
+                        subGroup:item.unit.group.name,
                         guid:item.id,
                         unit:el.data_unit.name,
                         level:item.evaluation_level.name,
@@ -83,6 +86,7 @@ export class ShowHighlightPage implements OnInit {
                   item.ent_self_eva_mon_approvals.forEach( el=>{
                     if(el.mon_approval_type.code == '02'){
                       sunGroupArr.push({
+                        subGroup:item.unit.group.name,
                         guid:item.id,
                         unit:el.data_unit.name,
                         level:item.evaluation_level.name,

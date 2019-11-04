@@ -11,7 +11,7 @@ export class ExpertComponent implements OnInit {
   public noticeOpts : any = {
     effect: 'flip', 
     speed: 400, 
-    loop:true, 
+    loop:false, 
     autoplay: { delay: 2000 }, 
     direction:'vertical'
   }
