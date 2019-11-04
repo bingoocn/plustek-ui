@@ -136,7 +136,6 @@ export class GroupComponent implements OnInit {
         let resArr = response;
         let unitArr = [];
         let standard_Level = [];
-        let unitLevelArr = [];
 
         unitArr = resArr.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id==element.unit.id)) {

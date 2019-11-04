@@ -32,7 +32,7 @@ export class QuestionsPageComponent implements OnInit {
      this.http.getRequest(`/questionnaires`, params).then((response: any)=>{
        this.questId = response[0].id;
        this.indicator_name = response[0].indicator_sets.index_name;
-    //  this.saveForm(this.questId);
+       this.saveForm(this.questId);  
        this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
         if (response[0].id) {
           this.indicatorId = response[0].id

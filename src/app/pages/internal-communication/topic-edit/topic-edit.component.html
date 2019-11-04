@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button text="返回" icon="arrow-back" (click)="back()"></ion-back-button>
+      </ion-buttons>
+      <ion-title>内部交流</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div class="section">
+      <ion-list class="no-margin" *ngIf="communication">
+        <ion-item>
+          <ion-label>交流事项：</ion-label>
+          <ion-input type="text" [(ngModel)]="communication.exchange_proceeding"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>交流内容：</ion-label>
+          <ion-textarea rows="10" clearOnEdit="true" [(ngModel)]="communication.exchange_content"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>备注：</ion-label>
+          <ion-textarea rows="3" clearOnEdit="true" [(ngModel)]="communication.remark"></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <div class="text-center mr-top-10">
+        <ion-button size="small" fill="outline" (click)="saveCommunication()">保存</ion-button>
+        <ion-button size="small" fill="outline" (click)="saveAndPublish()">保存并发布</ion-button>
+      </div>
+    </div>
+  </ion-content>
+  

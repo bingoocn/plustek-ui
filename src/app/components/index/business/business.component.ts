@@ -112,6 +112,7 @@ export class BusinessComponent implements OnInit {
         this.slides[2].subGroup = response.length;
     });
   }
+  
   // 获取最新评价
   // getNews(){
   //   this.http.getRequest('/specification_mon_evaluations?sort=-evaluation_date').then((response:any) => {
@@ -124,6 +125,7 @@ export class BusinessComponent implements OnInit {
   //     }
   //   });
   // }
+
   // 获取公告通知数据
   getNotice(){
     this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
