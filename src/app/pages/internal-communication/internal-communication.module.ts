@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { InternalCommunicationPage } from './internal-communication.page';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 import { TopicAddComponent } from './topic-add/topic-add.component';
+import { TopicEditComponent } from './topic-edit/topic-edit.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
   },{
     path: 'topicAdd',
     component: TopicAddComponent
+  },{
+    path: 'topicEdit/:topicId',
+    component: TopicEditComponent
   }
 ];
 
@@ -29,6 +33,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [InternalCommunicationPage, TopicDetailComponent, TopicAddComponent]
+  declarations: [InternalCommunicationPage, TopicDetailComponent, TopicAddComponent, TopicEditComponent]
 })
 export class InternalCommunicationPageModule {}
