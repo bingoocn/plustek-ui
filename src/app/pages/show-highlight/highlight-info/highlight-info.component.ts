@@ -26,6 +26,7 @@ export class HighlightInfoComponent implements OnInit {
           response.ent_self_eva_mon_approvals.forEach( el=>{
             if(el.mon_approval_type.code == '01'){
               this.highlightInfo.push={
+                subGroup:response.unit.group.name,
                 unitName:el.data_unit.name,
                 selfEvaluationLevel:response.evaluation_level.name,
                 self_score:response.self_score,
@@ -36,6 +37,7 @@ export class HighlightInfoComponent implements OnInit {
             }
             if(el.mon_approval_type.code == '02'){
               this.highlightInfo = {
+                subGroup:response.unit.group.name,
                 unitName:el.data_unit.name,
                 selfEvaluationLevel:response.evaluation_level.name,
                 self_score:response.self_score,

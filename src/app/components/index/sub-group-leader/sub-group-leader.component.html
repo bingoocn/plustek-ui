@@ -20,7 +20,7 @@
         </ion-col>
         <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
           <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
-            <ion-img class="mine-icon-img" src="./assets/overall-evalution.png" alt=""></ion-img>
+            <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">综合评价</ion-label>
         </ion-col>
@@ -154,17 +154,17 @@
           </ion-col>
           <ion-col size="4">
             <div class="mine-section linear-lightGreens" [routerLink]="['/expert-review']">
-                <p>{{selfCheck.checkedNum}}</p>
+                <p>{{expertAssess.checkedNum}}</p>
                 <p>家已检查</p>
               <ion-img class="mine-icon-bg" src="./assets/expert-review.png" alt=""></ion-img>
             </div>
           </ion-col>
           <ion-col size="8">
             <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-                最高达级：<span>{{ selfCheck.heighLevel }}</span> ({{selfCheck.heighsum}})家
+                最高达级：<span>{{ expertAssess.heighLevel }}级</span> ({{expertAssess.heighsum}})家
             </div>
             <div class="mine-section-item linear-lightGreen" [routerLink]="['/expert-review']">
-                最高达级：<span>{{ selfCheck.lowLevel }}</span> ({{selfCheck.lowsum}})家
+                最高达级：<span>{{ expertAssess.lowLevel }}级</span> ({{expertAssess.lowsum}})家
             </div>
           </ion-col>
         </ion-row>  
