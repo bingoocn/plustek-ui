@@ -16,13 +16,13 @@ export class InterationInfoComponent implements OnInit {
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.interationId = params['interationId']);
     this.interationInfo = {
-      subGroup:'',
-      unitName:'',
-      selfEvaluationLevel:'',
-      selfEvaluationScore:'',
-      person:'',
-      time:'',
-      content:''
+      subGroup:'中国北方工业公司',
+      unitName:'中国万宝工程公司',
+      selfEvaluationLevel:'二级',
+      selfEvaluationScore:'80',
+      person:'张连',
+      time:'2019-09-10',
+      content:'该单位精益管理工作良好，继续努力'
     }
     this.getData();
   }

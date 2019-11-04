@@ -11,7 +11,7 @@ export class ExpertComponent implements OnInit {
   public noticeOpts : any = {
     effect: 'flip', 
     speed: 400, 
-    loop:true, 
+    loop:false, 
     autoplay: { delay: 2000 }, 
     direction:'vertical'
   }
@@ -28,11 +28,11 @@ export class ExpertComponent implements OnInit {
   };
   //专家检查信息
   public expertAssess :any = {
-    checkedNum:'35',
-    heighLevel:'三级',
-    lowLevel:'五级',
-    heighsum:'30',
-    lowsum:'23'
+    checkedNum:0,
+    heighLevel:'',
+    lowLevel:'',
+    heighsum:0,
+    lowsum:0
   };
  
   constructor( public http:HttpService,public common: CommonService) { }
@@ -46,32 +46,46 @@ export class ExpertComponent implements OnInit {
   getSelfAssess(){
     this.http.getRequest('/specification_evaluations').then((response:any) => {
       if(response && response.length > 0){
-        this.selfAccess.accessedNum = response.length;
+        let accessArr = [];
+        response.forEach( item=>{
+          if(item.evaluation_level && item.evaluation_level.name !== ''){
+            accessArr.push(item);
+            this.selfAccess.accessedNum = accessArr.length;
+          }
+        })
       }
     });
     //统计最高达级信息
     this.http.getRequest('/specification_evaluations?sort=-evaluation_level_code').then((response:any) => {
       if(response && response.length > 0){
         this.selfAccess.heighLevel = response[0].evaluation_level.name;
-        this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
-        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
-          if(response && response.length > 0){
-            this.selfAccess.heighsum = response.length;
-          }
-        });
+        if(response[0].evaluation_level.name == ''){
+          this.selfAccess.heighsum = 0;
+        }else{
+          this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
+          this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+            if(response && response.length > 0){
+              this.selfAccess.heighsum = response.length;
+            }
+          });
+        }
       }
     });
     //统计最低达级信息
     this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
+      response = response.filter( item => item.evaluation_level.name !== '')
       if(response && response.length > 0){
         this.selfAccess.lowLevel = response[0].evaluation_level.name;
-        this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
-        this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
-          if(response && response.length > 0){
-            // console.log(response)
-            this.selfAccess.lowsum = response.length;
-          }
-        });
+        if(response[0].evaluation_level.name == ''){
+          this.selfAccess.lowsum = 0;
+        }else{
+          this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+          this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+            if(response && response.length > 0){
+              this.selfAccess.lowsum = response.length;
+            }
+          });
+        }
       }
     });
   }
