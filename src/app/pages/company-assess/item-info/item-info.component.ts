@@ -60,45 +60,44 @@ export class ItemInfoComponent implements OnInit {
   postForm() {
     this.formate();
     const params = {
-      options:this.result,
-      index_slave_id:this.resultArr.index_slave_id
+      options: this.result,
+      index_slave_id: this.resultArr.index_slave_id
     };
     this.http.postRequest(`/specification_evaluations/${this.questId}/self_evaluations`, params).then((response: any) => {
-      this.http.presentToast('保存成功！', 'bottom', 'success');
+      // this.http.presentToast('保存成功！', 'bottom', 'success');
     })
   }
-  aa(item, id) {
+  changeOption(item: any, id: any) {
     this.momentArr.push({
-      index_slave_id:id,
-      item:item,
+      index_slave_id: id,
+      item: item,
     })
   }
   // 处理得到的值,留下选中的选项
-  formate(){
+  formate() {
     // 过滤掉不需要的数据
-    this.momentArr.forEach((e,i)=>{
-      if(e.item.flag){
+    this.momentArr.forEach((e: any, i: any) => {
+      if (e.item.flag) {
         this.resultArr.push({
-          index_slave_id:e.index_slave_id,
-          option:e.item,
+          index_slave_id: e.index_slave_id,
+          option: e.item,
         })
       }
     })
     // 处理成最终的样式
-    this.resultArr.forEach((e,i)=>{
+    this.resultArr.forEach((e: any, i: any) => {
       this.result.push(e.option)
     });
-    this.result.forEach((e,i)=>{
-      e.topics_slave_id=e.id;
-      e.supplementary_content=e.topics_content;
+    this.result.forEach((e: any, i: any) => {
+      e.topics_slave_id = e.id;
+      e.supplementary_content = e.topics_content;
     })
   }
-  getGuid(){
-    
-  }
+  // 上一题
   prev() {
     this.slide.slidePrev();
   }
+  // 下一题
   next() {
     // this.postForm();
     this.slide.slideNext();
