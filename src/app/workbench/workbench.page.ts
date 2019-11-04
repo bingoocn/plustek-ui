@@ -9,12 +9,10 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./workbench.page.scss'],
 })
 export class WorkbenchPage implements OnInit {
-  readonly menus:any = JSON.parse(localStorage.getItem("menu"));
-  // 定义工作台各模块变量
-  public workbench:any = [];
-  public learn:any = [];
-  public evaluation:any = [];
-  public examination:any = [];
+  // 当前登录人所具有角色
+  readonly currentRole:any = JSON.parse(localStorage.getItem("currentRole"));
+  // 当前登录人角色缩写
+  public role:any;
 
   constructor(
     private el: ElementRef,
@@ -32,18 +30,10 @@ export class WorkbenchPage implements OnInit {
         toolbar[i].shadowRoot.querySelector('a').style.padding = '0';
       }
     }, 1000);
-    // 处理工作台菜单数据
-    this.workbench = this.fn.forma2Tree(this.menus, 'superiorMenuId', 'guid');
-     // 学习交流
-     this.learn = this.workbench[2]['children'][0]['children'];
-     // 规范评价
-     this.evaluation = this.workbench[2]['children'][1]['children'];
-    if(this.workbench[2]['children']['length'] == '3'){
-      // 评价考核
-      this.examination = this.workbench[2]['children'][2]['children'];
-    }else{
-      // 评价考核
-      this.examination = [];
-    }
+    // 根据登录人角色控制工作台各模块入口
+    this.http.getRequest("/sys_param?param_name="+this.currentRole.guid, null).then(res => {
+      this.role = JSON.parse(res.param_value).abbreviation;
+      console.log(this.role)
+    })
   }
 }
