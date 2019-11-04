@@ -11,6 +11,7 @@ export class BusinessComponent implements OnInit {
   public slideOpts:any = {
     effect: 'flip', 
     speed: 400, 
+    spaceBetween: 100,
     loop:false, 
     autoplay: { delay: 2000 }, 
     pager: false
