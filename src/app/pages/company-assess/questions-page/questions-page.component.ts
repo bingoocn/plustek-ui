@@ -18,6 +18,7 @@ export class QuestionsPageComponent implements OnInit {
   public indicatorId: string;
   public questId: string; //问卷的ID
   public subordinatePlate: string; // 所属板块
+  public companyId: string; // 企业自评ID
 
   constructor(public routeInfo: ActivatedRoute, public http: HttpService, private router: Router, public common: CommonService, ) { }
 
@@ -32,7 +33,7 @@ export class QuestionsPageComponent implements OnInit {
      this.http.getRequest(`/questionnaires`, params).then((response: any)=>{
        this.questId = response[0].id;
        this.indicator_name = response[0].indicator_sets.index_name;
-       this.saveForm(this.questId);  
+       this.saveForm(this.questId);
        this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
         if (response[0].id) {
           this.indicatorId = response[0].id
@@ -47,9 +48,20 @@ export class QuestionsPageComponent implements OnInit {
   }
 
   saveForm(questId: any) {
-    const params = {questionnaire_id: questId, subordinate_plate: this.subordinatePlate, evaluation_level_code : this.evaluationLevelCode, evaluation_date: this.evaluationDate, };
+    const params = {
+          topics_master_id: questId,
+          subordinate_plate: this.subordinatePlate,
+          evaluation_level_code : this.evaluationLevelCode,
+          evaluation_date: this.evaluationDate, 
+          // self_evaluations:{
+          //   index_slave_id:'',
+          //   option
+          // }
+        };
     this.http.postRequest(`/specification_evaluations`, params).then((response: any) => {
       // this.http.presentToast('保存成功！', 'bottom', 'success');
+      console.log('自评Id', response)
+      this.companyId = response.id
     }, (error: any) => {
     })
     

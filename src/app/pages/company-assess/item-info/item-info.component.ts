@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
 import { CommonService } from 'src/app/service/common/common.service';
 import { ModalController } from '@ionic/angular';
-import {ModalPageComponent} from './modal-page/modal-page.component'
+import { ModalPageComponent } from './modal-page/modal-page.component'
 
 @Component({
   selector: 'app-item-info',
@@ -18,7 +18,9 @@ export class ItemInfoComponent implements OnInit {
   public momentArr: any = []; // 暂时存放的选中数组
   public resultArr: any = []; // 过滤选中数组
   public result: any = []; // 保存选中数组
-  public indexes: any =[];
+  public indexes: any = [];
+  public selfEvaluations: any = []; // 保存的数组
+  public companyId:any; // 企业自评ID
   public slideOpts: any = {
     effect: 'flip',
     speed: 400,
@@ -29,63 +31,63 @@ export class ItemInfoComponent implements OnInit {
   }
   @ViewChild("slide", { static: false }) slide;
   constructor(public modalController: ModalController,
-              public routeInfo: ActivatedRoute,
-              public http: HttpService,
-              private router: Router,
-              public common: CommonService, ) { }
+    public routeInfo: ActivatedRoute,
+    public http: HttpService,
+    private router: Router,
+    public common: CommonService, ) { }
   ngOnInit() {
     // 获取传递过来的规范评价id
     this.routeInfo.queryParams.subscribe((data) => {
-      this.questId = data.questId;
+      this.questId = data.questId,
+      this.companyId = data.companyId,
       this.indicatorId = data.indicatorId,
-      this.indexId = data.indexId});
-    const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code'};
+        this.indexId = data.indexId
+    });
+    const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code' };
     this.getIndicator(params);
   }
   // 获取当前试题得到具体的题目
   getIndicator(params: any) {
     this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
       if (response && response.length > 0) {
-        response.forEach((e,i)=>{
+        response.forEach((e, i) => {
           // 这里的判断有点牵强，但是可以用
-          if(e.index_notes){
+          if (e.index_notes) {
             this.items.push(e);
           }
         })
 
-        this.items.forEach((e,i)=>{
-          if(e.options && e.options.length>0){
-            e.options.forEach((el,i)=>{
+        this.items.forEach((e: any, i: any) => {
+          if (e.options && e.options.length > 0) {
+            e.options.forEach((el: any, i: any) => {
               el.checked = false;
             })
           }
         })
-
-        console.log(this.items,'显示的数据')
-
+        console.log(this.items, '显示的数据')
       }
     })
 
     // this.http.getRequest('/indicator_sets/' + this.indicatorId + '/indicators').then(( response: any) => {
-      // if (response && response.length > 0) {
-      //   response.forEach((e,i)=>{
-      //     if(e.index_level_type.code ==='03'){
-      //       this.indexes.push(e)
-      //     }
-      //   })
-        // 获取选项
-        // this.indexes.forEach((e,i)=>{
-        //   this.http.getRequest(`/questionnaires/${this.questId}/topics?scort=&indicator_id=` + e.id).then((response: any) => {
-        //     if (response && response.length > 0) {
-        //       for(let k=0; k<response[0].length; k++) {
-        //         response[0][k]['flag'] = false;
-        //       }
-        //       this.items[i] = response[0];
-        //       console.log(this.items,'dddddd')
-        //     }
-        //   })
-        // })
-      // }
+    // if (response && response.length > 0) {
+    //   response.forEach((e,i)=>{
+    //     if(e.index_level_type.code ==='03'){
+    //       this.indexes.push(e)
+    //     }
+    //   })
+    // 获取选项
+    // this.indexes.forEach((e,i)=>{
+    //   this.http.getRequest(`/questionnaires/${this.questId}/topics?scort=&indicator_id=` + e.id).then((response: any) => {
+    //     if (response && response.length > 0) {
+    //       for(let k=0; k<response[0].length; k++) {
+    //         response[0][k]['flag'] = false;
+    //       }
+    //       this.items[i] = response[0];
+    //       console.log(this.items,'dddddd')
+    //     }
+    //   })
+    // })
+    // }
     // })
 
     // this.http.getRequest(`/indicator_sets/${this.indicatorId}/indicators`, params).then((response: any) => {
@@ -113,19 +115,59 @@ export class ItemInfoComponent implements OnInit {
       // this.http.presentToast('保存成功！', 'bottom', 'success');
     })
   }
-  changeOption(val) {
-    // this.momentArr.push({
-    //   index_slave_id: id,
-    //   item: item,
-    // })
-    console.log(val)
+  changeOption(item: any, id: any) {
+    this.momentArr.push({
+      index_slave_id: id,
+      item: item,
+    })
+    // this.momentArr.push({item})
+  }
+  save() {
+    this.itemsFormate();
+    const params = {
+      id: this.companyId, // 自评ID
+      topics_master_id: this.questId ,// 问卷Id
+      added_self_evaluations: this.selfEvaluations
+    };
+    this.http.putRequest(`/specification_evaluations/${this.companyId}`,params).then((response: any) => {
+      console.log(response,'保存成功')
+      if(response && response.length > 0){
 
+      }
+    })
+
+  }
+  // 处理得到的数据
+  itemsFormate() {
+    // {index_slave_id: '', options:[]}
+    this.selfEvaluations = [{ index_slave_id: '', options: [] }];
+    this.items.forEach((e: any, i: any) => {
+      let newOption = [];
+      e.options.forEach((el: any, j: any) => {
+        // console.log(el, '每一项')
+        if (el.checked) {
+          newOption.push({
+            topics_slave_id: el.id,
+            supplementary_content: el.topics_content
+          });
+          this.selfEvaluations[i] = {
+            index_slave_id: e.id,
+            options: newOption,
+          }
+        }
+      })
+      console.log(this.selfEvaluations, '遍历出的结果')
+    })
+  }
+
+  formate212() {
+    // this.selfEvaluations.forEach(e)
   }
   // 处理得到的值,留下选中的选项
   formate() {
     // 过滤掉不需要的数据
     this.momentArr.forEach((e: any, i: any) => {
-      if (e.item.flag) {
+      if (e.item.checked) {
         this.resultArr.push({
           index_slave_id: e.index_slave_id,
           option: e.item,
@@ -151,14 +193,13 @@ export class ItemInfoComponent implements OnInit {
   }
   slideDidChange() {
     this.formate();
-    console.log(this.result,'最后的结果值')
-
+    // console.log(this.result,'最后的结果值')
     // this.saveItem()
   }
   async presentModal(val) {
-    const modal =  await this.modalController.create({
+    const modal = await this.modalController.create({
       component: ModalPageComponent,
-      showBackdrop:true,
+      showBackdrop: true,
       componentProps: { value: val }
     });
     return await modal.present();
