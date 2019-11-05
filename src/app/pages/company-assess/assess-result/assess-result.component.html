@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>自评结果</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" class="ion-no-margin ion-no-padding" *ngIf="assessInfo">
+    <ion-input>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <span>子集团/直管单位</span>
+            <span>{{ (assessInfo.unit && assessInfo.unit.group && assessInfo.unit.group.name) ? assessInfo.unit.group.name:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>单位名称：</span>
+            <span>{{ (assessInfo.unit && assessInfo.unit.name) ? assessInfo.unit.name:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>所属板块：</span>
+            <span>{{ (assessInfo.subordinate_plate) ? assessInfo.subordinate_plate:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>评价日期：</span>
+            <span>{{ (assessInfo.evaluation_date) ? assessInfo.evaluation_date:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>认定自评等级：</span>
+            <span>{{ (assessInfo.evaluation_level && assessInfo.evaluation_level.name) ? assessInfo.evaluation_level.name:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>自评得分：</span>
+            <span>{{ (assessInfo.self_score ) ? assessInfo.self_score:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>自评累计得分：</span>
+            <span>{{ (assessInfo.self_score ) ? assessInfo.self_score:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>百分制得分：</span>
+            <span>{{ (assessInfo.self_score ) ? assessInfo.self_score:'' }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-input>
+    <ion-item>
+      <ion-label position="stacked">
+        主要亮点：
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="main_highlight" placeholder="请输入……"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        主要不足：
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="major_deficiency" placeholder="请输入……"></ion-input>
+    </ion-item>
+  </ion-list>
+  <!-- <div class="section mr-top-10">
+      <div class="text-center">
+        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../reachStandardEvaluation',reviewId]">规范达标评价</ion-button>
+        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button>
+        <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button>
+      </div>
+    </div> -->
+  <div class="ion-padding">
+    <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin" >保存</ion-button>
+  </div>
+</ion-content>
