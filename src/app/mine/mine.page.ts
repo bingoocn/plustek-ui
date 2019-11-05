@@ -14,7 +14,7 @@ export class MinePage implements OnInit {
   public mine:any = [];
   public myMenus:any = [];
   public user:any;
-  readonly role_abbr:string;
+  public role_abbr:string;
 
   constructor(private el: ElementRef, public nav: NavController, public http:HttpService,public fn: CommonService) { }
 
