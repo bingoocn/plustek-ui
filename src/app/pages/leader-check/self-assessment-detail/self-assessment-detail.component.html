@@ -39,11 +39,11 @@
           </ion-col>
           <ion-col size="12">
             <span>部门审核日期：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.standard_result && assessInfo.evaluation_result.standard_result.name) ? assessInfo.evaluation_result.standard_result.name:'' }}</span>
+            <span>{{ (dept_check_info && dept_check_info.create_time) ? dept_check_info.create_time:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>部门审核人： </span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.gist_score) ? assessInfo.evaluation_result.gist_score:'' }}</span>
+            <span>{{ (dept_check_info && dept_check_info.creator) ? assessInfo.evaluation_result.gist_score:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>部门审核意见：</span>
@@ -74,6 +74,7 @@
     </ion-item>
   </ion-list>
   <div class="section mr-top-10 text-center">
-    <ion-button size="small" fill="outline" [routerLink]="['../../leaderCheckDetail',assessId]">查看领导审核详情</ion-button>
+    <ion-button size="small" fill="outline" *ngIf="!is_checked">进入领导审核</ion-button>
+    <ion-button size="small" fill="outline" *ngIf="is_checked" [routerLink]="['../../leaderCheckDetail',assessId]">查看领导审核详情</ion-button>
   </div>
 </ion-content>

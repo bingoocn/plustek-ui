@@ -82,10 +82,10 @@ export class MonitorEvaluationDetailComponent implements OnInit {
           var paramValue = JSON.parse(response.param_value);
           if(paramValue.abbreviation){
             var recommended = '';
-            if(paramValue.abbreviation === 'JTLD'){
+            if(paramValue.abbreviation === 'JTYWBM'){
               recommended = '/top_group_recommended';
             }
-            if(paramValue.abbreviation === 'ZJTLD'){
+            if(paramValue.abbreviation === 'ZJTYWBM'){
               recommended = '/sub_group_recommended';
             }
             if(recommended !== ''){
@@ -111,10 +111,10 @@ export class MonitorEvaluationDetailComponent implements OnInit {
           var paramValue = JSON.parse(response.param_value);
           if(paramValue.abbreviation){
             var monitor = '';
-            if(paramValue.abbreviation === 'JTLD'){
+            if(paramValue.abbreviation === 'JTYWBM'){
               monitor = '/top_group_monitor';
             }
-            if(paramValue.abbreviation === 'ZJTLD'){
+            if(paramValue.abbreviation === 'ZJTYWBM'){
               monitor = '/sub_group_monitor';
             }
             if(monitor !== ''){

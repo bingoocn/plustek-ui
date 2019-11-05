@@ -18,13 +18,7 @@
     </ion-item>
   </div>
   <div class="section mr-top-10 no-padding">
-    <ion-list class="no-margin" *ngIf="myMenus && myMenus.length > 0">
-      <!-- <ion-item detail class="ion-text-nowrap" *ngFor="let item of myMenus;let key=index" [routerLink]="[item.menuUrl]">
-        <ion-img slot="start" class="ion-list-img" src="{{ './assets/'+item.menuCode.split('/')[1]+'.png' }}"></ion-img>
-        <ion-label>
-          {{ item.menuName }}
-        </ion-label>
-      </ion-item> -->
+    <ion-list class="no-margin">
       <ion-item detail class="ion-text-nowrap" [routerLink]="['./mytopic']" *ngIf="role_abbr != 'ZJ' && role_abbr != 'undefined'">
         <ion-img slot="start" class="ion-list-img" src="./assets/mytopic.png"></ion-img>
         <ion-label>

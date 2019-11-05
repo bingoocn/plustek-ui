@@ -11,6 +11,7 @@ export class LeaderCheckPage implements OnInit {
 
 
   public checkTabValue: string;//当前tab值
+  public unit_id:string = '';// 当前登录人所属组织机构id
   public unAssess: any = [];//待审核
   public assess: any = [];//已审核
 
@@ -18,10 +19,16 @@ export class LeaderCheckPage implements OnInit {
 
   ngOnInit() {
     this.checkTabValue = 'unchecked';// 默认显示待审核的
-    const uncheckedParams = { evaluation_status_code:'04',sort:'-evaluation_date' };
-    this.getUnCheckedData(uncheckedParams);
-    const checkedParams = { evaluation_status_code:'05',sort:'-evaluation_date' };
-    this.getCheckedData(checkedParams);
+    // 获取当前登录人所属单位信息
+    this.http.getUser().then((response:any) => {
+      if(response && response.subordinateOrgId){
+        this.unit_id = response.subordinateOrgId;
+        const uncheckedParams = { evaluation_status_code:'03',sort:'-evaluation_date',apply_id:this.unit_id };
+        this.getUnCheckedData(uncheckedParams);
+        const checkedParams = { evaluation_status_code:'05',sort:'-evaluation_date',apply_id:this.unit_id };
+        this.getCheckedData(checkedParams);
+      }
+    })
   }
 
   // 发送请求获取待审核数据
