@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>领导审核详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <div class="section" *ngIf="indicator_name">
+    <ion-label class="lightgrey size-sm">
+      <span>{{ indicator_name }} （{{ level_name }}）</span>
+    </ion-label>
+  </div>
+  <ion-list class="bg-LightGrey" *ngIf="topics">
+    <ion-item class="mr-top-10" lines="none" *ngFor="let item of topics; let key = index">
+      <ion-label class="no-margin">
+        <div class="list-item">{{ item.index_num + item.index_name }}</div>
+        <div *ngIf="item.children != undefined" class="dropdown-list">
+          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index">
+            <div class="list-item">{{ i.index_num + "&nbsp;" + i.index_name }}</div>
+            <div class="ion-text-wrap size-sm">{{ i.topics_describe}}</div>
+            <ion-list *ngIf="i.options" class="no-margin">
+              <ion-item lines="none" *ngFor="let j of i.options;let idx = index">
+                <ion-label class="ion-text-wrap">{{ j.topics_content }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
