@@ -26,20 +26,9 @@ export class RolesComponent implements OnInit {
   }
   // 存储当前登录人登入角色
   onClick(e) {
-    this.http.getRequest("/roles/"+e.guid+"/menus", null, this.PortalIp).then(menus => {
-      this.fn.checkMenu(menus).then(res => {
-        if(res['length'] != 4) {
-          this.http.presentAlert('提示', '', '未分配菜单，请联系管理员配置！');
-          localStorage.clear();
-          return;
-        }
-        localStorage.setItem('currentRole', JSON.stringify(e));
-        // 存储并登入系统
-        localStorage.setItem("menu", JSON.stringify(menus));
-        this.nav.navigateRoot("/tabs/index");
-      });
-      this.navParams.data.modal.dismiss();
-    })
+    localStorage.setItem('currentRole', JSON.stringify(e));
+    this.nav.navigateRoot("/tabs/index");
+    this.navParams.data.modal.dismiss();
   }
   // 关闭模态框
   doClose() {

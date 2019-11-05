@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar color="lightPrimary">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>企业自评详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="grey">
+  <ion-list lines="full" class="no-margin" *ngIf="assessInfo">
+    <ion-item>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <span>子集团/直管单位：</span>
+            <span>{{ (assessInfo.unit && assessInfo.unit.group && assessInfo.unit.group.name) ? assessInfo.unit.group.name:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>单位名称：</span>
+            <span>{{ (assessInfo.unit && assessInfo.unit.name) ? assessInfo.unit.name:'' }}</span>
+          </ion-col>
+
+          <ion-col size="12">
+            <span>所属板块：</span>
+            <span>{{ (assessInfo.subordinate_plate) ? assessInfo.subordinate_plate:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>评价日期：</span>
+            <span>{{ (assessInfo.evaluation_date) ? assessInfo.evaluation_date:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>认定自评等级：</span>
+            <span>{{ (assessInfo.evaluation_level && assessInfo.evaluation_level.name) ? assessInfo.evaluation_level.name:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>自评得分：</span>
+            <span>{{ (assessInfo.self_score ) ? assessInfo.self_score:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>部门审核日期：</span>
+            <span>{{ (dept_check_info && dept_check_info.create_time) ? dept_check_info.create_time:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>部门审核人： </span>
+            <span>{{ (dept_check_info && dept_check_info.creator) ? assessInfo.evaluation_result.gist_score:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>部门审核意见：</span>
+            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score) ? assessInfo.evaluation_result.plus_score:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>领导审核日期：</span>
+            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>领导审核人：</span>
+            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>领导审核意见：</span>
+            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>主要亮点：</span>
+            <span>{{ (assessInfo.main_highlight ) ? assessInfo.main_highlight:'' }}</span>
+          </ion-col>
+          <ion-col size="12">
+            <span>主要不足：</span>
+            <span>{{ (assessInfo.major_deficiency) ? assessInfo.major_deficiency:'' }}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <div class="section mr-top-10 text-center">
+    <ion-button size="small" fill="outline" *ngIf="!is_checked">进入领导审核</ion-button>
+    <ion-button size="small" fill="outline" *ngIf="is_checked" [routerLink]="['../../leaderCheckDetail',assessId]">查看领导审核详情</ion-button>
+  </div>
+</ion-content>

@@ -29,22 +29,6 @@ export class EvaluationModelPage implements OnInit {
         if(response[0].indicator_sets && response[0].indicator_sets.index_name){
           this.indicator_name = response[0].indicator_sets.index_name;
         }
-        // this.indicator_id = response[0].id;
-        // if(response[0].index_name){
-        //   this.indicator_name = response[0].index_name;
-        // }
-        // if(response[0].id){
-        //   this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {
-        //     if(response && response.length > 0){
-        //       this.indexes = [];
-        //       response.forEach(element => {
-        //         if(element.index_level_type && element.index_level_type.code && element.index_level_type.code == '01'){
-        //           this.indexes.push({id:element.id,index_name:element.index_name,index_num:element.index_num});
-        //         }
-        //       });
-        //     }
-        //   })
-        // }
       }
     })
   }
