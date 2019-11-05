@@ -76,23 +76,9 @@ export class LoginPage implements OnInit {
             this.showModal(res);
             return;
           }
-          // 根据当前登录人角色获取系统菜单
-          const systemId = JSON.parse(localStorage.getItem("currentSystem")).guid;
-          this.http.getRequest("/roles/"+res[0].guid+"/menus", null, this.PortalIp).then(menus => {
-            // 校验是否分配底部菜单
-            this.fn.checkMenu(menus).then(tabs => {
-              if(tabs['length'] != 4) {
-                this.http.presentAlert('提示', '', '未分配菜单，请联系管理员配置！');
-                localStorage.clear();
-                return;
-              }
-              // 存储当前登录人角色信息
-              localStorage.setItem("currentRole", JSON.stringify(res[0]));
-              // 存储菜单信息
-              localStorage.setItem("menu", JSON.stringify(menus));
-              this.nav.navigateRoot("/tabs/index");
-            });
-          })
+          // 存储当前登录人角色信息
+          localStorage.setItem("currentRole", JSON.stringify(res[0]));
+          this.nav.navigateRoot("/tabs/index");
         });
       }, error => {
         localStorage.clear();
@@ -110,9 +96,10 @@ export class LoginPage implements OnInit {
       const mineRoles = [];
       // 获取当前登录人所具有系统
       this.http.getRequest("/user/systems", null, this.PortalIp).then(systems => {
+        console.log(systems)
         for(let i=0; i<systems.length; i++) {
           // App标识校验
-          if(systems[i].businessSystemCode.split('-')[0] != "App") continue;
+          // if(systems[i].businessSystemCode.split('-')[0] != "App") continue;
           // 存储当前系统信息
           localStorage.setItem("currentSystem", JSON.stringify(systems[i]));
           // 获取当前登录人具有角色列表
