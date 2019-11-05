@@ -9,7 +9,7 @@
 
 <ion-content class="padding-10">
   <ion-list lines="full" class="ion-no-margin ion-no-padding " *ngIf="assessInfo">
-    <ion-input>
+    <ion-item>
       <ion-row>
         <ion-col size="12">
           <span>子集团/直管单位</span>
@@ -44,7 +44,7 @@
           <span>{{ (assessInfo.self_score ) ? assessInfo.self_score:'' }}</span>
         </ion-col>
       </ion-row>
-    </ion-input>
+    </ion-item>
     <ion-item>
       <ion-label position="stacked">
         主要亮点：
@@ -58,13 +58,6 @@
       <ion-input type="text" [(ngModel)]="major_deficiency" placeholder="请输入……"></ion-input>
     </ion-item>
   </ion-list>
-  <!-- <div class="section mr-top-10">
-      <div class="text-center">
-        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../reachStandardEvaluation',reviewId]">规范达标评价</ion-button>
-        <ion-button size="small" fill="outline" class="mr-right-10" [routerLink]="['../../expertGroup',reviewId]">专家组</ion-button>
-        <ion-button size="small" fill="outline" [routerLink]="['../../deficiencySuggestion',reviewId]">不足及建议</ion-button>
-      </div>
-    </div> -->
   <div class="ion-padding">
     <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin">保存</ion-button>
   </div>
