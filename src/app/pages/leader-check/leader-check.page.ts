@@ -17,17 +17,34 @@ export class LeaderCheckPage implements OnInit {
   constructor(public router: Router, public http: HttpService) { }
 
   ngOnInit() {
-    this.getData();
     this.checkTabValue = 'unchecked';// 默认显示待审核的
+    const uncheckedParams = { evaluation_status_code:'04',sort:'-evaluation_date' };
+    this.getUnCheckedData(uncheckedParams);
+    const checkedParams = { evaluation_status_code:'05',sort:'-evaluation_date' };
+    this.getCheckedData(checkedParams);
   }
 
-  // 发送请求获取数据
-  getData() {
-    this.http.getRequest('/specification_evaluations').then((response: any) => {
+  // 发送请求获取待审核数据
+  getUnCheckedData(params) {
+    this.http.getRequest('/specification_evaluations',params).then((response: any) => {
       if (response && response.length > 0) {
-        // this.assess = response;
+        this.unAssess = response;
       }
     });
+  }
+
+  // 发送请求获取已审核数据
+  getCheckedData(params) {
+    this.http.getRequest('/specification_evaluations',params).then((response: any) => {
+      if (response && response.length > 0) {
+        this.assess = response;
+      }
+    });
+  }
+
+  // tab切换
+  segmentChanged(e){
+
   }
 
 }
