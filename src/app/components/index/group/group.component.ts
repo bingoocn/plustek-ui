@@ -26,29 +26,13 @@ export class GroupComponent implements OnInit {
     pager: false
   }
   // 最新评价
-  public news = {
-    id:'8ae4af936df2617b016df2ce68f10008',
-    notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
-    date:'2019-09-10'
-  };
+  // public news = {
+  //   id:'8ae4af936df2617b016df2ce68f10008',
+  //   notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
+  //   date:'2019-09-10'
+  // };
   // 公告通知数据
   public GroupNotice = [];
-  // 轮播图数据
-  public slides = [
-    {
-      self: '5',
-      department: '5',
-      leader: '3'
-    },
-    {
-      department: '5',
-      leader: '3'
-    },
-    {
-      department: '5',
-      leader: '3'
-    }
-  ];
    //企业自评信息
    public selfAccess :any = {
     accessedNum:0,
@@ -172,7 +156,6 @@ export class GroupComponent implements OnInit {
     this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
       if(response && response.length > 0){
         let contentArr = [];
-        let a = []
         for(let i=0;i<response.length;i++){
           if(response[i].ent_self_eva_mon_approvals.length > 0){
             for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){

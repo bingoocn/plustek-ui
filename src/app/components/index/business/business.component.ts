@@ -26,11 +26,11 @@ export class BusinessComponent implements OnInit {
     pager: false
   }
   // 最新评价
-  public news = {
-    id:'01',
-    notice:'该单位精益管理工作良好，继续努力',
-    date:'2019-09-10'
-  };
+  // public news = {
+  //   id:'01',
+  //   notice:'该单位精益管理工作良好，继续努力',
+  //   date:'2019-09-10'
+  // };
   // 公告通知数据
   public noticeSlides = [];
 

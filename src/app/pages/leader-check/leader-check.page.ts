@@ -9,19 +9,23 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class LeaderCheckPage implements OnInit {
 
-  public assess: any = [];
-  constructor(public router: Router, public http: HttpService) { }
 
+  public checkTabValue: string;//当前tab值
+  public unAssess: any = [];//待审核
+  public assess: any = [];//已审核
+
+  constructor(public router: Router, public http: HttpService) { }
 
   ngOnInit() {
     this.getData();
+    this.checkTabValue = 'unchecked';// 默认显示待审核的
   }
 
   // 发送请求获取数据
   getData() {
     this.http.getRequest('/specification_evaluations').then((response: any) => {
       if (response && response.length > 0) {
-        this.assess = response;
+        // this.assess = response;
       }
     });
   }

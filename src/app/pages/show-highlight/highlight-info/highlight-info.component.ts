@@ -11,12 +11,13 @@ export class HighlightInfoComponent implements OnInit {
   public highlightInfo:any = {};
   public hightLightId : string;
   public code : string;
+  
 
   constructor(public routeInfo:ActivatedRoute,private router: Router,public http:HttpService) { }
 
   ngOnInit() {
     this.highlightInfo = {}
-    this.routeInfo.queryParams.subscribe((data) => {this.hightLightId = data.hightLightId,this.code = data.code});
+    this.routeInfo.queryParams.subscribe((data) => {this.hightLightId = data.hightLightId,this.code = data.code });
     this.getData();
   }
    // 发送请求获取数据
