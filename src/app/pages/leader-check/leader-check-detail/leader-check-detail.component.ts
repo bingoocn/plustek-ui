@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-leader-check-detail',
@@ -14,9 +15,9 @@ export class LeaderCheckDetailComponent implements OnInit {
   public indicator_id:string; // 规范评价id
   public assess_id:string; // 企业自评id 
   public level_name:string; // 级别
-  public model_id:string;
+  // public model_id:string;
 
-  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService,public common:CommonService) { }
 
   ngOnInit() {
     // 获取路由传递过来的维度id
@@ -32,7 +33,7 @@ export class LeaderCheckDetailComponent implements OnInit {
         }
       });
     }
-    const params = { index_type_code:'01',publish_status_code:'02'};
+    const params = { index_type_code:'01',publish_status_code:'02',evaluation_level_code:'01'};
     this.getIndicator(params);
   }
 
@@ -40,28 +41,14 @@ export class LeaderCheckDetailComponent implements OnInit {
   getIndicator(params:any){
     this.http.getRequest('/evaluation_models', params).then((response:any) => {
       if(response && response.length > 0){
-        // 获取企业自评使用的评价模型id
-        response.forEach(item => {
-          if(item.evaluation_level && item.evaluation_level.name && item.evaluation_level.name === this.level_name){
-            this.model_id = item.id;
-            // this.http.getRequest('/questionnaries/' + model_id + '/tree').then((response:any) => {
-
-            // })
-          }
-        })
-        // this.indicator_id = response[0].id;
-        // if(response[0].id){
-        //   this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {
-        //     if(response && response.length > 0){
-        //       this.indexes = [];
-        //       response.forEach(element => {
-        //         if(element.index_level_type && element.index_level_type.code && element.index_level_type.code == '01'){
-        //           this.indexes.push({id:element.id,index_name:element.index_name,index_num:element.index_num});
-        //         }
-        //       });
-        //     }
-        //   })
-        // }
+        // 获取企业自评使用的评价模型id,并根据id查询所有题目
+        if(response[0].id){
+          this.http.getRequest('/questionnaires/' + response[0].id + '/tree').then((response:any) => {
+            if(response && response.length > 0){
+              this.topics = this.common.forma2Tree(response, 'pid', 'id')[0].children;
+            }
+          })
+        }
       }
     })
   }

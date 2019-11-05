@@ -16,16 +16,22 @@
   <ion-list class="bg-LightGrey" *ngIf="topics">
     <ion-item class="mr-top-10" lines="none" *ngFor="let item of topics; let key = index">
       <ion-label class="no-margin">
-        <div class="list-item">{{ item.index_num + item.index_name }}</div>
+        <div class="list-item">{{ item.label }}</div>
         <div *ngIf="item.children != undefined" class="dropdown-list">
           <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index">
-            <div class="list-item">{{ i.index_num + "&nbsp;" + i.index_name }}</div>
-            <div class="ion-text-wrap size-sm">{{ i.topics_describe}}</div>
-            <ion-list *ngIf="i.options" class="no-margin">
-              <ion-item lines="none" *ngFor="let j of i.options;let idx = index">
-                <ion-label class="ion-text-wrap">{{ j.topics_content }}</ion-label>
-              </ion-item>
-            </ion-list>
+            <div class="list-item">{{ i.label }}</div>
+            <div *ngIf="i.children != undefined" class="dropdown-list">
+              <div class="dropdown-list-item" *ngFor="let j of i.children;let inx = index">
+                <div class="list-item">{{ j.label }}</div>
+                <div class="ion-text-wrap size-sm">{{ j.description}}</div>
+                <ion-list *ngIf="j.options && j.options.length > 0" class="no-margin">
+                  <ion-item lines="none" *ngFor="let k of j.options;let idx = index">
+                    <ion-label class="ion-text-wrap">{{ k.topics_content }}</ion-label>
+                    <ion-checkbox slot="start" color="primary" *ngIf="k.topics_type && k.topics_type.code && k.topics_type.code == '01'"></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
           </div>
         </div>
       </ion-label>

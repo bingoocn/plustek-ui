@@ -11,7 +11,7 @@ export class SelfAssessmentDetailComponent implements OnInit {
 
   public assessId: string; // 企业自评id
   public assessInfo: any; // 企业自评基本信息
-  public is_checked:boolean; // 分管领导是否已审核
+  public is_checked:string; // 分管领导是否已审核
   public dept_check_info:any; // 部门审核信息
   public leader_check_info:any; // 分管领导审核信息
 
@@ -33,12 +33,13 @@ export class SelfAssessmentDetailComponent implements OnInit {
           this.dept_check_info = response;
         }
       })
-      // 查询企业自评分管领导审核信息
-      this.http.getRequest('/specification_evaluations/' + this.assessId + '/leader_check').then((response:any) => {
-        if(response){
-          this.leader_check_info = response;
-        }
-      })
+      if(this.is_checked === 'true'){// 如果分管领导已审核，查询企业自评分管领导审核信息
+        this.http.getRequest('/specification_evaluations/' + this.assessId + '/leader_check').then((response:any) => {
+          if(response){
+            this.leader_check_info = response;
+          }
+        })
+      }
     }
   }
 
