@@ -11,27 +11,25 @@ export class ShowHighlightPage implements OnInit {
 
   public groupHighlights:any = [];
   public subGroupHighlights:any = [];
-  highlightTabValue: string;
+  //默认tab
+  public highlightTabValue: string;
 
   constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
     this.highlightTabValue = 'group';
-    this.groupHighlights = [];
-    this.subGroupHighlights = [
-      // {
-      //   guid:'01',
-      //   group:'',
-      //   unit:'',
-      //   level:'二级',
-      //   grade:'88',
-      //   person:'周宽',
-      //   time:'2019.11.10'
-      // }
-    ]
+    // this.routeInfo.queryParams.subscribe((data) => {
+    //   console.log(data)
+    //     this.highlightTabValue = data.group_state 
+    // });
     this.getData();
-    this.getHighlightTabValue();
-    // this.routeInfo.params.subscribe((params: Params) => this.highlightTabValue = params['highlightTabValue']);
+  }
+  // 关键字搜索
+  getCases(ev: any) {
+    // this.page = 1;
+    // this.title = ev.target.value;
+    // const params = { title:this.title,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
+    // this.getData(params);
   }
   getData() {
     // 获取当前登录人信息
@@ -40,7 +38,6 @@ export class ShowHighlightPage implements OnInit {
         if(response.guid){
           this.http.getRequest('/specification_evaluations_lightspot?apply_fguid=&recommended_unit_type_code=01').then((response:any) => {
             if(response && response.length > 0){
-              let dataArr = [];
               let groupArr = [];
               let sunGroupArr = [];
 
@@ -110,11 +107,6 @@ export class ShowHighlightPage implements OnInit {
         }
       }
     });
-    
-    
-  }
-  getHighlightTabValue() {
-    // console.log(this.routeInfo.params.subscribe)
   }
   // tab切换事件
   tabChanged(ev: any) {
@@ -122,14 +114,14 @@ export class ShowHighlightPage implements OnInit {
   }
 
   // 关键字搜索
-  getHighlights(ev:any){
-    this.ngOnInit();
+  // getHighlights(ev:any){
+  //   this.ngOnInit();
 
-    const val = ev.target.value;
-    if (val && val.trim() != ''){
-      this.groupHighlights = this.groupHighlights.filter((item)=> {
-        return (item.level.indexOf(val) > -1)
-      })
-    }
-  }
+  //   const val = ev.target.value;
+  //   if (val && val.trim() != ''){
+  //     this.groupHighlights = this.groupHighlights.filter((item)=> {
+  //       return (item.level.indexOf(val) > -1)
+  //     })
+  //   }
+  // }
 }
