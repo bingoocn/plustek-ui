@@ -19,8 +19,8 @@
         </ion-segment-button>
       </ion-segment>
     </div>
-    <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getHighlights($event)"></ion-searchbar>
-    <ion-list lines="full" *ngIf=" highlightTabValue == 'group'">
+    <!-- <ion-searchbar placeholder="请输入关键字" [debounce]="250" (ionInput)="getHighlights($event)"></ion-searchbar> -->
+    <ion-list lines="full" *ngIf=" highlightTabValue == 'group'" class="mr-top-10">
       <ion-item *ngFor="let item of groupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]" [queryParams]="{hightLightId:item.guid,code:'01'}">
         <ion-label>
           <h3> 子集团/直管单位：{{ item.subGroup}}</h3>
@@ -32,7 +32,7 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <ion-list lines="full" *ngIf=" highlightTabValue == 'subGroup'">
+    <ion-list lines="full" *ngIf=" highlightTabValue == 'subGroup'" class="mr-top-10">
       <ion-item *ngFor="let item of subGroupHighlights; let key = index" detail [routerLink]="['./highlightInfo',item.guid]" [queryParams]="{hightLightId:item.guid,code:'02'}">
         <ion-label>
           <h3> 子集团/直管单位：{{ item.subGroup}}</h3>
