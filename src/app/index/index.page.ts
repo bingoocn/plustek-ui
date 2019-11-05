@@ -9,21 +9,10 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./index.page.scss'],
 })
 export class IndexPage implements OnInit {
-
-  public flag:any = [];
-
-  // 当前所具备菜单数据
-  public menus:any = JSON.parse(localStorage.getItem("menu"));
-  // 首页比对数据
-  readonly munuCode:any = [
-    { name: 'business', code: '0' },
-    { name: 'business-leader', code: '1' },
-    { name: 'group', code: '2' },
-    { name: 'group-leader', code: '3' },
-    { name: 'expert', code: '4' },
-    { name: 'sub-group-leader', code: '5' },
-    { name: 'sub-group-business-unit', code: '6' },
-  ]
+  // 当前登录人所具有角色
+  readonly currentRole:any = JSON.parse(localStorage.getItem("currentRole"));
+  // 当前登录人角色缩写
+  public role:any;
 
   constructor(
     public route:ActivatedRoute,
@@ -32,24 +21,10 @@ export class IndexPage implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.filterIndex().then(res => {
-      if(res['length']>1) {
-        this.http.presentAlert('提示', '', '菜单配置有误，请联系管理员修改配置！');
-        this.nav.navigateRoot("/login");
-      }
-    })
-  }
-  filterIndex() {
-    return new Promise((resolve, reject) => {
-      const menus = JSON.parse(localStorage.getItem("menu"));
-      for(let i=0; i<this.munuCode.length; i++) {
-        for(let k=0; k<menus.length; k++) {
-          if(menus[k].menuUrl == this.munuCode[i].name) {
-            this.flag.push(this.munuCode[i].code);
-          }
-        }
-      }
-      resolve(this.flag)
+    // 根据登录人角色控制工作台各模块入口
+    this.http.getRequest("/sys_param?param_name="+this.currentRole.guid, null).then(res => {
+      this.role = JSON.parse(res.param_value).abbreviation;
+      console.log(this.role)
     })
   }
 }

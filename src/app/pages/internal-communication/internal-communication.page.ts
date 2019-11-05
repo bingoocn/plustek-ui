@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-internal-communication',
@@ -10,78 +9,86 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class InternalCommunicationPage implements OnInit {
 
-  @ViewChild(IonInfiniteScroll,null) infiniteScroll: IonInfiniteScroll;
+  public publishedTopics:any = [];// 已发布的
+  public unblishedTopics:any = [];// 未发布的
+  public communionTabValue: string;//当前tab值
+  public exchange_proceeding:string = '';// 已发布模糊查询
+  public un_exchange_proceeding:string = '';//未发布模糊查询
 
-  public topics:any = [];
-  public page:any = 1;
-  public per_page:any = 10;
-  public hasMore:boolean = true;
-  // public title:any;
-  public exchange_proceeding:string = '';
-
-  constructor(public route:ActivatedRoute, public http:HttpService) { }
+  constructor(public http:HttpService,public nav: NavController) { }
 
   ngOnInit() {
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
-    this.getData(params);
+    this.communionTabValue = 'published';// 默认显示已发布列表
 
+    // 获取已发布的数据
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',sort:'-publish_time' };
+    this.getPublishedData(params);
+
+    // 获取当前登录人信息
+    this.http.getUser().then((response:any) => {
+      if(response){
+        if(response.guid){
+          const unParams = { publish_status_code: '01',sort:'-publish_time' };
+          this.getUnpublishedData(unParams,response.guid);
+        }
+      }
+    })
   }
 
-  // 关键字搜索
+  // 已发布关键字搜索
   getTopics(ev: any) {
-    this.page = 1;
     this.exchange_proceeding = ev.target.value;
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
-    this.getData(params);
+    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',sort:'-publish_time' };
+    this.getPublishedData(params);
   }
 
-  // 发送请求获取数据
-  getData(params:any){
+  // 未 发布关键字搜索
+  getUnTopics(ev: any) {
+    this.exchange_proceeding = ev.target.value;
+    const params = { exchange_proceeding:this.un_exchange_proceeding,publish_status_code: '02',sort:'-publish_time' };
+    this.getPublishedData(params);
+  }
+
+  // 发送请求获取已发布数据
+  getPublishedData(params:any){
     this.http.getRequest('/communions', params).then((response:any) => {
       if(response && response.length > 0){
-        this.topics = response;
-        if(response.length < this.per_page){
-          this.infiniteScroll.disabled = true;
-        }else{
-          ++this.page;
-        }
+        this.publishedTopics = response;
       }
     });
   }
 
-  // 刷新
-  doRefresh(e) {
-    this.page = 1;
-    this.exchange_proceeding = "";
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
+  // 发送请求获取未发布的当前登录人保存的数据
+  getUnpublishedData(params:any,person_id){
     this.http.getRequest('/communions', params).then((response:any) => {
       if(response && response.length > 0){
-        this.topics = response;
-        if(response.length < this.per_page){
-          this.infiniteScroll.disabled = true;
-        }else{
-          ++this.page;
-          this.infiniteScroll.disabled = false;
-          this.hasMore = true;
-        }
-        e.target.complete(); // 告诉ion-refresher 更新数据
+        this.unblishedTopics = [];
+        response.forEach(element => {
+          if(element.creator && element.creator.id){
+            if(element.creator.id === person_id){
+              this.unblishedTopics.push(element);
+            }
+          }
+        });
       }
-    });
+    })
   }
-  // 加载更多
-  loadMore(e){
-    const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
-    this.http.getRequest('/communions', params).then((response:any) => {
-      if(response && response.length > 0){
-        this.topics = this.topics.concat(response);
-        ++this.page;
-        //判断下一页有没有数据
-        if(response.length < this.per_page){
-          e.target.disabled = true;
-          this.hasMore = false;
-        }
-        e.target.complete(); //请求完成数据以后告诉ion-infinite-scroll更新数据
-      }
-    });
+
+  // 发布
+  toPublish(id){
+    this.http.putRequest('/communions/' + id + '/published','').then((res:any) => {
+      this.http.presentToast('发布成功！', 'bottom', 'success');
+      location.reload();
+    })
+  }
+
+  // tab切换事件
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
+  }
+
+  // 返回
+  back() {
+    this.nav.navigateBack('/tabs/workbench');
   }
 }

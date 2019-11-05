@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+      <ion-back-button text="返回" icon="arrow-back" (click)="back()"></ion-back-button>
     </ion-buttons>
     <ion-title>内部交流</ion-title>
   </ion-toolbar>
@@ -23,7 +23,7 @@
       </ion-item>
     </ion-list>
     <div class="text-center mr-top-10">
-      <!-- <ion-button size="small" fill="outline" (click)="saveCommunication()">保存</ion-button> -->
+      <ion-button size="small" fill="outline" (click)="saveCommunication()">保存</ion-button>
       <ion-button size="small" fill="outline" (click)="saveAndPublish()">保存并发布</ion-button>
     </div>
   </div>
