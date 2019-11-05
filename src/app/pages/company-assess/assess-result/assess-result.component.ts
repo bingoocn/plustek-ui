@@ -35,7 +35,7 @@ export class AssessResultComponent implements OnInit {
     };
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
       if (response) {
-        this.nav.navigateForward("./company-assess")
+        this.nav.navigateForward("/company-assess")
       }
     })
   }
