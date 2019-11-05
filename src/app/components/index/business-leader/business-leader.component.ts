@@ -95,7 +95,7 @@ export class BusinessLeaderComponent implements OnInit {
                 if(role.abbreviation === 'QYFGLD'){
                   this.is_apart_leader = true;
                   response.forEach( item=>{
-                    if(item.evaluation_status !== null && item.evaluation_status.code == '03'){
+                    if(item.evaluation_status !== null && item.evaluation_status.code == '05'){
                       checkedArr.push(item);
                     }
                     if(item.evaluation_status !== null && item.evaluation_status.code == '01' || item.evaluation_status.code == '02'){

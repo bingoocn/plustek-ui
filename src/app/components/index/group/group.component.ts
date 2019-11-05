@@ -46,6 +46,7 @@ export class GroupComponent implements OnInit {
   //专家检查信息
   public expertAssess :any = {
     checkedNum:0,
+    checkTime:'',
     heighLevel:'',
     lowLevel:'',
     heighsum:0,
@@ -116,6 +117,7 @@ export class GroupComponent implements OnInit {
   getExpertAssess() {
     this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
       if(response && response.length > 0){
+        this.expertAssess.checkTime = response[0].check_end_time;
         //根据单位去重
         let resArr = response;
         let unitArr = [];
@@ -143,11 +145,8 @@ export class GroupComponent implements OnInit {
             return prev
           },[])
           this.expertAssess.heighLevel = Math.max(...standard_Level)
-          this.expertAssess.lowLevel = Math.min(...standard_Level)
           this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
-          this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
           this.expertAssess.heighLevel = this.common.convertToChinaNum(Math.max(...standard_Level))
-          this.expertAssess.lowLevel = this.common.convertToChinaNum(Math.min(...standard_Level))
         }
       }
     });
