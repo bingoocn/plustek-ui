@@ -9,7 +9,7 @@
 
 <ion-content color="grey">
   <div>
-    <div class="padding-10 no-padding-bottom">
+    <div class="padding-10">
       <ion-segment [(ngModel)] = "checkTabValue" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="unchecked" checked>
           <ion-label>待审核</ion-label>
@@ -43,7 +43,7 @@
     </div>
     <div *ngIf=" checkTabValue == 'checked'">
       <ion-list lines="full"  *ngIf ="assess && assess.length > 0">
-        <ion-item  *ngFor ="let item of assess; let key = index" detail [routerLink]="['../assess-info',item.id]">
+        <ion-item  *ngFor ="let item of assess; let key = index" detail [routerLink]="['./selfAssessmentDetail',item.id]">
           <ion-grid fixed>
             <ion-row>
               <ion-col size="9">

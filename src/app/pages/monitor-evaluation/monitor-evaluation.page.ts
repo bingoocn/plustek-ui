@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
@@ -13,12 +14,23 @@ export class MonitorEvaluationPage implements OnInit {
   public evaluations: any = [];//已评价
   public role: any = [];//当前登录人的当前角色
 
-  constructor(public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    // 获取传递过来的状态（已评价，未评价）
+    this.routeInfo.params.subscribe((params: Params) => {
+      const evaluation_state = params['evaluation_state'];
+      if(evaluation_state == '未评价'){
+        this.evaluationTabValue = 'notEvaluated';
+      }else if(evaluation_state == '已评价'){
+        this.evaluationTabValue = 'alreadyEvaluated';
+      }else{
+        this.evaluationTabValue = 'notEvaluated';
+      }
+    });
     const params = { evaluation_level_code: '',sort:'-evaluation_date' };
     this.getData(params);
-    this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
+    // this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
   }
 
   // 发送请求获取数据
