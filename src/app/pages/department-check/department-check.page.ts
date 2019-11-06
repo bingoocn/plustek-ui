@@ -17,7 +17,7 @@ export class DepartmentCheckPage implements OnInit {
   constructor(public router: Router, public http: HttpService) { }
 
   ngOnInit() {
-    this.checkTabValue = 'unchecked';// 默认显示待审核的
+    this.checkTabValue = 'unchecked'; // 默认显示待审核的
     // 获取当前登录人所属单位信息
     this.http.getUser().then((response: any) => {
       if (response && response.subordinateOrgId) {

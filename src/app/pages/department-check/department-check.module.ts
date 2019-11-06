@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { DepartmentCheckPage } from './department-check.page';
 import { DepaertmentInfoComponent } from './depaertment-info/depaertment-info.component';
-import { QuestionsPageComponent } from './questions-page/questions-page.component'
-import { from } from 'rxjs';
+import { QuestionsPageComponent } from './questions-page/questions-page.component';
+import { ModalPageComponent } from './questions-page/modal-page/modal-page.component';
 
 const routes: Routes = [
   {
@@ -20,7 +20,10 @@ const routes: Routes = [
   }, {
     path: 'quest-page',
     component: QuestionsPageComponent
-  }
+  }, {
+    path: 'modalPage',
+    component: ModalPageComponent
+  },
 ];
 
 @NgModule({
@@ -30,6 +33,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [QuestionsPageComponent, DepaertmentInfoComponent, DepartmentCheckPage]
+  declarations: [ModalPageComponent, QuestionsPageComponent, DepaertmentInfoComponent, DepartmentCheckPage]
 })
 export class DepartmentCheckPageModule { }

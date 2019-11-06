@@ -117,7 +117,6 @@ export class ItemInfoComponent implements OnInit {
       added_self_evaluations: this.selfEvaluations
     };
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
-      // console.log(response, '保存成功')
     })
   }
   // 处理得到的数据
