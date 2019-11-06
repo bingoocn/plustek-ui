@@ -13,28 +13,61 @@
       <span>{{ indicator_name }} （{{ level_name }}）</span>
     </ion-label>
   </div>
-  <ion-list class="bg-LightGrey" *ngIf="topics">
+  <ion-list class="bg-LightGrey no-margin" *ngIf="topics">
     <ion-item class="mr-top-10" lines="none" *ngFor="let item of topics; let key = index">
-      <ion-label class="no-margin">
-        <div class="list-item">{{ item.label }}</div>
-        <div *ngIf="item.children != undefined" class="dropdown-list">
-          <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index">
-            <div class="list-item">{{ i.label }}</div>
-            <div *ngIf="i.children != undefined" class="dropdown-list">
-              <div class="dropdown-list-item" *ngFor="let j of i.children;let inx = index">
-                <div class="list-item">{{ j.label }}</div>
-                <div class="ion-text-wrap size-sm">{{ j.description}}</div>
-                <ion-list *ngIf="j.options && j.options.length > 0" class="no-margin">
-                  <ion-item lines="none" *ngFor="let k of j.options;let idx = index">
-                    <ion-label class="ion-text-wrap">{{ k.topics_content }}</ion-label>
-                    <ion-checkbox slot="start" color="primary" *ngIf="k.topics_type && k.topics_type.code && k.topics_type.code == '01'"></ion-checkbox>
-                  </ion-item>
-                </ion-list>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="12">
+            <ion-label class="no-margin">
+              <div class="list-item">{{ item.label }}</div>
+              <div *ngIf="item.children != undefined" class="dropdown-list">
+                <div class="dropdown-list-item" *ngFor="let i of item.children;let k = index">
+                  <div class="list-item">{{ i.label }}</div>
+                  <div *ngIf="i.children != undefined" class="dropdown-list">
+                    <div class="dropdown-list-item" *ngFor="let j of i.children;let inx = index">
+                      <div class="list-item">{{ j.label }}</div>
+                      <div class="ion-text-wrap size-sm">{{ j.description}}</div>
+                      <ion-list *ngIf="j.options && j.options.length > 0" class="no-margin">
+                        <ion-item lines="none" *ngFor="let k of j.options;let idx = index">
+                          <ion-label class="ion-text-wrap">{{ k.topics_content }}</ion-label>
+                          <ion-checkbox slot="start" color="primary" disabled [(ngModel)]="k.checked"></ion-checkbox>
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </ion-label>
+            </ion-label>
+          </ion-col>
+          <ion-col size="12">
+            <ion-radio-group [(ngModel)]="item.approval_status_code">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item lines="none">
+                    <ion-label>通过</ion-label>
+                    <ion-radio slot="start" color="success" value="01"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item lines="none">
+                    <ion-label>不通过</ion-label>
+                    <ion-radio slot="start" color="danger" value="02"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
+  <div class="section mr-top-10">
+    <ion-item>
+      <ion-label position="floating">审核人批阅：</ion-label>
+      <ion-textarea rows="5" [(ngModel)]="leader_review" [readonly]="is_checked == 'true'"></ion-textarea>
+    </ion-item>
+    <div class="mr-top-10 text-right" *ngIf="is_checked == 'false'">
+      <ion-button size="small" fill="outline" (click)="saveAndReport()">保存并上报</ion-button>
+    </div>
+  </div>
 </ion-content>
