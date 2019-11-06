@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-leader-check-detail',
@@ -13,26 +14,46 @@ export class LeaderCheckDetailComponent implements OnInit {
   public indicator_name:string; // 规范评价名称
   public indicator_id:string; // 规范评价id
   public assess_id:string; // 企业自评id 
+  public is_checked:string; // 是否已审核
   public level_name:string; // 级别
-  public model_id:string;
+  public self_evaluations:any = [];
+  public leader_review:string; // 审核人批阅
+  public leader_check_info:any = []; // 领导审核信息
+  public readonly:boolean = false;
 
-  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService,public common:CommonService) { }
 
   ngOnInit() {
     // 获取路由传递过来的维度id
     this.routeInfo.params.subscribe((params: Params) => this.assess_id = params['assessId']);
+    this.is_checked = this.routeInfo.snapshot.queryParams['isChecked'];
     if (this.assess_id) {
-      // 查询规范评价名称及企业自评的级别
+      // 发送请求获取企业自评基本信息
       this.http.getRequest('/specification_evaluations/' + this.assess_id).then((response: any) => {
+        // 获取规范评价名称
         if(response && response.questionnaire && response.questionnaire.indicator_sets && response.questionnaire.indicator_sets.index_name){
           this.indicator_name = response.questionnaire.indicator_sets.index_name;
         }
-        if (response && response.questionnaire && response.questionnaire.evaluation_level && response.questionnaire.evaluation_level.name) {
+        // 获取试卷的级别
+        if(response && response.questionnaire && response.questionnaire.evaluation_level && response.questionnaire.evaluation_level.name) {
           this.level_name = response.questionnaire.evaluation_level.name;
         }
+        // 获取试卷答案
+        if(response && response.self_evaluations && response.self_evaluations.length > 0){
+          this.self_evaluations = response.self_evaluations;
+        }
       });
+      // 发送请求获取企业自评分管领导审核信息
+      this.http.getRequest('/specification_evaluations/' + this.assess_id + '/leader_check').then((response:any) => {
+        if(response && response.approval_detail && response.approval_detail.length > 0){
+          this.leader_check_info = response.approval_detail;
+        }
+        if(response && response.leader_review){
+          this.leader_review = response.leader_review;
+        }
+      })
     }
-    const params = { index_type_code:'01',publish_status_code:'02'};
+    const params = { index_type_code:'01',publish_status_code:'02',evaluation_level_code:'01'};
     this.getIndicator(params);
   }
 
@@ -40,30 +61,93 @@ export class LeaderCheckDetailComponent implements OnInit {
   getIndicator(params:any){
     this.http.getRequest('/evaluation_models', params).then((response:any) => {
       if(response && response.length > 0){
-        // 获取企业自评使用的评价模型id
-        response.forEach(item => {
-          if(item.evaluation_level && item.evaluation_level.name && item.evaluation_level.name === this.level_name){
-            this.model_id = item.id;
-            // this.http.getRequest('/questionnaries/' + model_id + '/tree').then((response:any) => {
-
-            // })
-          }
-        })
-        // this.indicator_id = response[0].id;
-        // if(response[0].id){
-        //   this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response:any) => {
-        //     if(response && response.length > 0){
-        //       this.indexes = [];
-        //       response.forEach(element => {
-        //         if(element.index_level_type && element.index_level_type.code && element.index_level_type.code == '01'){
-        //           this.indexes.push({id:element.id,index_name:element.index_name,index_num:element.index_num});
-        //         }
-        //       });
-        //     }
-        //   })
-        // }
+        // 获取企业自评使用的评价模型id,并根据id查询所有题目
+        if(response[0].id){
+          this.http.getRequest('/questionnaires/' + response[0].id + '/tree').then((response:any) => {
+            if(response && response.length > 0){
+              response.forEach(item => {
+                // 为所有的选项添加checked属性，默认值为false
+                if(item.options && item.options.length > 0){
+                  item.options.forEach(i => {
+                    i['checked'] = false;
+                  })
+                }
+                // 遍历试卷答案，回显答题
+                if(this.self_evaluations.length > 0){
+                  this.self_evaluations.forEach(e => {
+                    if(e.index_slave_id && e.index_slave_id == item.id){
+                      if(item.options && item.options.length > 0){
+                        item.options.forEach(i => {
+                          if(e.options && e.options.length > 0){
+                            e.options.forEach(el => {
+                              if(el.topics_slave_id && el.topics_slave_id == i.id){
+                                i['checked'] = true;
+                                if(i.topics_type && i.topics_type.code && i.topics_type.code == '02'){
+                                  i.topics_content = el.supplementary_content;
+                                }
+                              }
+                            })
+                          }
+                        })
+                      }
+                    }
+                  })
+                }
+              })
+              this.topics = this.common.forma2Tree(response, 'pid', 'id')[0].children;
+              // 为维度添加属性approval_status_code，默认值为''
+              if(this.topics.length > 0){
+                this.topics.forEach(element => {
+                  element['approval_status_code'] = "";
+                })
+              }
+              // 遍历领导审核信息，回显
+              if(this.leader_check_info.length > 0){
+                this.leader_check_info.forEach(item => {
+                  if(item.indicator_id){
+                    if(this.topics.length > 0){
+                      this.topics.forEach(element => {
+                        if(element.id == item.indicator_id){
+                          element['approval_status_code'] = item.approval_status_code;
+                        }
+                      })
+                    }
+                  }
+                })
+              }
+            }
+          })
+        }
       }
     })
+  }
+
+  // 保存并上报
+  saveAndReport(){
+    var detail:any = [];
+    if(this.topics.length > 0){
+      this.topics.forEach(element => {
+        if(element.approval_status_code){
+          detail.push({
+            indicator_id:element.id,
+            approval_status_code:element.approval_status_code
+          })
+        }
+      })
+      if(detail.length > 0){
+        const params = {
+          leader_review:this.leader_review,
+          detail:detail
+        }
+        this.http.postRequest('/specification_evaluations/' + this.assess_id + '/leader_check',params).then((response:any) => {
+          if(response && response.id){
+            this.http.putRequest('/specification_evaluations/' + this.assess_id + '/reported','').then((response:any) => {
+              this.http.presentToast('保存并上报成功！', 'bottom', 'success');
+            })
+          }
+        })
+      }
+    }
   }
 
 }
