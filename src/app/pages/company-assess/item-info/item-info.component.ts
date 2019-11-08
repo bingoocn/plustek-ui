@@ -20,7 +20,8 @@ export class ItemInfoComponent implements OnInit {
   public result: any = []; // 保存选中数组
   public indexes: any = [];
   public selfEvaluations: any = []; // 保存的数组
-  public companyId:any; // 企业自评ID
+  public self_evaluations: any; // 返回的数据
+  public companyId: any; // 企业自评ID
   public slideOpts: any = {
     effect: 'flip',
     speed: 400,
@@ -38,25 +39,36 @@ export class ItemInfoComponent implements OnInit {
   ngOnInit() {
     // 获取传递过来的规范评价id
     this.routeInfo.queryParams.subscribe((data) => {
-      this.questId = data.questId,
-      this.companyId = data.companyId,
-      this.indicatorId = data.indicatorId,
+        this.questId = data.questId,
+        this.companyId = data.companyId,
+        this.indicatorId = data.indicatorId,
         this.indexId = data.indexId
     });
-    const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code' };
-    this.getIndicator(params);
+
+    this.getFormData();
+
+  }
+  // 获取自评的信息
+  getFormData() {
+    this.http.getRequest(`/specification_evaluations/${this.companyId}`).then((response: any) => {
+      if (response) {
+        this.self_evaluations = response.self_evaluations;
+        const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code' };
+        this.getIndicator(params);
+      }
+    })
   }
   // 获取当前试题得到具体的题目
   getIndicator(params: any) {
     this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
       if (response && response.length > 0) {
-        response.forEach((e, i) => {
+        response.forEach((e: any, i: any) => {
           // 这里的判断有点牵强，但是可以用
           if (e.index_notes) {
             this.items.push(e);
           }
         })
-
+        // 先默认给每个选项给checked标识
         this.items.forEach((e: any, i: any) => {
           if (e.options && e.options.length > 0) {
             e.options.forEach((el: any, i: any) => {
@@ -64,105 +76,71 @@ export class ItemInfoComponent implements OnInit {
             })
           }
         })
-        console.log(this.items, '显示的数据')
+        // 回显
+        if (this.self_evaluations && this.self_evaluations.length > 0) {
+          this.items.forEach((e, i) => {
+            this.self_evaluations.forEach((el, j) => {
+              if (e.id === el.index_slave_id) {
+                e.options.forEach(item => [
+                  el.options.forEach(element => {
+                    if (item.id === element.topics_slave_id) {
+                      item.checked = true;
+                      // console.log(item, 'qweq')
+                      if (item.topics && item.topics_type === '02') {
+                        item.topics_content = element.supplementary_content
+                      }
+
+                    }
+                  })
+                ])
+              }
+            })
+          })
+
+        }
       }
     })
-
-    // this.http.getRequest('/indicator_sets/' + this.indicatorId + '/indicators').then(( response: any) => {
-    // if (response && response.length > 0) {
-    //   response.forEach((e,i)=>{
-    //     if(e.index_level_type.code ==='03'){
-    //       this.indexes.push(e)
-    //     }
-    //   })
-    // 获取选项
-    // this.indexes.forEach((e,i)=>{
-    //   this.http.getRequest(`/questionnaires/${this.questId}/topics?scort=&indicator_id=` + e.id).then((response: any) => {
-    //     if (response && response.length > 0) {
-    //       for(let k=0; k<response[0].length; k++) {
-    //         response[0][k]['flag'] = false;
-    //       }
-    //       this.items[i] = response[0];
-    //       console.log(this.items,'dddddd')
-    //     }
-    //   })
-    // })
-    // }
-    // })
-
-    // this.http.getRequest(`/indicator_sets/${this.indicatorId}/indicators`, params).then((response: any) => {
-    //   if (response && response.length > 0) {
-    //     const res: any = response;
-    //     res.forEach((e: any, i: any) => {
-    //       this.http.getRequest(`/questionnaires/${this.questId}/topics?scort=&indicator_id=` + e.id).then((response: any) => {
-    //         if (response && response.length > 0) {
-    //           for(let k=0; k<response[0].length; k++) {
-    //             response[0][k]['flag'] = false;
-    //           }
-    //           this.items[i] = response[0];
-    //         }
-    //       })
-    //     })
-    //   }
-    // })
   }
-  saveItem() {
-    const params = {
-      options: this.result,
-      index_slave_id: this.resultArr.index_slave_id
-    };
-    this.http.postRequest(`/specification_evaluations/${this.questId}/self_evaluations`, params).then((response: any) => {
-      // this.http.presentToast('保存成功！', 'bottom', 'success');
-    })
-  }
+  // 选中选项时
   changeOption(item: any, id: any) {
     this.momentArr.push({
       index_slave_id: id,
       item: item,
     })
-    // this.momentArr.push({item})
   }
-  save() {
+  // 保存选中的选项
+  saveItem() {
     this.itemsFormate();
     const params = {
       id: this.companyId, // 自评ID
-      topics_master_id: this.questId ,// 问卷Id
+      topics_master_id: this.questId,// 问卷Id
       added_self_evaluations: this.selfEvaluations
     };
-    this.http.putRequest(`/specification_evaluations/${this.companyId}`,params).then((response: any) => {
-      console.log(response,'保存成功')
-      if(response && response.length > 0){
-
-      }
+    this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
     })
-
   }
   // 处理得到的数据
   itemsFormate() {
-    // {index_slave_id: '', options:[]}
     this.selfEvaluations = [{ index_slave_id: '', options: [] }];
     this.items.forEach((e: any, i: any) => {
       let newOption = [];
-      e.options.forEach((el: any, j: any) => {
-        // console.log(el, '每一项')
-        if (el.checked) {
-          newOption.push({
-            topics_slave_id: el.id,
-            supplementary_content: el.topics_content
-          });
-          this.selfEvaluations[i] = {
-            index_slave_id: e.id,
-            options: newOption,
+      if (e.options && e.options.length > 0) {
+        e.options.forEach((el: any, j: any) => {
+          if (el.checked) {
+            newOption.push({
+              topics_slave_id: el.id,
+              supplementary_content: el.topics_content
+            });
+            this.selfEvaluations[i] = {
+              index_slave_id: e.id,
+              options: newOption,
+            }
           }
-        }
-      })
-      console.log(this.selfEvaluations, '遍历出的结果')
+        })
+      }
     })
   }
 
-  formate212() {
-    // this.selfEvaluations.forEach(e)
-  }
   // 处理得到的值,留下选中的选项
   formate() {
     // 过滤掉不需要的数据
@@ -191,10 +169,9 @@ export class ItemInfoComponent implements OnInit {
   next() {
     this.slide.slideNext();
   }
+  // 离开这一页时
   slideDidChange() {
     this.formate();
-    // console.log(this.result,'最后的结果值')
-    // this.saveItem()
   }
   async presentModal(val) {
     const modal = await this.modalController.create({

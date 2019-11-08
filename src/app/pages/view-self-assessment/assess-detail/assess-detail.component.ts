@@ -3,15 +3,14 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
-  selector: 'app-self-assessment-detail',
-  templateUrl: './self-assessment-detail.component.html',
-  styleUrls: ['./self-assessment-detail.component.scss'],
+  selector: 'app-assess-detail',
+  templateUrl: './assess-detail.component.html',
+  styleUrls: ['./assess-detail.component.scss'],
 })
-export class SelfAssessmentDetailComponent implements OnInit {
+export class AssessDetailComponent implements OnInit {
 
   public assessId: string; // 企业自评id
   public assessInfo: any; // 企业自评基本信息
-  public is_checked:string; // 分管领导是否已审核
   public dept_check_info:any; // 部门审核信息
   public leader_check_info:any; // 分管领导审核信息
 
@@ -19,7 +18,6 @@ export class SelfAssessmentDetailComponent implements OnInit {
 
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.assessId = params['assessId']);
-    this.is_checked = this.routeInfo.snapshot.queryParams['isChecked'];
     if (this.assessId) {
       // 查询企业自评基本信息
       this.http.getRequest('/specification_evaluations/' + this.assessId).then((response: any) => {
@@ -32,14 +30,13 @@ export class SelfAssessmentDetailComponent implements OnInit {
         if(response){
           this.dept_check_info = response;
         }
+      });
+      // 查询企业自评分管领导审核信息
+      this.http.getRequest('/specification_evaluations/' + this.assessId + '/leader_check').then((response:any) => {
+        if(response){
+          this.leader_check_info = response;
+        }
       })
-      if(this.is_checked === 'true'){// 如果分管领导已审核，查询企业自评分管领导审核信息
-        this.http.getRequest('/specification_evaluations/' + this.assessId + '/leader_check').then((response:any) => {
-          if(response){
-            this.leader_check_info = response;
-          }
-        })
-      }
     }
   }
 

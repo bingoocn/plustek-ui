@@ -2,38 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
 import { CommonService } from 'src/app/service/common/common.service';
-import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-leader-check-detail',
-  templateUrl: './leader-check-detail.component.html',
-  styleUrls: ['./leader-check-detail.component.scss'],
+  selector: 'app-topics-detail',
+  templateUrl: './topics-detail.component.html',
+  styleUrls: ['./topics-detail.component.scss'],
 })
-export class LeaderCheckDetailComponent implements OnInit {
+export class TopicsDetailComponent implements OnInit {
 
   public topics:any = []; // 题目
   public indicator_name:string; // 规范评价名称
   public indicator_id:string; // 规范评价id
-  public assess_id:string; // 企业自评id 
-  public is_checked:string; // 是否已审核
+  public assess_id:string; // 企业自评id
   public level_name:string; // 级别
   public level_code:string = ''; // 级别code
   public self_evaluations:any = [];
   public leader_review:string; // 审核人批阅
   public leader_check_info:any = []; // 领导审核信息
-  public readonly:boolean = false;
 
-  constructor(
-    public routeInfo:ActivatedRoute,
-    public router: Router,
-    public http:HttpService,
-    public common:CommonService,
-    public nav: NavController) { }
+  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService,public common:CommonService) { }
 
   ngOnInit() {
     // 获取路由传递过来的企业自评id
     this.routeInfo.params.subscribe((params: Params) => this.assess_id = params['assessId']);
-    this.is_checked = this.routeInfo.snapshot.queryParams['isChecked'];
     if (this.assess_id) {
       // 发送请求获取企业自评基本信息
       this.http.getRequest('/specification_evaluations/' + this.assess_id).then((response: any) => {
@@ -133,42 +124,6 @@ export class LeaderCheckDetailComponent implements OnInit {
         }
       }
     })
-  }
-
-  // 保存并上报
-  saveAndReport(){
-    var detail:any = [];
-    if(this.topics.length > 0){
-      this.topics.forEach(element => {
-        if(element.approval_status_code){
-          detail.push({
-            indicator_id:element.id,
-            approval_status_code:element.approval_status_code
-          })
-        }
-      })
-      if(detail.length > 0){
-        const params = {
-          leader_review:this.leader_review,
-          detail:detail
-        }
-        this.http.postRequest('/specification_evaluations/' + this.assess_id + '/leader_check',params).then((response:any) => {
-          if(response && response.id){
-            this.http.putRequest('/specification_evaluations/' + this.assess_id + '/reported','').then((response:any) => {
-              this.http.presentToast('保存并上报成功！', 'bottom', 'success');
-              this.back();
-            })
-          }
-        })
-      }
-    }
-  }
-
-  // 返回列表页
-  back(){
-    this.nav.navigateRoot(['/leader-check']).then(() => {
-      location.reload();
-    });
   }
 
 }

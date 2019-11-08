@@ -74,7 +74,6 @@
     </ion-item>
   </ion-list>
   <div class="section mr-top-10 text-center">
-    <ion-button size="small" fill="outline" *ngIf="is_checked == 'false'" [routerLink]="['../../leaderCheckDetail',assessId]" [queryParams]="{isChecked:false}">进入领导审核</ion-button>
-    <ion-button size="small" fill="outline" *ngIf="is_checked == 'true'" [routerLink]="['../../leaderCheckDetail',assessId]" [queryParams]="{isChecked:true}">查看领导审核详情</ion-button>
+    <ion-button size="small" fill="outline" [routerLink]="['../../topicsDetail',assessId]">查看企业自评详情</ion-button>
   </div>
 </ion-content>
