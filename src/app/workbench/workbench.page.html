@@ -18,25 +18,25 @@
           </div>
           <ion-label class="mine-icon-label">公告通知</ion-label>
         </ion-col>
-        <ion-col class="col-20 text-center ion-align-self-center"  [routerLink]="['/experience']">
+        <ion-col *ngIf="role != 'ZJ'" class="col-20 text-center ion-align-self-center"  [routerLink]="['/experience']">
           <div class="mine-icon-circle bg-cyan">
             <ion-img class="mine-icon-img" src="./assets/experience.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">经验分享</ion-label>
         </ion-col>
-        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/case']">
+        <ion-col *ngIf="role != 'ZJ'" class="col-20 text-center ion-align-self-center" [routerLink]="['/case']">
           <div class="mine-icon-circle bg-brightBlue">
             <ion-img class="mine-icon-img" src="./assets/case.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">案例分析</ion-label>
         </ion-col>
-        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/improvement-plan']">
+        <ion-col *ngIf="role != 'ZJ'" class="col-20 text-center ion-align-self-center" [routerLink]="['/improvement-plan']">
           <div class="mine-icon-circle bg-lightRed" style="padding: 5px;">
             <ion-img class="mine-icon-img" src="./assets/improvement-plan.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">改善方案</ion-label>
         </ion-col>
-        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/internal-communication']" [queryParams]="{title:'内部交流'}">
+        <ion-col *ngIf="role != 'ZJ'" class="col-20 text-center ion-align-self-center" [routerLink]="['/internal-communication']" [queryParams]="{title:'内部交流'}">
           <div class="mine-icon-circle bg-orange" style="padding: 3px;">
             <ion-img class="mine-icon-img" src="./assets/internal-communication.png" alt=""></ion-img>
           </div>
@@ -91,7 +91,7 @@
           </div>
           <ion-label class="mine-icon-label">专家阅评</ion-label>
         </ion-col>
-        <ion-col *ngIf="role != 'QYTBY'" class="col-20 text-center ion-align-self-center" [routerLink]="['/company-assess']">
+        <ion-col *ngIf="role != 'QYTBY'" class="col-20 text-center ion-align-self-center" [routerLink]="['/view-self-assessment']">
           <div class="mine-icon-circle bg-orange">
             <ion-img class="mine-icon-img" src="./assets/view-self-evaluation.png" alt=""></ion-img>
           </div>

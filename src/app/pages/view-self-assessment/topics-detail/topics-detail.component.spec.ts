@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewSelfEvaluationPage } from './view-self-evaluation.page';
+import { TopicsDetailComponent } from './topics-detail.component';
 
-describe('ViewSelfEvaluationPage', () => {
-  let component: ViewSelfEvaluationPage;
-  let fixture: ComponentFixture<ViewSelfEvaluationPage>;
+describe('TopicsDetailComponent', () => {
+  let component: TopicsDetailComponent;
+  let fixture: ComponentFixture<TopicsDetailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewSelfEvaluationPage ],
+      declarations: [ TopicsDetailComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewSelfEvaluationPage);
+    fixture = TestBed.createComponent(TopicsDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

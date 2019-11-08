@@ -21,6 +21,7 @@ export class NoticePage implements OnInit {
   constructor(public router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    console.log(0)
     const params = { title:this.title,publish_status_code: '02',page:this.page,per_page:this.per_page,sort:'-publish_time' };
     this.getData(params);
   }
