@@ -32,4 +32,13 @@ export class CompanyAssessPage implements OnInit {
     });
   }
 
+  // 上报
+  toReport(id:any){
+    this.http.putRequest('/specification_evaluations/' + id + '/reported','').then((response:any) => {
+      if(response){
+        this.http.presentToast('上报成功','bottom','success');
+      }
+    })
+  }
+
 }

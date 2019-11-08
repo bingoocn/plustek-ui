@@ -29,6 +29,7 @@ export class AssessResultComponent implements OnInit {
       });
     }
   }
+  // 保存
   save() {
     const params = {
       id: this.companyId, // 自评ID
@@ -38,6 +39,25 @@ export class AssessResultComponent implements OnInit {
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
       if (response) {
         this.nav.navigateForward("/company-assess")
+      }
+    })
+  }
+
+  // 保存并上报
+  saveAndReport(){
+    const params = {
+      id: this.companyId, // 自评ID
+      main_highlight: this.main_highlight, // 主要亮点
+      major_deficiency: this.major_deficiency, //主要不足
+    };
+    this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
+      if (response && response.id) {
+        this.http.putRequest('/specification_evaluations/' + response.id + '/reported','').then((response:any) => {
+          // if(response){
+            this.http.presentToast('保存并上报成功','bottom','success');
+            this.nav.navigateForward("/company-assess");
+          // }
+        })
       }
     })
   }
