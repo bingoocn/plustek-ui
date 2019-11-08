@@ -9,9 +9,10 @@
 
 <ion-content color="grey">
   <div class="mr-top-10 no-padding-top">
-    <ion-list lines="full" *ngIf ="assess && assess.length > 0" >
-      <ion-item *ngFor ="let item of assess; let key = index" detail [routerLink]="['./addAssess']" [queryParams]="{companyId:item.id,title:'editor'}" >
-      <ion-grid fixed>
+    <ion-list lines="full" *ngIf="assess && assess.length > 0">
+      <ion-item *ngFor="let item of assess; let key = index" detail [routerLink]="['./addAssess']"
+        [queryParams]="{companyId:item.id,title:'editor'}">
+        <ion-grid fixed>
           <ion-row>
             <ion-col size="9">
               <span class="size-sm grey">认定自评等级：{{item.evaluation_level.name}}</span>
@@ -27,11 +28,11 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-    </ion-item>
+      </ion-item>
     </ion-list>
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addAssess']">
+    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addAssess']" [queryParams]="{title:'new'}">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

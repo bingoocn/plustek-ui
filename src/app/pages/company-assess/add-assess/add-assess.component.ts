@@ -14,7 +14,9 @@ export class AddAssessComponent implements OnInit {
   public evaluationDate: string;  // 选择日期
   public evaluationLevelCode: string; // 级次
   public title: string; // 编辑还是查看是新增
-  public companyId: string; //企业自评ID
+  public companyId: string; // 企业自评ID
+  public isEdito: boolean = false; // 编辑时不可操作
+  public butValue: string = '开始答题'; // 新增：开始答题，
 
   constructor(public routeInfo: ActivatedRoute, private router: Router, public http: HttpService) { }
 
@@ -31,6 +33,7 @@ export class AddAssessComponent implements OnInit {
         this.title = data.title
     });
     if (this.title === 'editor') {
+      this.isEdito = true,
       this.http.getRequest('/specification_evaluations/' + this.companyId).then((response: any) => {
         if (response) {
           this.evaluationLevelCode = response.evaluation_level.code;

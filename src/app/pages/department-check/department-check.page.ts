@@ -17,14 +17,14 @@ export class DepartmentCheckPage implements OnInit {
   constructor(public router: Router, public http: HttpService) { }
 
   ngOnInit() {
-    this.checkTabValue = 'unchecked';// 默认显示待审核的
+    this.checkTabValue = 'unchecked'; // 默认显示待审核的
     // 获取当前登录人所属单位信息
     this.http.getUser().then((response: any) => {
       if (response && response.subordinateOrgId) {
         this.unit_id = response.subordinateOrgId;
-        const uncheckedParams = { evaluation_status_code: '03', sort: '-evaluation_date', apply_id: this.unit_id };
+        const uncheckedParams = { evaluation_status_code: '02', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getUnCheckedData(uncheckedParams);
-        const checkedParams = { evaluation_status_code: '05', sort: '-evaluation_date', apply_id: this.unit_id };
+        const checkedParams = { evaluation_status_code: '03', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getCheckedData(checkedParams);
       }
     })
