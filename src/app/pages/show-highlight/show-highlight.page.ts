@@ -13,6 +13,8 @@ export class ShowHighlightPage implements OnInit {
   public subGroupHighlights:any = [];
   //默认tab
   public highlightTabValue: string;
+  public groupArr:any = [];
+  public subGroupArr:any = [];
 
   constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
@@ -20,7 +22,8 @@ export class ShowHighlightPage implements OnInit {
     this.highlightTabValue = 'group';
     //路由跳转默认tab
     const group_state = this.routeInfo.snapshot.queryParams['group_state'];
-    this.highlightTabValue = group_state;
+    if(group_state){this.highlightTabValue = group_state}
+    
     this.getData();
   }
   // 关键字搜索
@@ -37,70 +40,72 @@ export class ShowHighlightPage implements OnInit {
         if(response.guid){
           this.http.getRequest('/specification_evaluations_lightspot?apply_fguid=&recommended_unit_type_code=01').then((response:any) => {
             if(response && response.length > 0){
-              let groupArr = [];
-              let sunGroupArr = [];
-
               response.forEach( item=>{
                 if(item.ent_self_eva_mon_approvals.length == 1){
-                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '01'){
-                    groupArr.push({
+                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '01' && item.ent_self_eva_mon_approvals[0].is_recommended == true){
+                    this.groupArr.push({
                       subGroup:item.unit.group.name,
                       guid:item.id,
-                      unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
+                      unit:item.ent_self_eva_mon_approvals[0].recommended_person.unit_name,
                       level:item.evaluation_level.name,
                       grade:item.self_score,
-                      person:item.ent_self_eva_mon_approvals[0].mon_approval_person,
-                      time:item.ent_self_eva_mon_approvals[0].mon_approval_date,
-                    })
-                  }
-                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '02'){
-                    sunGroupArr.push({
-                      subGroup:item.unit.group.name,
-                      guid:item.id,
-                      unit:item.ent_self_eva_mon_approvals[0].data_unit.name,
-                      level:item.evaluation_level.name,
-                      grade:item.self_score,
-                      person:item.ent_self_eva_mon_approvals[0].mon_approval_person,
-                      time:item.ent_self_eva_mon_approvals[0].mon_approval_date,
+                      person:item.ent_self_eva_mon_approvals[0].recommended_person.name,
+                      time:item.ent_self_eva_mon_approvals[0].recommended_date,
                     })
                   }
                 }
                 if(item.ent_self_eva_mon_approvals.length == 2){
                   item.ent_self_eva_mon_approvals.forEach( el=>{
-                    if(el.mon_approval_type.code == '01'){
-                      groupArr.push({
+                    if(el.mon_approval_type.code == '01' && el.is_recommended == true){
+                      this.groupArr.push({
                         subGroup:item.unit.group.name,
                         guid:item.id,
-                        unit:el.data_unit.name,
+                        unit:el.recommended_person.unit_name,
                         level:item.evaluation_level.name,
                         grade:item.self_score,
-                        person:el.mon_approval_person,
-                        time:el.mon_approval_date,
-                      })
-                    }
-                  })
-                  item.ent_self_eva_mon_approvals.forEach( el=>{
-                    if(el.mon_approval_type.code == '02'){
-                      sunGroupArr.push({
-                        subGroup:item.unit.group.name,
-                        guid:item.id,
-                        unit:el.data_unit.name,
-                        level:item.evaluation_level.name,
-                        grade:item.self_score,
-                        person:el.mon_approval_person,
-                        time:el.mon_approval_date,
+                        person:el.recommended_person.name,
+                        time:el.recommended_date,
                       })
                     }
                   })
                 }
               })
-              this.groupHighlights = groupArr;
-              this.subGroupHighlights = sunGroupArr;
+              this.groupHighlights = this.groupArr;
             }
           });
           this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=02').then((response:any) => {
             if(response && response.length > 0){
-              this.subGroupHighlights = response;
+              response.forEach( item=>{
+                if(item.ent_self_eva_mon_approvals.length == 1){
+                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '02' && item.ent_self_eva_mon_approvals[0].is_recommended == true){
+                    this.subGroupArr.push({
+                      subGroup:item.unit.group.name,
+                      guid:item.id,
+                      unit:item.ent_self_eva_mon_approvals[0].recommended_person.unit_name,
+                      level:item.evaluation_level.name,
+                      grade:item.self_score,
+                      person:item.ent_self_eva_mon_approvals[0].recommended_person.name,
+                      time:item.ent_self_eva_mon_approvals[0].recommended_date,
+                    })
+                  }
+                }
+                if(item.ent_self_eva_mon_approvals.length == 2){
+                  item.ent_self_eva_mon_approvals.forEach( el=>{
+                    if(el.mon_approval_type.code == '02' && el.is_recommended == true){
+                      this.subGroupArr.push({
+                        subGroup:item.unit.group.name,
+                        guid:item.id,
+                        unit:el.recommended_person.unit_name,
+                        level:item.evaluation_level.name,
+                        grade:item.self_score,
+                        person:el.recommended_person.name,
+                        time:el.recommended_date,
+                      })
+                    }
+                  })
+                }
+              })
+              this.subGroupHighlights = this.subGroupArr;
             }
           });
         }
