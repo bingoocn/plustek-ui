@@ -24,7 +24,7 @@ export class DepartmentCheckPage implements OnInit {
         this.unit_id = response.subordinateOrgId;
         const uncheckedParams = { evaluation_status_code: '02', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getUnCheckedData(uncheckedParams);
-        const checkedParams = { evaluation_status_code: '03', sort: '-evaluation_date', apply_id: this.unit_id };
+        const checkedParams = { evaluation_status_code: '03,04,05,06', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getCheckedData(checkedParams);
       }
     })
