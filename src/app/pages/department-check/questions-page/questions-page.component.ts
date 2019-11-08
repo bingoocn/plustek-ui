@@ -146,7 +146,13 @@ export class QuestionsPageComponent implements OnInit {
       detail: this.detail
     };
     this.http.postRequest(`/specification_evaluations/${this.companyId}/department`, params).then((response: any) => {
-      this.nav.navigateForward("/department-check")
+      if (response) {
+        this.http.putRequest(`/specification_evaluations/${this.companyId}/reported`, '').then((response) => {
+          console.log('上报成功！！')
+          // 跳转到审核列表页面
+          this.nav.navigateForward("/department-check")
+        })
+      }
     })
   }
   // 下一步按钮
