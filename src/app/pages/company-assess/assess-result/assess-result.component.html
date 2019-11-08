@@ -58,7 +58,8 @@
       <ion-input type="text" [(ngModel)]="major_deficiency" placeholder="请输入……"></ion-input>
     </ion-item>
   </ion-list>
-  <div class="ion-padding">
-    <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin">保存</ion-button>
+  <div class="section mr-top-10 text-center">
+      <ion-button size="small" fill="outline" (click)="save()">保存</ion-button>
+      <ion-button size="small" fill="outline" (click)="saveAndReport()">保存并上报</ion-button>
   </div>
 </ion-content>
