@@ -7,10 +7,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { CompanyAssessPage } from './company-assess.page';
 
-import {AddAssessComponent} from './add-assess/add-assess.component';
-import {QuestionsPageComponent} from './questions-page/questions-page.component';
-import {ItemInfoComponent} from './item-info/item-info.component';
-import {ModalPageComponent} from './item-info/modal-page/modal-page.component'
+import { AddAssessComponent } from './add-assess/add-assess.component';
+import { QuestionsPageComponent } from './questions-page/questions-page.component';
+import { ItemInfoComponent } from './item-info/item-info.component';
+import { ModalPageComponent } from './item-info/modal-page/modal-page.component';
+import { AssessResultComponent } from './assess-result/assess-result.component';
+import { from } from 'rxjs';
 
 const routes: Routes = [
   {
@@ -28,6 +30,9 @@ const routes: Routes = [
   }, {
     path: 'modalPage',
     component: ModalPageComponent
+  }, {
+    path: 'assessResult',
+    component: AssessResultComponent
   }
 ];
 
@@ -38,6 +43,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CompanyAssessPage, ModalPageComponent, AddAssessComponent, QuestionsPageComponent, ItemInfoComponent]
+  declarations: [AssessResultComponent, CompanyAssessPage, ModalPageComponent, AddAssessComponent, QuestionsPageComponent, ItemInfoComponent]
 })
-export class CompanyAssessPageModule {}
+export class CompanyAssessPageModule { }

@@ -11,7 +11,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
 
   public evaluationId:string;
   public selfEvaluation:any;
-  public is_evaluated:boolean = false; // 是否留言
+  public is_evaluated:string; // 是否留言
   public is_sub_group_evaluated:boolean = false; // 是否子集团留言
   public is_group_evaluated:boolean = false; // 是否集团留言
   public is_sub_group_recommended:boolean = false; // 是否子集团推荐
@@ -51,7 +51,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
         }
       });
       // 判断是否留言，如果已留言，查询留言信息并显示
-      if(this.is_evaluated){
+      if(this.is_evaluated === 'true'){
         // 查询子集团留言，如果存在，显示子集团留言
         this.http.getRequest('/specification_evaluations/' + this.evaluationId + '/sub_group_monitor').then((response:any) => {
           if(response && response.mon_approval_content) {
@@ -82,10 +82,10 @@ export class MonitorEvaluationDetailComponent implements OnInit {
           var paramValue = JSON.parse(response.param_value);
           if(paramValue.abbreviation){
             var recommended = '';
-            if(paramValue.abbreviation === 'JTLD'){
+            if(paramValue.abbreviation === 'JTYWBM'){
               recommended = '/top_group_recommended';
             }
-            if(paramValue.abbreviation === 'ZJTLD'){
+            if(paramValue.abbreviation === 'ZJTYWBM'){
               recommended = '/sub_group_recommended';
             }
             if(recommended !== ''){
@@ -111,10 +111,10 @@ export class MonitorEvaluationDetailComponent implements OnInit {
           var paramValue = JSON.parse(response.param_value);
           if(paramValue.abbreviation){
             var monitor = '';
-            if(paramValue.abbreviation === 'JTLD'){
+            if(paramValue.abbreviation === 'JTYWBM'){
               monitor = '/top_group_monitor';
             }
-            if(paramValue.abbreviation === 'ZJTLD'){
+            if(paramValue.abbreviation === 'ZJTYWBM'){
               monitor = '/sub_group_monitor';
             }
             if(monitor !== ''){

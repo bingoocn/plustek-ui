@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content fullscreen padding scroll-y="false" *ngIf="items">
-  <ion-slides [pager]='false' #slide class="banner size-xm" mode="ios" pager="ios" [options]="slideOpts"
+  <ion-slides [pager]='false' #slide class="my-height banner size-xm" mode="ios" pager="ios" [options]="slideOpts"
     (ionSlideNextEnd)="slideDidChange()">
     <ion-slide *ngFor="let item of items; let key = index">
-      <div class='slider-style' *ngIf='item'>
+      <div class='slider-style ' *ngIf='item'>
 
         <p class="size-sm"><span>{{item.label}}</span>
           <ion-chip outline color="primary" (click)="presentModal(item.index_notes)">
@@ -24,8 +24,30 @@
             <ion-label *ngIf="entry.topics_type.code ==='01'">{{entry.topics_content}}</ion-label>
             <ion-input *ngIf="entry.topics_type.code ==='02'" placeholder="请输入……" [(ngModel)]="entry.topics_content">
             </ion-input>
-            <ion-checkbox slot="start" [(ngModel)]="entry.checked" (ionChange)="changeOption(entry,item.id)">
+            <ion-checkbox disabled slot="start" [(ngModel)]="entry.checked" (ionChange)="changeOption(entry,item.id)">
             </ion-checkbox>
+          </ion-item>
+          <ion-col size="12">
+            <ion-radio-group [(ngModel)]="item.approval_status_code">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item lines="none">
+                    <ion-label>通过</ion-label>
+                    <ion-radio slot="start" color="success" value="01"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item lines="none">
+                    <ion-label>不通过</ion-label>
+                    <ion-radio slot="start" color="danger" value="02"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-col>
+          <ion-item *ngIf='showSave'>
+            <ion-label position="stacked">审核人批阅</ion-label>
+            <ion-textarea [(ngModel)]="leader_review"></ion-textarea>
           </ion-item>
         </ion-list>
       </div>
@@ -38,11 +60,15 @@
         <ion-icon name="arrow-round-back"></ion-icon>
         <ion-label>上一题</ion-label>
       </ion-tab-button>
-      <ion-tab-button  (click)="next()">
+      <ion-tab-button (click)="next()">
         <ion-icon name="arrow-round-forward"></ion-icon>
         <ion-label>下一题</ion-label>
       </ion-tab-button>
-      <ion-tab-button  (click)="saveItem()" [routerLink]="['../assessResult']" [queryParams]="{companyId:companyId}">
+      <ion-tab-button *ngIf='!showSave' (click)="toNext()">
+        <ion-icon name="bookmark"></ion-icon>
+        <ion-label>下一步</ion-label>
+      </ion-tab-button>
+      <ion-tab-button *ngIf='showSave' (click)="saveItem()">
         <ion-icon name="bookmark"></ion-icon>
         <ion-label>保存</ion-label>
       </ion-tab-button>

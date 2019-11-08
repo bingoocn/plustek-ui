@@ -9,7 +9,7 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class MonitorEvaluationPage implements OnInit {
 
-  public evaluationTabValue: string;//当前tab值
+  public evaluationTabValue: string = 'notEvaluated';//当前tab值
   public noEvaluations: any = [];//未评价
   public evaluations: any = [];//已评价
   public role: any = [];//当前登录人的当前角色
@@ -18,19 +18,15 @@ export class MonitorEvaluationPage implements OnInit {
 
   ngOnInit() {
     // 获取传递过来的状态（已评价，未评价）
-    this.routeInfo.params.subscribe((params: Params) => {
-      const evaluation_state = params['evaluation_state'];
-      if(evaluation_state == '未评价'){
-        this.evaluationTabValue = 'notEvaluated';
-      }else if(evaluation_state == '已评价'){
-        this.evaluationTabValue = 'alreadyEvaluated';
-      }else{
-        this.evaluationTabValue = 'notEvaluated';
-      }
-    });
+    const evaluation_state = this.routeInfo.snapshot.queryParams['evaluation_state'];
+    if(evaluation_state == '未评价'){
+      this.evaluationTabValue = 'notEvaluated';
+    }
+    if(evaluation_state == '已评价'){
+      this.evaluationTabValue = 'alreadyEvaluated';
+    }
     const params = { evaluation_level_code: '',sort:'-evaluation_date' };
     this.getData(params);
-    // this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
   }
 
   // 发送请求获取数据
@@ -52,10 +48,10 @@ export class MonitorEvaluationPage implements OnInit {
                   this.role = JSON.parse(response.param_value);
                   if(this.role.abbreviation){
                     var monitor = '';
-                    if(this.role.abbreviation === 'JTLD'){
+                    if(this.role.abbreviation === 'JTYWBM'){
                       monitor = '/top_group_monitor'
                     }
-                    if(this.role.abbreviation === 'ZJTLD'){
+                    if(this.role.abbreviation === 'ZJTYWBM'){
                       monitor = '/sub_group_monitor'
                     }
                     if(monitor !== ''){

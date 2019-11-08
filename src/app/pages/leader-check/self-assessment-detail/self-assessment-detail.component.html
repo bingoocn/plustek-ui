@@ -39,27 +39,27 @@
           </ion-col>
           <ion-col size="12">
             <span>部门审核日期：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.standard_result && assessInfo.evaluation_result.standard_result.name) ? assessInfo.evaluation_result.standard_result.name:'' }}</span>
+            <span>{{ (dept_check_info && dept_check_info.create_time) ? dept_check_info.create_time:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>部门审核人： </span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.gist_score) ? assessInfo.evaluation_result.gist_score:'' }}</span>
+            <span>{{ (dept_check_info && dept_check_info.creator && dept_check_info.creator.name) ? dept_check_info.creator.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>部门审核意见：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score) ? assessInfo.evaluation_result.plus_score:'' }}</span>
+            <span>{{ (dept_check_info && dept_check_info.leader_review) ? dept_check_info.leader_review:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>领导审核日期：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+            <span>{{ (leader_check_info && leader_check_info.create_time) ? leader_check_info.create_time:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>领导审核人：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+            <span>{{ (leader_check_info && leader_check_info.creator && leader_check_info.creator.name) ? leader_check_info.creator.name:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>领导审核意见：</span>
-            <span>{{ (assessInfo.evaluation_result && assessInfo.evaluation_result.plus_score_explain) ? assessInfo.evaluation_result.plus_score_explain:'' }}</span>
+            <span>{{ (leader_check_info && leader_check_info.leader_review) ? leader_check_info.leader_review:'' }}</span>
           </ion-col>
           <ion-col size="12">
             <span>主要亮点：</span>
@@ -74,6 +74,7 @@
     </ion-item>
   </ion-list>
   <div class="section mr-top-10 text-center">
-    <ion-button size="small" fill="outline" [routerLink]="['../../leaderCheckDetail',assessId]">查看领导审核详情</ion-button>
+    <ion-button size="small" fill="outline" *ngIf="is_checked == 'false'" [routerLink]="['../../leaderCheckDetail',assessId]" [queryParams]="{isChecked:false}">进入领导审核</ion-button>
+    <ion-button size="small" fill="outline" *ngIf="is_checked == 'true'" [routerLink]="['../../leaderCheckDetail',assessId]" [queryParams]="{isChecked:true}">查看领导审核详情</ion-button>
   </div>
 </ion-content>

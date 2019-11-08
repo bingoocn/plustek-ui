@@ -18,10 +18,9 @@ export class ShowHighlightPage implements OnInit {
 
   ngOnInit() {
     this.highlightTabValue = 'group';
-    // this.routeInfo.queryParams.subscribe((data) => {
-    //   console.log(data)
-    //     this.highlightTabValue = data.group_state 
-    // });
+    //路由跳转默认tab
+    const group_state = this.routeInfo.snapshot.queryParams['group_state'];
+    this.highlightTabValue = group_state;
     this.getData();
   }
   // 关键字搜索

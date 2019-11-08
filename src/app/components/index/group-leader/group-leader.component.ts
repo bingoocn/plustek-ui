@@ -27,7 +27,7 @@ export class GroupLeaderComponent implements OnInit {
     autoplay: { delay: 2000 }, 
     pager: false
   }
-  // 公告通知数据
+  // 专家检查数据
   public groupLeaderNotices = [];
 
   //企业自评信息
@@ -43,6 +43,7 @@ export class GroupLeaderComponent implements OnInit {
   //专家检查信息
   public expertAssess :any = {
     checkedNum:0,
+    checkTime:'',
     heighLevel:'',
     lowLevel:'',
     heighsum:0,
@@ -104,7 +105,6 @@ export class GroupLeaderComponent implements OnInit {
 
   ngOnInit() {
     this.getEcharts();
-    this.getNotice();
     this.getExpertAssess();
     this.getSelfAssess();
   }
@@ -132,6 +132,7 @@ export class GroupLeaderComponent implements OnInit {
   getExpertAssess() {
     this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
       if(response && response.length > 0){
+        this.expertAssess.checkTime = response[0].check_end_time;
         //根据单位去重
         let resArr = response;
         let unitArr = [];
@@ -148,6 +149,12 @@ export class GroupLeaderComponent implements OnInit {
         response.forEach(item => {
           if(item.evaluation_result.standard_result !== null){
             standard_Level.push(Number(item.evaluation_result.standard_result.code));
+            this.groupLeaderNotices.push({
+              id:item.id,
+              level:item.evaluation_result.standard_result.name,
+              date:item.check_end_time,
+              unit:item.unit.name
+            })
           }
         });
         //获取最高/低达级单位数量
@@ -159,12 +166,10 @@ export class GroupLeaderComponent implements OnInit {
             return prev
           },[])
           this.expertAssess.heighLevel = Math.max(...standard_Level)
-          this.expertAssess.lowLevel = Math.min(...standard_Level)
           this.expertAssess.heighsum = this.common.countNum(newstandard_Level,this.expertAssess.heighLevel)
-          this.expertAssess.lowsum = this.common.countNum(newstandard_Level,this.expertAssess.lowLevel)
           this.expertAssess.heighLevel = this.common.convertToChinaNum(Math.max(...standard_Level))
-          this.expertAssess.lowLevel = this.common.convertToChinaNum(Math.min(...standard_Level))
         }
+
       }
     });
   }
@@ -216,13 +221,13 @@ export class GroupLeaderComponent implements OnInit {
     });
   }
   // 获取公告通知数据
-  getNotice(){
-    this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
-      if(response && response.length > 0){
-        this.groupLeaderNotices = response;
-      }
-    });
-  }
+  // getNotice(){
+  //   this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
+  //     if(response && response.length > 0){
+  //       this.groupLeaderNotices = response;
+  //     }
+  //   });
+  // }
   // 解决手动滑动后轮播图无法正常轮播
   touchEnd() {
     this.slide.startAutoplay();

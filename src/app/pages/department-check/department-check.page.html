@@ -1,47 +1,81 @@
 <ion-header>
   <ion-toolbar color="lightPrimary">
     <ion-buttons slot="start">
-          <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
+      <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
     </ion-buttons>
     <ion-title>部门审核</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="grey">
-  <div class="mr-top-10 no-padding-top">
-    <ion-list lines="full"  *ngIf ="assess && assess.length > 0">
-      <ion-item  *ngFor ="let item of assess; let key = index" detail [routerLink]="['../assess-info',item.id]">
-      <ion-grid fixed>
-          <ion-row>
-            <ion-col size="9">
-              <span class="size-sm grey">认定自评等级：{{item.evaluation_level.name}}</span>
-            </ion-col>
-            <ion-col size="9">
-              <span class="size-sm grey">自评得分：{{item.self_score}}</span>
-            </ion-col>
-            <ion-col size="9">
-              <span class="size-sm grey">当前状态：{{item.evaluation_status.name}}</span>
-            </ion-col>
-            <ion-col size="9">
-              <span class="size-sm grey">自评时间：{{item.evaluation_date}}</span>
-            </ion-col>
-            <!-- <ion-col size="9">
-              <ion-button fill="outline" expand="block" size="small" class="pull-right">
-                分管领导审核
-              </ion-button>&nbsp;&nbsp;
-              <ion-button fill="outline" expand="block" size="small" class="pull-right">
-                部门审核
-              </ion-button>
-            </ion-col> -->
-          </ion-row>
-        </ion-grid>
-    </ion-item>
-    </ion-list>
+  <div>
+    <div class="padding-10">
+      <ion-segment [(ngModel)]="checkTabValue" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="unchecked" checked>
+          <ion-label>待审核</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="checked">
+          <ion-label>已审核</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div *ngIf=" checkTabValue == 'unchecked'">
+      <ion-list lines="full" *ngIf="unAssess && unAssess.length > 0">
+        <ion-item *ngFor="let item of unAssess; let key = index" detail [routerLink]="['./department-info']" [queryParams]="{title:'new',companyId:item.id}">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="12">
+                <span
+                  class="size-sm grey">子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">认定自评等级：{{item.evaluation_level.name}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">自评得分：{{item.self_score}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">当前状态：{{item.evaluation_status.name}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">自评时间：{{item.evaluation_date}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf=" checkTabValue == 'checked'">
+      <ion-list lines="full" *ngIf="assess && assess.length > 0">
+        <ion-item *ngFor="let item of assess; let key = index" detail [routerLink]="['./department-info']" [queryParams]="{title:'look',companyId:item.id }">
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="12">
+                <span
+                  class="size-sm grey">子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">认定自评等级：{{item.evaluation_level.name}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">自评得分：{{item.self_score}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">当前状态：{{item.evaluation_status.name}}</span>
+              </ion-col>
+              <ion-col size="12">
+                <span class="size-sm grey">自评时间：{{item.evaluation_date}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
-  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addAssess']">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab> -->
 </ion-content>
-
