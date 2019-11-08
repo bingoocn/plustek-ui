@@ -28,23 +28,23 @@ export class HighlightInfoComponent implements OnInit {
             if(el.mon_approval_type.code == '01'){
               this.highlightInfo = {
                 subGroup:response.unit.group.name,
-                unitName:el.data_unit.name,
+                unitName:response.unit.name,
                 selfEvaluationLevel:response.evaluation_level.name,
                 self_score:response.self_score,
-                person:el.mon_approval_person,
-                time:el.mon_approval_date,
-                main_light:el.mon_approval_content
+                person:el.recommended_person.name,
+                time:el.recommended_date,
+                main_light:response.main_highlight
               }
             }
             if(el.mon_approval_type.code == '02'){
               this.highlightInfo = {
                 subGroup:response.unit.group.name,
-                unitName:el.data_unit.name,
+                unitName:response.unit.name,
                 selfEvaluationLevel:response.evaluation_level.name,
                 self_score:response.self_score,
-                person:el.mon_approval_person,
-                time:el.mon_approval_date,
-                main_light:el.mon_approval_content
+                person:el.recommended_person.name,
+                time:el.recommended_date,
+                main_light:response.main_highlight
               }
             }
           })
