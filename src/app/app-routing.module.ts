@@ -24,7 +24,6 @@ const routes: Routes = [
   { path: 'expert-review', loadChildren: './pages/expert-review/expert-review.module#ExpertReviewPageModule' },
   { path: 'leader-review', loadChildren: './pages/leader-review/leader-review.module#LeaderReviewPageModule' },
   { path: 'monitor-evaluation', loadChildren: './pages/monitor-evaluation/monitor-evaluation.module#MonitorEvaluationPageModule' },
-  { path: 'view-self-evaluation', loadChildren: './pages/view-self-evaluation/view-self-evaluation.module#ViewSelfEvaluationPageModule' },
   { path: 'show-highlight', loadChildren: './pages/show-highlight/show-highlight.module#ShowHighlightPageModule' },
   { path: 'message-interaction', loadChildren: './pages/message-interaction/message-interaction.module#MessageInteractionPageModule' },
   { path: 'overall-evaluation', loadChildren: './pages/overall-evaluation/overall-evaluation.module#OverallEvaluationPageModule' },
@@ -32,6 +31,8 @@ const routes: Routes = [
   { path: 'assess-info/:assessId', loadChildren: './pages/assess-info/assess-info.module#AssessInfoPageModule' },
   { path: 'leader-check', loadChildren: './pages/leader-check/leader-check.module#LeaderCheckPageModule' },
   { path: 'department-check', loadChildren: './pages/department-check/department-check.module#DepartmentCheckPageModule' },
+  { path: 'view-self-assessment', loadChildren: './pages/view-self-assessment/view-self-assessment.module#ViewSelfAssessmentPageModule' },
+
 ];
 @NgModule({
   imports: [

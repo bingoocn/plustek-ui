@@ -9,19 +9,36 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class CompanyAssessPage implements OnInit {
   public assess: any = [];
+  public unit_id:string = '';// 当前登录人所属组织机构id
   constructor(public router: Router, public http: HttpService) { }
 
 
   ngOnInit() {
-    this.getData();
+    // 获取当前登录人所属单位信息
+    this.http.getUser().then((response:any) => {
+      if(response && response.subordinateOrgId){
+        this.unit_id = response.subordinateOrgId;
+        const params = { apply_id:this.unit_id };
+        this.getData(params);
+      }
+    })
   }
   // 发送请求获取数据
-  getData() {
-    this.http.getRequest('/specification_evaluations').then((response: any) => {
+  getData(params) {
+    this.http.getRequest('/specification_evaluations',params).then((response: any) => {
       if (response && response.length > 0) {
         this.assess = response;
       }
     });
+  }
+
+  // 上报
+  toReport(id:any){
+    this.http.putRequest('/specification_evaluations/' + id + '/reported','').then((response:any) => {
+      if(response){
+        this.http.presentToast('上报成功','bottom','success');
+      }
+    })
   }
 
 }

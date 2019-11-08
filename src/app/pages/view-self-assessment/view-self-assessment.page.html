@@ -7,11 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="grey">
-  <div class="mr-top-10 no-padding-top">
-    <ion-list lines="full" *ngIf="assess && assess.length > 0">
-      <ion-item *ngFor="let item of assess; let key = index" detail [routerLink]="['./addAssess']"
-        [queryParams]="{companyId:item.id,title:'editor'}">
+<ion-content>
+  <ion-content color="grey">
+    <div class="mr-top-10 no-padding-top">
+      <ion-list lines="full" *ngIf ="assess && assess.length > 0" >
+        <ion-item *ngFor ="let item of assess; let key = index" detail [routerLink]="['./assessDetail',item.id]">
         <ion-grid fixed>
           <ion-row>
             <ion-col size="12">
@@ -29,22 +29,12 @@
             <ion-col size="12">
               <span class="size-sm grey">当前状态：{{item.evaluation_status.name}}</span>
             </ion-col>
-            <ion-col size="9">
+            <ion-col size="12">
               <span class="size-sm grey">自评时间：{{item.evaluation_date}}</span>
-            </ion-col>
-            <ion-col size="3" *ngIf="item.evaluation_status.code == '01'">
-              <ion-button fill="outline" expand="block" size="small" class="pull-right" (click)="toReport(item.id)">
-                上报
-              </ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
-      </ion-item>
+    </ion-item>
     </ion-list>
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size="small" class="no-margin" [routerLink]="['./addAssess']" [queryParams]="{title:'new'}">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

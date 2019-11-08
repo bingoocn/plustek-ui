@@ -27,6 +27,8 @@ export class QuestionsPageComponent implements OnInit {
   public companyId: any; // 企业自评ID
   public evaluationLevelCode: string;
   public leader_review: any; // 部门审核批阅
+  public approvalDetail: any; // 审核数据回显
+  public showDepartment: any = false; // 部门回显
   public slideOpts: any = {
     effect: 'flip',
     speed: 400,
@@ -46,9 +48,7 @@ export class QuestionsPageComponent implements OnInit {
     this.routeInfo.queryParams.subscribe((data) => {
       this.companyId = data.companyId
     });
-
     this.getFormData();
-
   }
   // 获取自评的信息
   getFormData() {
@@ -60,12 +60,13 @@ export class QuestionsPageComponent implements OnInit {
         this.getIndicator(params);
       }
     })
+    // 部门审核数据，用来回显
     this.http.getRequest(`/specification_evaluations/${this.companyId}/department_check`).then((response: any) => {
       if (response) {
-        console.log(response, '12312311231')
-
+        this.showDepartment = true;
+        this.approvalDetail = response.approval_detail;
+        this.leader_review = response.leader_review;
       }
-
     })
 
 
@@ -96,13 +97,13 @@ export class QuestionsPageComponent implements OnInit {
           // 回显
           if (this.self_evaluations && this.self_evaluations.length > 0) {
             this.items.forEach((e: any, i: any) => {
+              // 题目答案回显
               this.self_evaluations.forEach((el: any, j: any) => {
                 if (e.id === el.index_slave_id) {
                   e.options.forEach((item: any) => [
                     el.options.forEach((element: any) => {
                       if (item.id === element.topics_slave_id) {
                         item.checked = true;
-                        // console.log(item, 'qweq')
                         if (item.topics && item.topics_type === '02') {
                           item.topics_content = element.supplementary_content
                         }
@@ -112,6 +113,17 @@ export class QuestionsPageComponent implements OnInit {
                   ])
                 }
               })
+              // 部门审核结果回显
+              if (this.approvalDetail && this.approvalDetail.length > 0) {
+                this.approvalDetail.forEach((el: any, j: any) => {
+                  if (el.indicator_id === e.id) {
+                    e.approval_status_code = el.approval_status_code
+                  }
+
+                })
+
+              }
+
             })
           }
         }
@@ -134,7 +146,13 @@ export class QuestionsPageComponent implements OnInit {
       detail: this.detail
     };
     this.http.postRequest(`/specification_evaluations/${this.companyId}/department`, params).then((response: any) => {
-      this.nav.navigateForward("/department-check")
+      if (response) {
+        this.http.putRequest(`/specification_evaluations/${this.companyId}/reported`, '').then((response) => {
+          console.log('上报成功！！')
+          // 跳转到审核列表页面
+          this.nav.navigateForward("/department-check")
+        })
+      }
     })
   }
   // 下一步按钮
