@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="返回" icon="arrow-back"></ion-back-button>
     </ion-buttons>
-    <ion-title>领导审核详情</ion-title>
+    <ion-title>答题详情</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,13 +45,13 @@
                 <ion-col size="6">
                   <ion-item lines="none">
                     <ion-label>通过</ion-label>
-                    <ion-radio slot="start" color="success" value="1"></ion-radio>
+                    <ion-radio slot="start" color="success" value="1" disabled></ion-radio>
                   </ion-item>
                 </ion-col>
                 <ion-col size="6">
                   <ion-item lines="none">
                     <ion-label>不通过</ion-label>
-                    <ion-radio slot="start" color="danger" value="0"></ion-radio>
+                    <ion-radio slot="start" color="danger" value="0" disabled></ion-radio>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -64,10 +64,7 @@
   <div class="section mr-top-10">
     <ion-item>
       <ion-label position="floating">审核人批阅：</ion-label>
-      <ion-textarea rows="5" [(ngModel)]="leader_review" [readonly]="is_checked == 'true'"></ion-textarea>
+      <ion-textarea rows="5" [(ngModel)]="leader_review" readonly></ion-textarea>
     </ion-item>
-    <div class="mr-top-10 text-right" *ngIf="is_checked == 'false'">
-      <ion-button size="small" fill="outline" (click)="saveAndReport()">保存并上报</ion-button>
-    </div>
   </div>
 </ion-content>
