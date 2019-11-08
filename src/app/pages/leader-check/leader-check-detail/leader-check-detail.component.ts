@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
 import { CommonService } from 'src/app/service/common/common.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-leader-check-detail',
@@ -22,7 +23,12 @@ export class LeaderCheckDetailComponent implements OnInit {
   public leader_check_info:any = []; // 领导审核信息
   public readonly:boolean = false;
 
-  constructor(public routeInfo:ActivatedRoute, public router: Router, public http:HttpService,public common:CommonService) { }
+  constructor(
+    public routeInfo:ActivatedRoute,
+    public router: Router,
+    public http:HttpService,
+    public common:CommonService,
+    public nav: NavController) { }
 
   ngOnInit() {
     // 获取路由传递过来的企业自评id
@@ -150,11 +156,19 @@ export class LeaderCheckDetailComponent implements OnInit {
           if(response && response.id){
             this.http.putRequest('/specification_evaluations/' + this.assess_id + '/reported','').then((response:any) => {
               this.http.presentToast('保存并上报成功！', 'bottom', 'success');
+              this.back();
             })
           }
         })
       }
     }
+  }
+
+  // 返回列表页
+  back(){
+    this.nav.navigateRoot(['/leader-check']).then(() => {
+      location.reload();
+    });
   }
 
 }
