@@ -42,7 +42,7 @@ export class InternalCommunicationPage implements OnInit {
     this.getPublishedData(params);
   }
 
-  // 未 发布关键字搜索
+  // 未发布关键字搜索
   getUnTopics(ev: any) {
     this.exchange_proceeding = ev.target.value;
     const params = { exchange_proceeding:this.un_exchange_proceeding,publish_status_code: '02',sort:'-publish_time' };
@@ -82,9 +82,24 @@ export class InternalCommunicationPage implements OnInit {
     })
   }
 
+  // 查看详情调用浏览接口
+  toDetail(id) {
+    // 获取当前登录人信息
+    this.http.getUser().then((response:any) => {
+      if(response){
+        if(response.guid){
+          // 调用浏览数接口
+          this.http.postRequest('/communions/' + id + '/view?pubname_id=' + response.guid,'').then((response:any) => {
+            // console.log('浏览');
+          })
+        }
+      }
+    })
+  }
+
   // tab切换事件
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
+    // console.log('Segment changed', ev);
   }
 
   // 返回

@@ -25,8 +25,8 @@
   </div>
   <div class="section no-padding mr-top-10">
     <ion-item lines="full" class="bordered-bottom">
-      <ion-label class="subtitle">评论<span class="mr-left-10">1500</span></ion-label>
-      <ion-label slot="end" class="grey subtitle" align="right">访问<span class="mr-left-10">5000</span></ion-label>
+      <ion-label class="subtitle">评论<span class="mr-left-10">{{ (topic && topic.comment_number) ? topic.comment_number:0 }}</span></ion-label>
+      <ion-label slot="end" class="grey subtitle" align="right">访问<span class="mr-left-10">{{ (topic && topic.visit_number) ? topic.visit_number:0 }}</span></ion-label>
     </ion-item>
   </div>
   <div class="section">
