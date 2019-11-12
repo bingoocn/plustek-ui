@@ -45,13 +45,9 @@ export class LeaderCheckDetailComponent implements OnInit {
         if(response && response.questionnaire && response.questionnaire.evaluation_level && response.questionnaire.evaluation_level.name) {
           this.level_name = response.questionnaire.evaluation_level.name;
         }
-        // 获取试卷的级别的code
-        if(response && response.questionnaire && response.questionnaire.evaluation_level && response.questionnaire.evaluation_level.code) {
-          this.level_code = response.questionnaire.evaluation_level.code;
-          if(this.level_code && this.level_code != ''){
-            const params = { index_type_code:'01',publish_status_code:'02',evaluation_level_code:this.level_code};
-            this.getIndicator(params);
-          }
+        // 根据模型id查询题目
+        if(response && response.topics_master_id){
+          this.getIndicator(response.topics_master_id);
         }
         // 获取试卷答案
         if(response && response.self_evaluations && response.self_evaluations.length > 0){
@@ -71,60 +67,53 @@ export class LeaderCheckDetailComponent implements OnInit {
   }
 
   // 查询所有的题目
-  getIndicator(params:any){
-    this.http.getRequest('/evaluation_models', params).then((response:any) => {
+  getIndicator(id){
+    this.http.getRequest('/questionnaires/' + id + '/tree').then((response:any) => {
       if(response && response.length > 0){
-        // 获取企业自评使用的评价模型id,并根据id查询所有题目
-        if(response[0].id){
-          this.http.getRequest('/questionnaires/' + response[0].id + '/tree').then((response:any) => {
-            if(response && response.length > 0){
-              response.forEach(item => {
-                // 为所有的选项添加checked属性，默认值为false
+        response.forEach(item => {
+          // 为所有的选项添加checked属性，默认值为false
+          if(item.options && item.options.length > 0){
+            item.options.forEach(i => {
+              i['checked'] = false;
+            })
+          }
+          // 遍历试卷答案，回显答题
+          if(this.self_evaluations.length > 0){
+            this.self_evaluations.forEach(e => {
+              if(e.index_slave_id && e.index_slave_id == item.id){
                 if(item.options && item.options.length > 0){
                   item.options.forEach(i => {
-                    i['checked'] = false;
-                  })
-                }
-                // 遍历试卷答案，回显答题
-                if(this.self_evaluations.length > 0){
-                  this.self_evaluations.forEach(e => {
-                    if(e.index_slave_id && e.index_slave_id == item.id){
-                      if(item.options && item.options.length > 0){
-                        item.options.forEach(i => {
-                          if(e.options && e.options.length > 0){
-                            e.options.forEach(el => {
-                              if(el.topics_slave_id && el.topics_slave_id == i.id){
-                                i['checked'] = true;
-                                if(i.topics_type && i.topics_type.code && i.topics_type.code == '02'){
-                                  i.topics_content = el.supplementary_content;
-                                }
-                              }
-                            })
+                    if(e.options && e.options.length > 0){
+                      e.options.forEach(el => {
+                        if(el.topics_slave_id && el.topics_slave_id == i.id){
+                          i['checked'] = true;
+                          if(i.topics_type && i.topics_type.code && i.topics_type.code == '02'){
+                            i.topics_content = el.supplementary_content;
                           }
-                        })
-                      }
-                    }
-                  })
-                }
-              })
-              this.topics = this.common.forma2Tree(response, 'pid', 'id')[0].children;
-              // 为维度添加属性approval_status_code，默认值为''
-              if(this.topics.length > 0){
-                this.topics.forEach(element => {
-                  element['approval_status_code'] = "";
-                })
-              }
-              // 遍历领导审核信息，回显
-              if(this.leader_check_info.length > 0){
-                this.leader_check_info.forEach(item => {
-                  if(item.indicator_id){
-                    if(this.topics.length > 0){
-                      this.topics.forEach(element => {
-                        if(element.id == item.indicator_id){
-                          element['approval_status_code'] = item.approval_status_code;
                         }
                       })
                     }
+                  })
+                }
+              }
+            })
+          }
+        })
+        this.topics = this.common.forma2Tree(response, 'pid', 'id')[0].children;
+        // 为维度添加属性approval_status_code，默认值为''
+        if(this.topics.length > 0){
+          this.topics.forEach(element => {
+            element['approval_status_code'] = "";
+          })
+        }
+        // 遍历领导审核信息，回显
+        if(this.leader_check_info.length > 0){
+          this.leader_check_info.forEach(item => {
+            if(item.indicator_id){
+              if(this.topics.length > 0){
+                this.topics.forEach(element => {
+                  if(element.id == item.indicator_id){
+                    element['approval_status_code'] = item.approval_status_code;
                   }
                 })
               }
