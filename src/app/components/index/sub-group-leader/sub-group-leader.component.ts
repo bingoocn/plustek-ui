@@ -41,6 +41,8 @@ export class SubGroupLeaderComponent implements OnInit {
     unAssess:0,
     assessed:0,
   }
+  //过滤重复单位
+  public unitArr :any = [];
 
   constructor( public http:HttpService,public common: CommonService) { }
 
@@ -54,8 +56,17 @@ export class SubGroupLeaderComponent implements OnInit {
   getSelfAssess(){
     this.http.getRequest('/specification_evaluations').then((response:any) => {
       if(response && response.length > 0){
+        //根据单位去重
+        let resArr = response;
+        this.unitArr = resArr.reduce(function(prev,element){
+          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+            prev.push(element)
+          }
+          return prev
+        },[])
+
         let accessArr = [];
-        response.forEach( item=>{
+        this.unitArr.forEach( item=>{
           if(item.evaluation_level && item.evaluation_level.name !== ''){
             accessArr.push(item);
             this.selfAccess.accessedNum = accessArr.length;
@@ -73,7 +84,13 @@ export class SubGroupLeaderComponent implements OnInit {
           this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
           this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
             if(response && response.length > 0){
-              this.selfAccess.heighsum = response.length;
+              let  heighsumArr = response.reduce(function(prev,element){
+                if(!prev.find(el=>el.unit.id==element.unit.id)) {
+                  prev.push(element)
+                }
+                return prev
+              },[])
+              this.selfAccess.heighsum = heighsumArr.length;
             }
           });
         }
@@ -90,7 +107,13 @@ export class SubGroupLeaderComponent implements OnInit {
           this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
           this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
             if(response && response.length > 0){
-              this.selfAccess.lowsum = response.length;
+              let  lowsumArr = response.reduce(function(prev,element){
+                if(!prev.find(el=>el.unit.id==element.unit.id)) {
+                  prev.push(element)
+                }
+                return prev
+              },[])
+              this.selfAccess.lowsum = lowsumArr.length;
             }
           });
         }
@@ -103,16 +126,16 @@ export class SubGroupLeaderComponent implements OnInit {
       if(response && response.length > 0){
         //根据单位去重
         let resArr = response;
-        let unitArr = [];
+        // let this.unitArr = [];
         let standard_Level = [];
 
-        unitArr = resArr.reduce(function(prev,element){
+        this.unitArr = resArr.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id==element.unit.id)) {
             prev.push(element)
           }
           return prev
         },[])
-        this.expertAssess.checkedNum = unitArr.length;
+        this.expertAssess.checkedNum = this.unitArr.length;
         //获取最高/低达级
         response.forEach(item => {
           if(item.evaluation_result.standard_result !== null){
@@ -143,16 +166,16 @@ export class SubGroupLeaderComponent implements OnInit {
         let contentArr = [];
         let a = []
         for(let i=0;i<response.length;i++){
-          if(response[i].ent_self_eva_mon_approvals.length > 0){
-            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_content !== ''){
-                contentArr.push(response[i].ent_self_eva_mon_approvals[n])
+          if(response[i].ent_self_eva_lead_reviews.length > 0){
+            for(let n=0;n<response[i].ent_self_eva_lead_reviews.length;n++){
+              if(response[i].ent_self_eva_lead_reviews[n].leader_review_content !== ''){
+                contentArr.push(response[i].ent_self_eva_lead_reviews[n])
               }
             }
           }
         }
         this.myWork.assessed = contentArr.length;
-        this.myWork.unAssess = (response.length)*2 - contentArr.length;
+        this.myWork.unAssess = response.length - contentArr.length;
       }
     })
   }

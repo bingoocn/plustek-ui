@@ -49,8 +49,15 @@ export class SubGroupBusinessUnitComponent implements OnInit {
   getSelfAssess(){
     this.http.getRequest('/specification_evaluations').then((response:any) => {
       if(response && response.length > 0){
+        let resArr = response;
+        let unitArr = resArr.reduce(function(prev,element){
+          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+            prev.push(element)
+          }
+          return prev
+        },[])
         let accessArr = [];
-        response.forEach( item=>{
+        unitArr.forEach( item=>{
           if(item.evaluation_level && item.evaluation_level.name !== ''){
             accessArr.push(item);
             this.selfAccess.accessedNum = accessArr.length;
@@ -68,7 +75,13 @@ export class SubGroupBusinessUnitComponent implements OnInit {
           this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
           this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
             if(response && response.length > 0){
-              this.selfAccess.heighsum = response.length;
+              let  heighsumArr = response.reduce(function(prev,element){
+                if(!prev.find(el=>el.unit.id==element.unit.id)) {
+                  prev.push(element)
+                }
+                return prev
+              },[])
+              this.selfAccess.heighsum = heighsumArr.length;
             }
           });
         }
@@ -85,7 +98,13 @@ export class SubGroupBusinessUnitComponent implements OnInit {
           this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
           this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
             if(response && response.length > 0){
-              this.selfAccess.lowsum = response.length;
+              let  lowsumArr = response.reduce(function(prev,element){
+                if(!prev.find(el=>el.unit.id==element.unit.id)) {
+                  prev.push(element)
+                }
+                return prev
+              },[])
+              this.selfAccess.lowsum = lowsumArr.length;
             }
           });
         }
@@ -136,7 +155,6 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
       if(response && response.length > 0){
         let contentArr = [];
-        let a = []
         for(let i=0;i<response.length;i++){
           if(response[i].ent_self_eva_mon_approvals.length > 0){
             for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
@@ -147,7 +165,7 @@ export class SubGroupBusinessUnitComponent implements OnInit {
           }
         }
         this.myWork.assessed = contentArr.length;
-        this.myWork.unAssess = (response.length)*2 - contentArr.length;
+        this.myWork.unAssess = response.length - contentArr.length;
       }
     })
   }
