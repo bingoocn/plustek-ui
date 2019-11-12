@@ -52,7 +52,7 @@
             </ion-col>
             <ion-col size="3">
               <div class="item-foot">
-                <div [routerLink]="['./topicDetail',item.id]">
+                <div [routerLink]="['./topicDetail',item.id]" (click)="toDetail(item.id)">
                   <i class="iconfont icon-text"></i>
                   <span class="grey mr-left-5">详情</span>
                 </div>

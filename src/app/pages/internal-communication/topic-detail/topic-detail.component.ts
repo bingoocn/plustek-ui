@@ -54,6 +54,7 @@ export class TopicDetailComponent implements OnInit {
       this.getComments();
       this.content = '';
       this.http.presentToast('保存成功！', 'bottom', 'success');
+      this.ngOnInit();
     },(error:any) => {
 
     })
