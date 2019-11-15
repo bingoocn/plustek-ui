@@ -62,7 +62,9 @@ export class LoginPage implements OnInit {
   }
   // 登入系统
   onLogin() {
+    this.http.presentAlert('提示', '', '点击登录')
     if(this.status){
+      this.http.presentAlert('提示', '', '账号密码输入格式正确')
       const params = { username: this.username, password: this.password,grant_type:"password" }
       // 执行登录操作
       this.http.presentLoading('登录中...');
@@ -70,6 +72,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem("token", response['access_token']);
         // 存储登录人相关信息后进入系统
         this.getInfo().then(res => {
+          this.http.presentAlert('提示', '', '获取到用户信息'+res['guid'])
           this.http.hideLoading();
           // 根据角色多少进行分发
           if(res['length'] > 1) {
@@ -84,7 +87,7 @@ export class LoginPage implements OnInit {
         localStorage.clear();
         if(error.error) {
           this.http.hideLoading();
-          this.http.presentAlert('提示', '', error.error.error_description)
+          this.http.presentAlert('提示', '', error.error.error_description+error.error.error)
         }
       })
     }
