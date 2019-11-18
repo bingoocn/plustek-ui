@@ -18,17 +18,17 @@ export class BusinessLeaderComponent implements OnInit {
   // 公告通知配置
   public noticeOpts:any = {
     effect: 'flip', 
-    speed: 400, 
-    loop:false, 
+    speed: 400,
+    loop: false,
     direction: 'vertical',
-    autoplay: { delay: 2000 }, 
+    autoplay: { delay: 2000 },
     pager: false
   }
   // 最新评价
   public news = {
-    id:'8ae4af936df2617b016df2ce68f10008',
-    notice:'各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
-    date:'2019-09-10'
+    id: '8ae4af936df2617b016df2ce68f10008',
+    notice: '各单位抓紧完成企业自评工作，保证精益管理工作稳步进行',
+    date: '2019-09-10'
   };
   // 公告通知数据
   public businessNotice = [];
@@ -50,7 +50,7 @@ export class BusinessLeaderComponent implements OnInit {
   ];
   // 自评结果数据
   public selfEvaluations = {
-    id:'',
+    id: '',
     level: '',
     score: '',
     time: ''
@@ -59,8 +59,8 @@ export class BusinessLeaderComponent implements OnInit {
     unCheck: 0,
     checked: 0
   }
-  public is_business_leader:boolean = false;//部门领导角色
-  public is_apart_leader:boolean = false;//分管领导角色
+  public is_business_leader: boolean = false;//部门领导角色
+  public is_apart_leader: boolean = false;//分管领导角色
 
   @ViewChild("slide", { static: false }) slide;
 
@@ -73,7 +73,7 @@ export class BusinessLeaderComponent implements OnInit {
       const params = {param_name:currentRole[0].guid};
       this.http.getRequest('/sys_param',params).then((response:any) => {
         if(response && response.param_value){
-          var role = JSON.parse(response.param_value);
+          const role = JSON.parse(response.param_value);
           if(role.abbreviation){
             this.http.getRequest('/specification_evaluations').then((response:any) => {
               if(response){
