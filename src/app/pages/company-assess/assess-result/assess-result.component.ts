@@ -32,7 +32,7 @@ export class AssessResultComponent implements OnInit {
   // 保存
   save() {
     const params = {
-      id: this.companyId, // 自评ID
+      // id: this.companyId, // 自评ID  XXLL
       main_highlight: this.main_highlight, // 主要亮点
       major_deficiency: this.major_deficiency, //主要不足
     };

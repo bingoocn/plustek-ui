@@ -73,7 +73,7 @@ export class QuestionsPageComponent implements OnInit {
   }
   // 获取当前试题得到具体的题目
   getIndicator(params: any) {
-    const par = { index_type_code: '01', start_status_code: '01', evaluation_level_code: this.evaluationLevelCode };
+    const par = { index_type_code: '01', start_status_code: '01',publish_status_code: '02', evaluation_level_code: this.evaluationLevelCode };
     this.http.getRequest(`/evaluation_models`, par).then((response: any) => {
       this.questId = response[0].id;
 

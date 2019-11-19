@@ -25,15 +25,24 @@ export class QuestionsPageComponent implements OnInit {
 
   ngOnInit() {
     this.routeInfo.queryParams.subscribe((data) => { this.companyId = data.companyId, this.title = data.title; this.evaluationLevelCode = data.evaluationLevelCode; this.subordinatePlate = data.subordinatePlate; this.evaluationDate = data.evaluationDate; });
-    const params = { index_type_code: '01', start_status_code: '01', evaluation_level_code: this.evaluationLevelCode };
+    const params = { index_type_code: '01', start_status_code: '01', publish_status_code: '02', evaluation_level_code: this.evaluationLevelCode };
     this.getIndicator(params);
   }
 
   // 获取正在启用的问卷
   getIndicator(params: any) {
     this.http.getRequest(`/evaluation_models`, params).then((response: any) => {
-      this.questId = response[0].id;
+
       this.indicator_name = response[0].indicator_sets.index_name;
+      // 如果是新增的拿的题的启用和发布分
+      if (this.title === 'new') {
+        this.questId = response[0].id;
+      } else {
+        // 如果有自评的话，那就拿去自评的，查询自评的信息，拿去试卷ID  specification_evaluations
+        this.http.getRequest(`/specification_evaluations/${this.companyId}`).then((res: any) => {
+          this.questId = res.topics_master_id;
+        })
+      }
       this.saveForm(this.questId);
       this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
         if (response[0].id) {

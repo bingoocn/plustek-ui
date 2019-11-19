@@ -25,7 +25,7 @@ export class CompanyAssessPage implements OnInit {
   }
   // 发送请求获取数据
   getData(params) {
-    this.http.getRequest('/specification_evaluations',params).then((response: any) => {
+    this.http.getRequest('/specification_evaluations', params).then((response: any) => {
       if (response && response.length > 0) {
         this.assess = response;
       }

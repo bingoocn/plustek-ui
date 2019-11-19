@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { NavController } from '@ionic/angular';
 import { HttpService } from 'src/app/service/http/http.service';
 import { CommonService } from 'src/app/service/common/common.service';
 import { ModalController } from '@ionic/angular';
@@ -32,6 +33,7 @@ export class ItemInfoComponent implements OnInit {
   }
   @ViewChild("slide", { static: false }) slide;
   constructor(public modalController: ModalController,
+    public navController: NavController,
     public routeInfo: ActivatedRoute,
     public http: HttpService,
     private router: Router,
@@ -39,7 +41,7 @@ export class ItemInfoComponent implements OnInit {
   ngOnInit() {
     // 获取传递过来的规范评价id
     this.routeInfo.queryParams.subscribe((data) => {
-        this.questId = data.questId,
+      this.questId = data.questId,
         this.companyId = data.companyId,
         this.indicatorId = data.indicatorId,
         this.indexId = data.indexId
@@ -112,11 +114,23 @@ export class ItemInfoComponent implements OnInit {
   saveItem() {
     this.itemsFormate();
     const params = {
-      id: this.companyId, // 自评ID
-      topics_master_id: this.questId,// 问卷Id
+      // id: this.companyId, // 自评ID
+      // topics_master_id: this.questId,// 问卷Id
       added_self_evaluations: this.selfEvaluations
     };
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
+      if (response) {
+        console.log(response, '自评返回的结果')
+        const id = response.id;
+        // this.navController.navigateForward(['assessResult'], {
+        //   queryParams: {
+        //     companyId: id
+        //   }
+        // });
+        // this.router.navigate(['../assessResult']);
+
+      }
+      // [routerLink]="['../assessResult']" [queryParams]="{companyId:companyId}"
     })
   }
   // 处理得到的数据
