@@ -91,14 +91,13 @@ export class LoginPage implements OnInit {
   }
   // 获取登录人相关信息
   getInfo() {
-    this.http.getUser().then(res=>{
+    this.http.getUser().then((res:any)=>{
       let userId = res.guid;
-      this.http.getUserUnit(userId).then(unit=>{
-        console.log(unit,1)
-        const userUnit = unit.orgName || "中国兵器工业信息中心";
-        const userName = unit.guid;
-        window.localStorage.setItem("userUnit",userUnit);
-        window.localStorage.setItem("userName",userName);
+      this.http.getUserUnit(userId).then((unit:any)=>{
+        const unitName = unit.orgName || "中国兵器工业信息中心";
+        const unitId = unit.guid;
+        window.localStorage.setItem("unitId",unitId);
+        window.localStorage.setItem("unitName",unitName);
       })
     })
     return new Promise((resolve, reject) => {

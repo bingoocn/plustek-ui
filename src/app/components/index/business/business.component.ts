@@ -7,6 +7,8 @@ import { HttpService } from 'src/app/service/http/http.service';
   styleUrls: ['./business.component.scss'],
 })
 export class BusinessComponent implements OnInit {
+  //当前登录人单位Id
+  public unitId: string;
   // 规范评价进度配置
   public slideOpts:any = {
     effect: 'flip', 
@@ -53,9 +55,9 @@ export class BusinessComponent implements OnInit {
   // 自评结果数据
   public selfEvaluations = {
     id:'',
-    level: '',
-    score: '',
-    time: ''
+    level: '暂无',
+    score: '暂无',
+    time: '暂无'
   }
 
   @ViewChild("slide", { static: false }) slide;
@@ -66,27 +68,32 @@ export class BusinessComponent implements OnInit {
     this.getSlides();
     // this.getNews();
     this.getNotice();
-    this.getSelfAssess();
   }
   getSlides() {
     //规范评价
-    this.http.getRequest('/specification_evaluations').then((response:any) => {
+    this.unitId = window.localStorage.getItem("unitId");
+    this.http.getRequest('/specification_evaluations?designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.slides[0].self = response.length;
-        response.forEach(item=>{
-          //子集团
-          if(item.evaluation_status.code == '03'){
-            this.slides[0].department ++
-          }
-          //集团
-          if(item.evaluation_status.code == '05'){
-            this.slides[0].leader ++
-          }
-        })
       }
     });
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=03,05&designated_apply_id='+ this.unitId).then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].department = response.length;
+      }
+    })
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].leader = response.length;
+        //获取自评结果统计
+        this.selfEvaluations.id = response[0].id;
+        this.selfEvaluations.level = response[0].evaluation_level.name;
+        this.selfEvaluations.score = response[0].self_score;
+        this.selfEvaluations.time = response[0].evaluation_date;
+      }
+    })
     //监控评价
-    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         for(let i=0;i<response.length;i++){
           if(response[i].ent_self_eva_mon_approvals.length > 0){
@@ -105,10 +112,10 @@ export class BusinessComponent implements OnInit {
       }
     });
     //领导阅评
-    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=01').then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=01&apply_id='+ this.unitId).then((response:any) => {
       this.slides[2].group = response.length;
     });
-    this.http.getRequest('/specification_mon_evaluations?leader_review_type_code=02').then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=02&apply_id='+ this.unitId).then((response:any) => {
         this.slides[2].subGroup = response.length;
     });
   }
@@ -131,17 +138,6 @@ export class BusinessComponent implements OnInit {
     this.http.getRequest('/notices?publish_status_code=02').then((response:any) => {
       if(response && response.length > 0){
         this.noticeSlides = response;
-      }
-    });
-  }
-  // 获取企业自评数据
-  getSelfAssess(){
-    this.http.getRequest('/specification_evaluations?sort=-evaluation_date').then((response:any) => {
-      if(response && response.length > 0){
-        this.selfEvaluations.id = response[0].id;
-        this.selfEvaluations.level = response[0].evaluation_level.name;
-        this.selfEvaluations.score = response[0].self_score;
-        this.selfEvaluations.time = response[0].evaluation_date;
       }
     });
   }
