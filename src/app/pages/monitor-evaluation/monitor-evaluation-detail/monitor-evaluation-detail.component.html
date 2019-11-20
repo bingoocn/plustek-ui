@@ -70,7 +70,7 @@
   </ion-list>
   <div class="section mr-top-10">
     <ion-list class="no-margin">
-      <ion-item>
+      <ion-item *ngIf="is_evaluated == 'false'">
         <ion-label>留言：</ion-label>
         <ion-textarea rows="3" cols="20" clearOnEdit="true" placeholder="请输入留言内容..." [(ngModel)]="mon_approval_content"></ion-textarea>
       </ion-item>
@@ -79,7 +79,7 @@
       <ion-button size="small" fill="outline" (click)="toRecommend()">
         亮点推荐
       </ion-button>
-      <ion-button size="small" fill="outline" (click)="toSubmit()">
+      <ion-button size="small" fill="outline" (click)="toSubmit()" *ngIf="is_evaluated == 'false'">
         提交
       </ion-button>
     </div>
