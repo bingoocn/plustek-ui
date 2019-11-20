@@ -125,6 +125,20 @@ export class HttpService {
   }
 
   /**
+   * 获取当前登录人单位信息
+   */
+  public getUserUnit(userId){
+    let url = this.portalIp + '/api/users/'+ userId + '/subordinate_org?orgTypes=本部,下级单位';
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe(response => {
+        resolve(response);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
+
+  /**
    * 请求失败处理
    * @param content
    */

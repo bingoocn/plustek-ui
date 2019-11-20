@@ -91,12 +91,21 @@ export class LoginPage implements OnInit {
   }
   // 获取登录人相关信息
   getInfo() {
+    this.http.getUser().then(res=>{
+      let userId = res.guid;
+      this.http.getUserUnit(userId).then(unit=>{
+        console.log(unit,1)
+        const userUnit = unit.orgName || "中国兵器工业信息中心";
+        const userName = unit.guid;
+        window.localStorage.setItem("userUnit",userUnit);
+        window.localStorage.setItem("userName",userName);
+      })
+    })
     return new Promise((resolve, reject) => {
       // 当前登录人所具有角色列表
       const mineRoles = [];
       // 获取当前登录人所具有系统
       this.http.getRequest("/user/systems", null, this.PortalIp).then(systems => {
-        console.log(systems)
         for(let i=0; i<systems.length; i++) {
           // App标识校验
           // if(systems[i].businessSystemCode.split('-')[0] != "App") continue;
