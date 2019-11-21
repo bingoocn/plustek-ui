@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   public userFlag: boolean = false;
   public pwdFlag: boolean = false;
   public status: boolean = false;
-  readonly PortalIp = 'http://10.100.240.200:10002/api';
+  readonly PortalIp = 'http://192.168.1.111:10006/api';
 
   constructor(
     private nav: NavController, 

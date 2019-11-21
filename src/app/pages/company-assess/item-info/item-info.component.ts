@@ -87,7 +87,6 @@ export class ItemInfoComponent implements OnInit {
                   el.options.forEach(element => {
                     if (item.id === element.topics_slave_id) {
                       item.checked = true;
-                      // console.log(item, 'qweq')
                       if (item.topics && item.topics_type === '02') {
                         item.topics_content = element.supplementary_content
                       }
@@ -114,23 +113,15 @@ export class ItemInfoComponent implements OnInit {
   saveItem() {
     this.itemsFormate();
     const params = {
-      // id: this.companyId, // 自评ID
-      // topics_master_id: this.questId,// 问卷Id
+      id: this.companyId, // 自评ID
+      topics_master_id: this.questId,// 问卷Id
       added_self_evaluations: this.selfEvaluations
     };
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
       if (response) {
-        console.log(response, '自评返回的结果')
         const id = response.id;
-        // this.navController.navigateForward(['assessResult'], {
-        //   queryParams: {
-        //     companyId: id
-        //   }
-        // });
-        // this.router.navigate(['../assessResult']);
-
+        this.navController.navigateForward("/company-assess/assessResult?companyId="+ id)
       }
-      // [routerLink]="['../assessResult']" [queryParams]="{companyId:companyId}"
     })
   }
   // 处理得到的数据

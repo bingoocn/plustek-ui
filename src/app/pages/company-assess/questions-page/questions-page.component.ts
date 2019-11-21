@@ -34,28 +34,42 @@ export class QuestionsPageComponent implements OnInit {
     this.http.getRequest(`/evaluation_models`, params).then((response: any) => {
 
       this.indicator_name = response[0].indicator_sets.index_name;
+      
       // 如果是新增的拿的题的启用和发布分
       if (this.title === 'new') {
         this.questId = response[0].id;
+        this.saveForm(this.questId);
+        this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
+          if (response[0].id) {
+            this.indicatorId = response[0].id
+            this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response: any) => {
+              if (response && response.length > 0) {
+                this.indexes = this.common.forma2Tree(response, 'pid', 'id');
+              }
+            })
+          }
+        })
       } else {
         // 如果有自评的话，那就拿去自评的，查询自评的信息，拿去试卷ID  specification_evaluations
         this.http.getRequest(`/specification_evaluations/${this.companyId}`).then((res: any) => {
           this.questId = res.topics_master_id;
-        })
-      }
-      this.saveForm(this.questId);
-      this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
-        if (response[0].id) {
-          this.indicatorId = response[0].id
-          this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response: any) => {
-            if (response && response.length > 0) {
-              this.indexes = this.common.forma2Tree(response, 'pid', 'id');
+          this.saveForm(this.questId);
+          this.http.getRequest(`/questionnaires/${this.questId}/tree`).then((response: any) => {
+            if (response[0].id) {
+              this.indicatorId = response[0].id
+              this.http.getRequest('/indicator_sets/' + response[0].id + '/indicators').then((response: any) => {
+                if (response && response.length > 0) {
+                  this.indexes = this.common.forma2Tree(response, 'pid', 'id');
+                }
+              })
             }
           })
-        }
-      })
+        })
+      }
+      
     })
   }
+
 
   saveForm(questId: any) {
     const params = {

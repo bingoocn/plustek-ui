@@ -79,33 +79,31 @@ export class BusinessLeaderComponent implements OnInit {
           if(role.abbreviation){
             this.http.getRequest('/specification_evaluations').then((response:any) => {
               if(response){
-                let checkedArr = [];
-                let unCheckedArr = [];
                 if(role.abbreviation === 'QYBMLD'){
                   this.is_business_leader = true;
-                  response.forEach( item=>{
-                    if(item.evaluation_status !== null && item.evaluation_status.code == '03'){
-                      checkedArr.push(item);
+                  this.http.getRequest('/specification_evaluations?evaluation_status_code=02&apply_id='+this.unitId).then((response: any) => {
+                    if (response && response.length > 0) {
+                      this.myWork.unCheck = response.length;
                     }
-                    if(item.evaluation_status !== null && item.evaluation_status.code == '01' || item.evaluation_status.code == '02'){
-                      unCheckedArr.push(item);
+                  });
+                  this.http.getRequest('/specification_evaluations?evaluation_status_code=03,04,05&apply_id='+this.unitId).then((response: any) => {
+                    if (response && response.length > 0) {
+                      this.myWork.checked = response.length;
                     }
-                  })
-                  this.myWork.checked = checkedArr.length;
-                  this.myWork.unCheck = unCheckedArr.length;
+                  });
                 }
                 if(role.abbreviation === 'QYFGLD'){
                   this.is_apart_leader = true;
-                  response.forEach( item=>{
-                    if(item.evaluation_status !== null && item.evaluation_status.code == '05'){
-                      checkedArr.push(item);
+                  this.http.getRequest('/specification_evaluations?evaluation_status_code=03&apply_id='+this.unitId).then((response: any) => {
+                    if (response && response.length > 0) {
+                      this.myWork.unCheck = response.length;
                     }
-                    if(item.evaluation_status !== null && item.evaluation_status.code == '01' || item.evaluation_status.code == '02'){
-                      unCheckedArr.push(item);
+                  });
+                  this.http.getRequest('/specification_evaluations?evaluation_status_code=05&apply_id='+this.unitId).then((response: any) => {
+                    if (response && response.length > 0) {
+                      this.myWork.checked = response.length;
                     }
                   })
-                  this.myWork.checked = checkedArr.length;
-                  this.myWork.unCheck = unCheckedArr.length;
                 }
               }
             })
@@ -116,9 +114,9 @@ export class BusinessLeaderComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.unitId = window.localStorage.getItem("unitId");
     this.getSlides();
     this.getNotice();
-    // this.getSelfAssess();
   }
   getSlides() {
     //规范评价

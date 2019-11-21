@@ -65,13 +65,13 @@ export class BusinessComponent implements OnInit {
   constructor( public http:HttpService) { }
 
   ngOnInit() {
+    this.unitId = window.localStorage.getItem("unitId");
     this.getSlides();
     // this.getNews();
     this.getNotice();
   }
   getSlides() {
     //规范评价
-    this.unitId = window.localStorage.getItem("unitId");
     this.http.getRequest('/specification_evaluations?designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.slides[0].self = response.length;

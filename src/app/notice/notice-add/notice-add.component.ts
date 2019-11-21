@@ -23,7 +23,6 @@ export class NoticeAddComponent implements OnInit {
 
   }
   onSubmit(noticeData){
-    console.log(noticeData,"noticeData");
     // for (const i in this.addNoticeForm.controls) {
     //   if (i) {
     //     this.addNoticeForm.controls[ i ].markAsDirty();

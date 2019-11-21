@@ -26,8 +26,8 @@
             <h3>子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</h3>
             <h3>单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</h3>
             <h3>所属板块：{{ (item.subordinate_plate) ? item.subordinate_plate:'' }}</h3>
-            <h3>认定自评等级：{{ (item.questionnaire && item.questionnaire.evaluation_level && item.questionnaire.evaluation_level.name) ? item.questionnaire.evaluation_level.name:'' }}</h3>
-            <h3>自评得分：{{ (item.self_score) ? item.self_score:'' }}</h3>
+            <h3>认定自评等级：{{ item.evaluation_level ? item.evaluation_level.name :''}} </h3>
+            <h3>自评得分：{{ item.self_score }}</h3>
             <h3>自评时间：{{ (item.evaluation_date) ? item.evaluation_date:'' }}</h3>
           </ion-label>
         </ion-item>
@@ -40,8 +40,8 @@
             <h3>子集团/直管单位：{{ (item.unit && item.unit.group && item.unit.group.name) ? item.unit.group.name:'' }}</h3>
             <h3>单位名称：{{ (item.unit && item.unit.name) ? item.unit.name:'' }}</h3>
             <h3>所属板块：{{ (item.subordinate_plate) ? item.subordinate_plate:'' }}</h3>
-            <h3>认定自评等级：{{ (item.questionnaire && item.questionnaire.evaluation_level && item.questionnaire.evaluation_level.name) ? item.questionnaire.evaluation_level.name:'' }}</h3>
-            <h3>自评得分：{{ (item.self_score) ? item.self_score:'' }}</h3>
+            <h3>认定自评等级：{{ item.evaluation_level ? item.evaluation_level.name : '' }}</h3>
+            <h3>自评得分：{{ item.self_score}}</h3>
             <h3>自评时间：{{ (item.evaluation_date) ? item.evaluation_date:'' }}</h3>
           </ion-label>
         </ion-item>

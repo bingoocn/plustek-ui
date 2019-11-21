@@ -10,6 +10,7 @@ import { CommonService } from 'src/app/service/common/common.service';
 export class SubGroupBusinessUnitComponent implements OnInit {
   //当前登录人单位Id
   public unitId: string;
+  public role: any;
   public noticeOpts : any = {
     effect: 'flip', 
     speed: 400, 
@@ -111,7 +112,6 @@ export class SubGroupBusinessUnitComponent implements OnInit {
         }
       }
     });
-    
   }
   //获取专家检查数据
   getExpertAssess() {
@@ -154,29 +154,44 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     });
   }
   getMyWork(){
-    // this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
-    //   if(response && response.length > 0){
-    //     let contentArr = [];
-    //     for(let i=0;i<response.length;i++){
-    //       if(response[i].ent_self_eva_mon_approvals.length > 0){
-    //         for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-    //           if(response[i].ent_self_eva_mon_approvals[n].mon_approval_content !== ''){
-    //             contentArr.push(response[i].ent_self_eva_mon_approvals[n])
-    //           }
-    //         }
-    //       }
-    //     }
-    //     this.myWork.assessed = contentArr.length;
-    //     this.myWork.unAssess = response.length - contentArr.length;
-    //   }
-    // })
     this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
-      response.forEach(element => {
-        this.http.getRequest('/specification_evaluations/' + element.id + '/top_group_monitor').then((response:any) => {
-          console.log(response)
-        })
-      })
-    })
+      if(response && response.length > 0){
+        // 遍历每条数据，区分当前登录人当前角色未评价、已评价
+        response.forEach(element => {
+          if(element.id){
+            // 从session里获取当前登录人的当前角色信息
+            const currentRole = JSON.parse(localStorage.getItem('currentRole'));
+            if(currentRole && currentRole.guid){
+              // 获取系统运行参数表查找与当前登录人当前角色id相匹配的信息
+              const params = {param_name:currentRole.guid};
+              this.http.getRequest('/sys_param',params).then((response:any) => {
+                if(response && response.param_value){
+                  this.role = JSON.parse(response.param_value);
+                  if(this.role.abbreviation){
+                    var monitor = '';
+                    if(this.role.abbreviation === 'JTYWBM'){
+                      monitor = '/top_group_monitor'
+                    }
+                    if(this.role.abbreviation === 'ZJTYWBM'){
+                      monitor = '/sub_group_monitor'
+                    }
+                    if(monitor !== ''){
+                      this.http.getRequest('/specification_evaluations/' + element.id + monitor).then((response:any) => {
+                        if(response == null){
+                          this.myWork.unAssess ++
+                        }else{
+                          this.myWork.assessed ++
+                        }
+                      })
+                    }
+                  }
+                }
+              })
+            }
+          }
+        });
+      }
+    });
   }
   // 发送请求获取数据
   getData(){

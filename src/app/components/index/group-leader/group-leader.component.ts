@@ -8,6 +8,8 @@ import { CommonService } from 'src/app/service/common/common.service';
   styleUrls: ['./group-leader.component.scss'],
 })
 export class GroupLeaderComponent implements OnInit {
+  //当前登录人单位Id
+  public unitId: string;
   public echarts : any;
   public options :any;
   // 规范评价进度配置
@@ -33,9 +35,9 @@ export class GroupLeaderComponent implements OnInit {
   //企业自评信息
   public selfAccess :any = {
     accessedNum:0,
-    heighLevel:'',
+    heighLevel:'暂无',
     heighLevel_code:'',
-    lowLevel:'',
+    lowLevel:'暂无',
     lowLevel_code:'',
     heighsum:0,
     lowsum:0
@@ -44,8 +46,8 @@ export class GroupLeaderComponent implements OnInit {
   public expertAssess :any = {
     checkedNum:0,
     checkTime:'',
-    heighLevel:'',
-    lowLevel:'',
+    heighLevel:'暂无',
+    lowLevel:'暂无',
     heighsum:0,
     lowsum:0
   };
@@ -102,15 +104,15 @@ export class GroupLeaderComponent implements OnInit {
 
   constructor( public http:HttpService,public common: CommonService) { }
 
-
   ngOnInit() {
+    this.unitId = window.localStorage.getItem("unitId");
     this.getEcharts();
     this.getExpertAssess();
     this.getSelfAssess();
   }
   getEcharts() {
     this.echarts = echarts.init(document.querySelector('#main'));
-    this.http.getRequest('/specification_evaluations').then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05').then((response:any) => {
       if(response && response.length > 0){
         let levelCodeArr = [];
         response.forEach(item => {
@@ -130,7 +132,7 @@ export class GroupLeaderComponent implements OnInit {
   }
   //获取专家检查数据
   getExpertAssess() {
-    this.http.getRequest('/expert_reviews?sort=-check_end_time').then((response:any) => {
+    this.http.getRequest('/expert_reviews?sort=-check_end_time&apply_id'+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.expertAssess.checkTime = response[0].check_end_time;
         //根据单位去重
@@ -175,32 +177,27 @@ export class GroupLeaderComponent implements OnInit {
   }
   // 获取企业自评数据
   getSelfAssess(){
-    this.http.getRequest('/specification_evaluations').then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
-        let unitArr = response.reduce(function(prev,element){
+        let resArr = response;
+        let unitArr = resArr.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id==element.unit.id)) {
             prev.push(element)
           }
           return prev
         },[])
-        let accessArr = [];
-        unitArr.forEach( item=>{
-          if(item.evaluation_level && item.evaluation_level.name !== ''){
-            accessArr.push(item);
-            this.selfAccess.accessedNum = accessArr.length;
-          }
-        })
+        this.selfAccess.accessedNum = unitArr.length;
       }
     });
     //统计最高达级信息
-    this.http.getRequest('/specification_evaluations?sort=-evaluation_level_code').then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-evaluation_level_code&apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.selfAccess.heighLevel = response[0].evaluation_level.name;
         if(response[0].evaluation_level.name == ''){
           this.selfAccess.heighsum = 0;
         }else{
           this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
-          this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.heighLevel_code+'&apply_id='+ this.unitId).then((response:any) => {
             if(response && response.length > 0){
               let  heighsumArr = response.reduce(function(prev,element){
                 if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -209,29 +206,33 @@ export class GroupLeaderComponent implements OnInit {
                 return prev
               },[])
               this.selfAccess.heighsum = heighsumArr.length;
-            }
-          });
-        }
-      }
-    });
-    //统计最低达级信息
-    this.http.getRequest('/specification_evaluations?sort=evaluation_level_code').then((response:any) => {
-      response = response.filter( item => item.evaluation_level.name !== '')
-      if(response && response.length > 0){
-        this.selfAccess.lowLevel = response[0].evaluation_level.name;
-        if(response[0].evaluation_level.name == ''){
-          this.selfAccess.lowsum = 0;
-        }else{
-          this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
-          this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
-            if(response && response.length > 0){
-              let  lowsumArr = response.reduce(function(prev,element){
-                if(!prev.find(el=>el.unit.id==element.unit.id)) {
-                  prev.push(element)
+              //统计最低达级信息
+              this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=evaluation_level_code&apply_id='+ this.unitId).then((response:any) => {
+                response = response.filter( item => item.evaluation_level.name !== '')
+                if(response && response.length > 0){
+                  if(response[0].evaluation_level.name == ''){
+                    this.selfAccess.lowsum = 0;
+                  }else{
+                    if(this.selfAccess.heighLevel !== '一级'){
+                      this.selfAccess.lowLevel = response[0].evaluation_level.name;
+                    }
+                    this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
+                    this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+                      if(response && response.length > 0){
+                        let  lowsumArr = response.reduce(function(prev,element){
+                          if(!prev.find(el=>el.unit.id==element.unit.id)) {
+                            prev.push(element)
+                          }
+                          return prev
+                        },[])
+                        if(lowsumArr.length == 1 && lowsumArr[0].evaluation_level.name !== '一级'){
+                          this.selfAccess.lowsum = lowsumArr.length;
+                        }
+                      }
+                    });
+                  }
                 }
-                return prev
-              },[])
-              this.selfAccess.lowsum = lowsumArr.length;
+              });
             }
           });
         }

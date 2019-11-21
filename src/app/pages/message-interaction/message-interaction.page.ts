@@ -54,7 +54,6 @@ export class MessageInteractionPage implements OnInit {
   getData(){
     this.http.getRequest('/specification_evaluation/'+ '/top_group_monitor').then((response:any)=>{
       if(response && response.length > 0){
-        console.log(response)
         this.groupInterations = response;
       }
     })
