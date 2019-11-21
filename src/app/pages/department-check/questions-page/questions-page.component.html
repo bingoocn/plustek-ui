@@ -31,13 +31,13 @@
             <ion-radio-group [(ngModel)]="item.approval_status_code">
               <ion-row>
                 <ion-col size="6">
-                  <ion-item lines="none">
+                  <ion-item lines="none" class="bgColor">
                     <ion-label>通过</ion-label>
                     <ion-radio [disabled]='showDepartment' slot="start" color="success" value="1"></ion-radio>
                   </ion-item>
                 </ion-col>
                 <ion-col size="6">
-                  <ion-item lines="none">
+                  <ion-item lines="none"  class="bgColor">
                     <ion-label>不通过</ion-label>
                     <ion-radio [disabled]='showDepartment' slot="start" color="danger" value="0"></ion-radio>
                   </ion-item>
