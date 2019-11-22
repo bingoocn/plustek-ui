@@ -90,16 +90,11 @@ export class SubGroupLeaderComponent implements OnInit {
               this.selfAccess.heighsum = heighsumArr.length;
               //统计最低达级信息
               this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=evaluation_level_code&apply_id='+ this.unitId).then((response:any) => {
-                response = response.filter( item => item.evaluation_level.name !== '')
                 if(response && response.length > 0){
-                  if(response[0].evaluation_level.name == ''){
-                    this.selfAccess.lowsum = 0;
-                  }else{
-                    if(this.selfAccess.heighLevel !== '一级'){
-                      this.selfAccess.lowLevel = response[0].evaluation_level.name;
-                    }
+                  if(this.selfAccess.heighLevel !== '一级'){
+                    this.selfAccess.lowLevel = response[0].evaluation_level.name;
                     this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
-                    this.http.getRequest('/specification_evaluations?evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+                    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
                       if(response && response.length > 0){
                         let  lowsumArr = response.reduce(function(prev,element){
                           if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -107,9 +102,7 @@ export class SubGroupLeaderComponent implements OnInit {
                           }
                           return prev
                         },[])
-                        if(lowsumArr.length == 1 && lowsumArr[0].evaluation_level.name !== '一级'){
-                          this.selfAccess.lowsum = lowsumArr.length;
-                        }
+                        this.selfAccess.lowsum = lowsumArr.length;
                       }
                     });
                   }

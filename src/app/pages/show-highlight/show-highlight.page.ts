@@ -8,7 +8,8 @@ import { HttpService } from 'src/app/service/http/http.service';
   styleUrls: ['./show-highlight.page.scss'],
 })
 export class ShowHighlightPage implements OnInit {
-
+  //当前登录人单位Id
+  public unitId: string;
   public groupHighlights:any = [];
   public subGroupHighlights:any = [];
   //默认tab
@@ -19,6 +20,7 @@ export class ShowHighlightPage implements OnInit {
   constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
+    this.unitId = window.localStorage.getItem("unitId");
     this.highlightTabValue = 'group';
     //路由跳转默认tab
     const group_state = this.routeInfo.snapshot.queryParams['group_state'];
@@ -38,77 +40,39 @@ export class ShowHighlightPage implements OnInit {
     this.http.getUser().then((response:any) => {
       if(response){
         if(response.guid){
-          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid=&recommended_unit_type_code=01').then((response:any) => {
+          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ this.unitId +'&recommended_unit_type_code=01').then((response:any) => {
             if(response && response.length > 0){
               response.forEach( item=>{
-                if(item.ent_self_eva_mon_approvals.length == 1){
-                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '01' && item.ent_self_eva_mon_approvals[0].is_recommended == true){
-                    this.groupArr.push({
-                      subGroup:item.unit.group.name,
-                      guid:item.id,
-                      unit:item.ent_self_eva_mon_approvals[0].recommended_person.unit_name,
-                      level:item.evaluation_level.name,
-                      grade:item.self_score,
-                      person:item.ent_self_eva_mon_approvals[0].recommended_person.name,
-                      time:item.ent_self_eva_mon_approvals[0].recommended_date,
-                    })
-                  }
-                }
-                if(item.ent_self_eva_mon_approvals.length == 2){
-                  item.ent_self_eva_mon_approvals.forEach( el=>{
-                    if(el.mon_approval_type.code == '01' && el.is_recommended == true){
-                      this.groupArr.push({
-                        subGroup:item.unit.group.name,
-                        guid:item.id,
-                        unit:el.recommended_person.unit_name,
-                        level:item.evaluation_level.name,
-                        grade:item.self_score,
-                        person:el.recommended_person.name,
-                        time:el.recommended_date,
-                      })
-                    }
+                  this.groupArr.push({
+                    subGroup:item.unit.group.name,
+                    guid:item.id,
+                    unit:item.recommended_person.unit_name,
+                    level:item.evaluation_level.name,
+                    grade:item.self_score,
+                    person:item.recommended_person.name,
+                    time:item.recommended_date,
                   })
-                }
               })
               this.groupHighlights = this.groupArr;
             }
           });
-          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ response.subordinateOrgId +'&recommended_unit_type_code=02').then((response:any) => {
-            if(response && response.length > 0){
-              response.forEach( item=>{
-                if(item.ent_self_eva_mon_approvals.length == 1){
-                  if(item.ent_self_eva_mon_approvals[0].mon_approval_type.code == '02' && item.ent_self_eva_mon_approvals[0].is_recommended == true){
-                    this.subGroupArr.push({
-                      subGroup:item.unit.group.name,
-                      guid:item.id,
-                      unit:item.ent_self_eva_mon_approvals[0].recommended_person.unit_name,
-                      level:item.evaluation_level.name,
-                      grade:item.self_score,
-                      person:item.ent_self_eva_mon_approvals[0].recommended_person.name,
-                      time:item.ent_self_eva_mon_approvals[0].recommended_date,
-                    })
-                  }
-                }
-                if(item.ent_self_eva_mon_approvals.length == 2){
-                  item.ent_self_eva_mon_approvals.forEach( el=>{
-                    if(el.mon_approval_type.code == '02' && el.is_recommended == true){
-                      this.subGroupArr.push({
-                        subGroup:item.unit.group.name,
-                        guid:item.id,
-                        unit:el.recommended_person.unit_name,
-                        level:item.evaluation_level.name,
-                        grade:item.self_score,
-                        person:el.recommended_person.name,
-                        time:el.recommended_date,
-                      })
-                    }
-                  })
-                }
-              })
-              this.subGroupHighlights = this.subGroupArr;
-            }
-          });
         }
+        this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ this.unitId +'&recommended_unit_type_code=02').then((response:any) => {
+          if(response && response.length > 0){
+            response.forEach( item=>{
+                this.subGroupArr.push({
+                  subGroup:item.unit.group.name,
+                  guid:item.id,
+                  unit:item.recommended_person.unit_name,
+                  level:item.evaluation_level.name,
+                  grade:item.self_score,
+                  person:item.recommended_person.name,
+                  time:item.recommended_date,
+                })
+            })
+            this.subGroupHighlights = this.subGroupArr;
+          }
+        });
       }
     });
   }

@@ -23,7 +23,6 @@ export class AssessResultComponent implements OnInit {
       this.http.getRequest('/specification_evaluations/' + this.companyId).then((response: any) => {
         if (response) {
           this.assessInfo = response;
-          console.log(this.companyId,this.assessInfo,0)
           this.main_highlight = response.main_highlight;
           this.major_deficiency = response.major_deficiency;
         }
@@ -39,7 +38,7 @@ export class AssessResultComponent implements OnInit {
     };
     this.http.putRequest(`/specification_evaluations/${this.companyId}`, params).then((response: any) => {
       if (response) {
-        this.nav.navigateForward("/company-assess")
+        this.nav.navigateForward("/tabs/workbench")
       }
     })
   }

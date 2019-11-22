@@ -94,23 +94,21 @@ export class BusinessComponent implements OnInit {
     })
     //监控评价
     this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
-      if(response && response.length > 0){
-        for(let i=0;i<response.length;i++){
-          if(response[i].ent_self_eva_mon_approvals.length > 0){
-            for(let n=0;n<response[i].ent_self_eva_mon_approvals.length;n++){
-              //子集团评价
-              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '01'){
-                this.slides[1].subGroup ++
-              }
-              //集团评价
-              if(response[i].ent_self_eva_mon_approvals[n].mon_approval_type.code == '02'){
-                this.slides[1].group ++
-              }
+      if(response){
+        response.forEach(element => {
+          this.http.getRequest('/specification_evaluations/' + element.id + '/top_group_monitor').then((response:any) => {
+            if(response !== null){
+              this.slides[1].group ++
             }
-          }
-        }
+          })
+          this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_monitor').then((response:any) => {
+            if(response !== null){
+              this.slides[1].subGroup ++
+            }
+          })
+        })
       }
-    });
+    })
     //领导阅评
     this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=01&apply_id='+ this.unitId).then((response:any) => {
       this.slides[2].group = response.length;

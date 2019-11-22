@@ -97,17 +97,17 @@
             <ion-label class="mine-section-title">自评结果</ion-label> 
           </ion-col>
           <ion-col size="4">
-            <div class="mine-section linear-lightGreens" [routerLink]="['/view-self-evaluation',selfEvaluations.id]">
+            <div class="mine-section linear-lightGreens" [routerLink]="['/company-assess']">
               <p>{{ selfEvaluations.level }}</p>
               <p>当前等级</p>
               <ion-img class="mine-icon-bg" src="./assets/company-assess.png" alt=""></ion-img>
             </div>
           </ion-col>
-          <ion-col size="8" [routerLink]="['/view-self-evaluation',selfEvaluations.id]">
+          <ion-col size="8" [routerLink]="['/company-assess']">
             <div class="mine-section-item linear-lightGreen">
               当前得分：<span>{{ selfEvaluations.score }}</span>
             </div>
-            <div class="mine-section-item linear-lightGreen" [routerLink]="['/view-self-evaluation',selfEvaluations.id]">
+            <div class="mine-section-item linear-lightGreen" [routerLink]="['/company-assess']">
               最近评价时间：{{ selfEvaluations.time }}
             </div>
           </ion-col>
