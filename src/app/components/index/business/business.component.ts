@@ -67,6 +67,7 @@ export class BusinessComponent implements OnInit {
   ngOnInit() {
     this.unitId = window.localStorage.getItem("unitId");
     this.getSlides();
+    this.getSelfEvaluations();
     // this.getNews();
     this.getNotice();
   }
@@ -82,7 +83,7 @@ export class BusinessComponent implements OnInit {
         this.slides[0].department = response.length;
       }
     })
-    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.slides[0].leader = response.length;
         //获取自评结果统计
@@ -117,7 +118,18 @@ export class BusinessComponent implements OnInit {
         this.slides[2].subGroup = response.length;
     });
   }
-  
+  getSelfEvaluations(){
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=02&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].leader = response.length;
+        //获取自评结果统计
+        this.selfEvaluations.id = response[0].id;
+        this.selfEvaluations.level = response[0].evaluation_level.name;
+        this.selfEvaluations.score = response[0].self_score;
+        this.selfEvaluations.time = response[0].evaluation_date;
+      }
+    })
+  }
   // 获取最新评价
   // getNews(){
   //   this.http.getRequest('/specification_mon_evaluations?sort=-evaluation_date').then((response:any) => {

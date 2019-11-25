@@ -116,6 +116,7 @@ export class BusinessLeaderComponent implements OnInit {
   ngOnInit() {
     this.unitId = window.localStorage.getItem("unitId");
     this.getSlides();
+    this.getSelfEvaluations();
     this.getNotice();
   }
   getSlides() {
@@ -129,16 +130,6 @@ export class BusinessLeaderComponent implements OnInit {
     this.http.getRequest('/specification_evaluations?evaluation_status_code=03,05&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.slides[0].department = response.length;
-      }
-    })
-    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
-      if(response && response.length > 0){
-        this.slides[0].leader = response.length;
-        //获取自评结果统计
-        this.selfEvaluations.id = response[0].id;
-        this.selfEvaluations.level = response[0].evaluation_level.name;
-        this.selfEvaluations.score = response[0].self_score;
-        this.selfEvaluations.time = response[0].evaluation_date;
       }
     })
     //监控评价
@@ -165,6 +156,18 @@ export class BusinessLeaderComponent implements OnInit {
     this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=02&apply_id='+ this.unitId).then((response:any) => {
         this.slides[2].subGroup = response.length;
     });
+  }
+  getSelfEvaluations(){
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=02&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
+      if(response && response.length > 0){
+        this.slides[0].leader = response.length;
+        //获取自评结果统计
+        this.selfEvaluations.id = response[0].id;
+        this.selfEvaluations.level = response[0].evaluation_level.name;
+        this.selfEvaluations.score = response[0].self_score;
+        this.selfEvaluations.time = response[0].evaluation_date;
+      }
+    })
   }
   // 获取公告通知数据
   getNotice(){

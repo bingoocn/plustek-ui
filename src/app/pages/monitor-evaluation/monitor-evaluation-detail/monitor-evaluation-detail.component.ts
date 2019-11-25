@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
 
@@ -23,7 +24,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
   public role_monitor:any;
 
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public navController: NavController,public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
     // 获取传递过来的企业自评id以及当前企业自评是否已留言
@@ -125,6 +126,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
                 this.http.postRequest('/specification_evaluations/' + this.evaluationId + monitor,params).then((response:any) => {
                   this.http.presentToast('保存成功！', 'bottom', 'success');
                   this.ngOnInit();
+                  // this.navController.navigateForward("/monitor-evaluation")
                   this.mon_approval_content = '';
                 })
               }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-leader-review',
@@ -8,17 +9,25 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class LeaderReviewPage implements OnInit {
 
-  public evaluationTabValue: string;
+  public evaluationTabValue: string = 'notEvaluated';//当前tab值
   public noEvaluations: any = [];
   public evaluations: any = [];
   public role: any = [];//当前登录人的当前角色
 
-  constructor(public http:HttpService) { }
+  constructor(public routeInfo:ActivatedRoute,public http:HttpService) { }
 
   ngOnInit() {
+    // 获取传递过来的状态（已评价，未评价）
+    const evaluation_state = this.routeInfo.snapshot.queryParams['evaluation_state'];
+    if(evaluation_state == '未评价'){
+      this.evaluationTabValue = 'notEvaluated';
+    }
+    if(evaluation_state == '已评价'){
+      this.evaluationTabValue = 'alreadyEvaluated';
+    }
+
     const params = { evaluation_level_code: '',sort:'-evaluation_date' };
     this.getData(params);
-    this.evaluationTabValue = 'notEvaluated';// 默认显示未评价列表
   }
 
   // 发送请求获取数据
