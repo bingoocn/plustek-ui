@@ -159,10 +159,10 @@ export class SubGroupLeaderComponent implements OnInit {
       if(response && response.length > 0){
         response.forEach(element => {
           this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_review').then((response:any) => {
-            if(response == null){
-              this.myWork.unAssess ++
-            }else{
+            if(response && response.leader_review_content){
               this.myWork.assessed ++
+            }else{
+              this.myWork.unAssess ++
             }
           })
         })

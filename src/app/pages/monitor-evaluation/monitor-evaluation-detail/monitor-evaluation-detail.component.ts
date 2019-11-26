@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-monitor-evaluation-detail',
@@ -24,7 +25,7 @@ export class MonitorEvaluationDetailComponent implements OnInit {
   public role_monitor:any;
 
 
-  constructor(public navController: NavController,public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public common: CommonService ,public navController: NavController,public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
 
   ngOnInit() {
     // 获取传递过来的企业自评id以及当前企业自评是否已留言
@@ -128,6 +129,8 @@ export class MonitorEvaluationDetailComponent implements OnInit {
                   this.ngOnInit();
                   // this.navController.navigateForward("/monitor-evaluation")
                   this.mon_approval_content = '';
+                  this.common.eventEmit.emit('getData','返回后list刷新');    
+                  this.router.navigateByUrl('/monitor-evaluation');
                 })
               }
             }

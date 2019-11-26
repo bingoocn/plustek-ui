@@ -147,7 +147,7 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     });
   }
   getMyWork(){
-    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05').then((response:any) => {
       if(response && response.length > 0){
         // 遍历每条数据，区分当前登录人当前角色未评价、已评价
         response.forEach(element => {
@@ -170,10 +170,10 @@ export class SubGroupBusinessUnitComponent implements OnInit {
                     }
                     if(monitor !== ''){
                       this.http.getRequest('/specification_evaluations/' + element.id + monitor).then((response:any) => {
-                        if(response == null){
-                          this.myWork.unAssess ++
-                        }else{
+                        if(response && response.mon_approval_content){
                           this.myWork.assessed ++
+                        }else{
+                          this.myWork.unAssess ++
                         }
                       })
                     }

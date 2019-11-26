@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-monitor-evaluation',
@@ -14,7 +15,13 @@ export class MonitorEvaluationPage implements OnInit {
   public evaluations: any = [];//已评价
   public role: any = [];//当前登录人的当前角色
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { }
+  constructor(public common: CommonService ,public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { 
+    this.common.eventEmit.on('getData',(result)=>{
+      this.evaluationTabValue = 'alreadyEvaluated';
+      const params = { evaluation_status_code: '05',evaluation_level_code: '',sort:'-evaluation_date' };
+      this.getData(params);
+    })
+  }
 
   ngOnInit() {
     // 获取传递过来的状态（已评价，未评价）
@@ -25,10 +32,10 @@ export class MonitorEvaluationPage implements OnInit {
     if(evaluation_state == '已评价'){
       this.evaluationTabValue = 'alreadyEvaluated';
     }
-    const params = { evaluation_level_code: '',sort:'-evaluation_date' };
+    const params = { evaluation_status_code: '05',evaluation_level_code: '',sort:'-evaluation_date' };
     this.getData(params);
   }
-
+  
   // 发送请求获取数据
   getData(params:any){
     this.http.getRequest('/specification_mon_evaluations', params).then((response:any) => {

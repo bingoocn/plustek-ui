@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
 import { NavController } from '@ionic/angular';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-internal-communication',
@@ -8,14 +9,27 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./internal-communication.page.scss'],
 })
 export class InternalCommunicationPage implements OnInit {
-
+  public userId: string = '';  //登陆人id
   public publishedTopics:any = [];// 已发布的
   public unblishedTopics:any = [];// 未发布的
   public communionTabValue: string;//当前tab值
   public exchange_proceeding:string = '';// 已发布模糊查询
   public un_exchange_proceeding:string = '';//未发布模糊查询
 
-  constructor(public http:HttpService,public nav: NavController) { }
+  constructor(public common: CommonService ,public http:HttpService,public nav: NavController) { 
+    this.common.eventEmit.on('getPublishedData',(result)=>{
+      if(result == 'saveAndPublish'){
+        this.communionTabValue = 'published';
+        const params = { exchange_proceeding:this.exchange_proceeding,publish_status_code: '02',sort:'-publish_time' };
+        this.getPublishedData(params);
+      }
+      if(result == 'saveCommunication'){
+        this.communionTabValue = 'unpublished';
+        const unParams = { publish_status_code: '01',sort:'-publish_time' };
+        this.getUnpublishedData(unParams,this.userId);
+      }
+    })
+  }
 
   ngOnInit() {
     this.communionTabValue = 'published';// 默认显示已发布列表
@@ -28,8 +42,9 @@ export class InternalCommunicationPage implements OnInit {
     this.http.getUser().then((response:any) => {
       if(response){
         if(response.guid){
+          this.userId = response.guid;
           const unParams = { publish_status_code: '01',sort:'-publish_time' };
-          this.getUnpublishedData(unParams,response.guid);
+          this.getUnpublishedData(unParams,this.userId);
         }
       }
     })

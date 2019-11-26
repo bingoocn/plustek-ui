@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import {EventEmitter} from 'eventemitter3';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
+  public eventEmit: any;
 
-  constructor() { }
+  constructor() { 
+    this.eventEmit = new EventEmitter();
+  }
 
   // 转换附件大小显示单位
   getFileSize(fileByte:any) {
