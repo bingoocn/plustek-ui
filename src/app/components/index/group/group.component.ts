@@ -189,10 +189,10 @@ export class GroupComponent implements OnInit {
                     }
                     if(monitor !== ''){
                       this.http.getRequest('/specification_evaluations/' + element.id + monitor).then((response:any) => {
-                        if(response == null){
-                          this.myWork.unAssess ++
-                        }else{
+                        if(response && response.mon_approval_content){
                           this.myWork.assessed ++
+                        }else{
+                          this.myWork.unAssess ++
                         }
                       })
                     }
