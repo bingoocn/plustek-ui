@@ -11,8 +11,7 @@ export class HttpService {
   // readonly baseIp = 'http://192.168.1.111:10009';
   
   // readonly portalIp = 'http://10.100.240.163:10002';
-  // readonly portalIp = 'http://10.100.240.200:10002';
-  readonly portalIp = 'http://10.100.240.159:10002';
+  readonly portalIp = 'http://10.100.240.200:10002';
   // readonly portalIp = 'http://192.168.1.111:10006';
   // 请求头
   public header = new HttpHeaders({

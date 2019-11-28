@@ -33,4 +33,13 @@ export class ExperienceDetailComponent implements OnInit {
     }
   }
 
+  //下载附件
+  download(id:any){
+    if(id){
+      window.location.href = this.http.baseIp + "/attachment/" + id;
+    }else{
+      this.http.presentToast('下载失败！', 'bottom');
+    }
+  }
+
 }

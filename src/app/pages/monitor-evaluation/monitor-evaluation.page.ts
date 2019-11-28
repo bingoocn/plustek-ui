@@ -15,7 +15,7 @@ export class MonitorEvaluationPage implements OnInit {
   public evaluations: any = [];//已评价
   public role: any = [];//当前登录人的当前角色
 
-  constructor(public common: CommonService ,public routeInfo:ActivatedRoute,private router: Router, public http:HttpService) { 
+  constructor(public common: CommonService ,public routeInfo:ActivatedRoute ,private router: Router, public http:HttpService) { 
     this.common.eventEmit.on('getData',(result)=>{
       this.evaluationTabValue = 'alreadyEvaluated';
       const params = { evaluation_status_code: '05',evaluation_level_code: '',sort:'-evaluation_date' };

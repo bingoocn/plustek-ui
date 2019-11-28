@@ -34,7 +34,6 @@ export class ExpertReviewPage implements OnInit {
   getData(params:any){
     this.http.getRequest('/expert_reviews', params).then((response:any) => {
       if(response && response.length > 0){
-        console.log(response[1].evaluation_result.standard_result.name)
         this.expertEvaluations = response;
       }
     })

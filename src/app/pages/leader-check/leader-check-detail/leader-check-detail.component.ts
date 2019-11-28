@@ -145,19 +145,12 @@ export class LeaderCheckDetailComponent implements OnInit {
           if(response && response.id){
             this.http.putRequest('/specification_evaluations/' + this.assess_id + '/reported','').then((response:any) => {
               this.http.presentToast('保存并上报成功！', 'bottom', 'success');
-              this.back();
+              this.common.eventEmit.emit('getData','checked'); 
+              this.router.navigateByUrl('/leader-check');
             })
           }
         })
       }
     }
   }
-
-  // 返回列表页
-  back(){
-    this.nav.navigateRoot(['/leader-check']).then(() => {
-      location.reload();
-    });
-  }
-
 }

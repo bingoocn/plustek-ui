@@ -86,7 +86,7 @@ export class SubGroupBusinessUnitComponent implements OnInit {
                   if(this.selfAccess.heighLevel !== '一级'){
                     this.selfAccess.lowLevel = response[0].evaluation_level.name;
                     this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
-                    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+                    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.lowLevel_code+'&apply_id='+ this.unitId).then((response:any) => {
                       if(response && response.length > 0){
                         let  lowsumArr = response.reduce(function(prev,element){
                           if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -147,7 +147,7 @@ export class SubGroupBusinessUnitComponent implements OnInit {
     });
   }
   getMyWork(){
-    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05').then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&apply_id'+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         // 遍历每条数据，区分当前登录人当前角色未评价、已评价
         response.forEach(element => {

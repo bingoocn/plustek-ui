@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
 
 @Component({
@@ -9,25 +9,28 @@ import { HttpService } from 'src/app/service/http/http.service';
 })
 export class DepartmentCheckPage implements OnInit {
 
-  public checkTabValue: string; // 当前tab值
+  public checkTabValue: string = ''; // 当前tab值
   public unit_id: string = ''; // 当前登录人所属组织机构id
   public unAssess: any = []; // 待审核
   public assess: any = []; // 已审核
 
-  constructor(public router: Router, public http: HttpService) { }
+  constructor(public routeInfo:ActivatedRoute ,public router: Router, public http: HttpService) { }
 
   ngOnInit() {
-    this.checkTabValue = 'unchecked'; // 默认显示待审核的
+    this.unit_id = window.localStorage.getItem("unitId");
+    // 获取传递过来的状态（已审核，未审核）
+    if(this.routeInfo.snapshot.queryParams['check_state']){
+      this.checkTabValue = this.routeInfo.snapshot.queryParams['check_state'];
+    }else{
+      this.checkTabValue = "unchecked"
+    }
     // 获取当前登录人所属单位信息
-    this.http.getUser().then((response: any) => {
-      if (response && response.subordinateOrgId) {
-        this.unit_id = response.subordinateOrgId;
+      if (this.unit_id) {
         const uncheckedParams = { evaluation_status_code: '02', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getUnCheckedData(uncheckedParams);
         const checkedParams = { evaluation_status_code: '03,04,05,06', sort: '-evaluation_date', apply_id: this.unit_id };
         this.getCheckedData(checkedParams);
       }
-    })
   }
   // 发送请求获取待审核数据
   getUnCheckedData(params) {

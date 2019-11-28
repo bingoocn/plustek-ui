@@ -42,7 +42,7 @@
       <ion-grid *ngIf="case && case.attachments && case.attachments.length > 0">
         <ion-row>
           <ion-col size="4" *ngFor="let item of case.attachments; let key = index">
-            <div class="attach-item">
+            <div class="attach-item" (click)="download(item.id)">
               <ion-thumbnail slot="start">
                 <img src="assets/attach.png">
               </ion-thumbnail>

@@ -47,7 +47,7 @@ export class ExpertComponent implements OnInit {
   }
   // 获取企业自评数据
   getSelfAssess(){
-    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         let unitArr = response.reduce(function(prev,element){
           if(!prev.find(el=>el.unit.id == element.unit.id)) {
@@ -59,14 +59,14 @@ export class ExpertComponent implements OnInit {
       }
     });
     //统计最高达级信息
-    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-evaluation_level_code&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=-evaluation_level_code&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.selfAccess.heighLevel = response[0].evaluation_level.name;
         if(response[0].evaluation_level.name == ''){
           this.selfAccess.heighsum = 0;
         }else{
           this.selfAccess.heighLevel_code = response[0].evaluation_level.code;
-          this.http.getRequest('/specification_evaluations?evaluation_status_code=05&apply_id='+ this.unitId+'&evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
+          this.http.getRequest('/specification_evaluations?evaluation_status_code=05&designated_apply_id='+ this.unitId+'&evaluation_level_code='+this.selfAccess.heighLevel_code).then((response:any) => {
             if(response && response.length > 0){
               let unitHeighArr = response.reduce(function(prev,element){
                 if(!prev.find(el=>el.unit.id == element.unit.id)) {
@@ -76,12 +76,12 @@ export class ExpertComponent implements OnInit {
               },[])
               this.selfAccess.heighsum = unitHeighArr.length;
               //统计最低达级信息
-              this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=evaluation_level_code&apply_id='+ this.unitId).then((response:any) => {
+              this.http.getRequest('/specification_evaluations?evaluation_status_code=05&sort=evaluation_level_code&designated_apply_id='+ this.unitId).then((response:any) => {
                 if(response && response.length > 0){
                   if(this.selfAccess.heighLevel !== '一级'){
                     this.selfAccess.lowLevel = response[0].evaluation_level.name;
                     this.selfAccess.lowLevel_code = response[0].evaluation_level.code;
-                    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.lowLevel_code).then((response:any) => {
+                    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&evaluation_level_code='+this.selfAccess.lowLevel_code + '&designated_apply_id='+ this.unitId).then((response:any) => {
                       if(response && response.length > 0){
                         let  lowsumArr = response.reduce(function(prev,element){
                           if(!prev.find(el=>el.unit.id==element.unit.id)) {
@@ -103,7 +103,7 @@ export class ExpertComponent implements OnInit {
   }
   //获取专家检查数据
   getExpertAssess() {
-    this.http.getRequest('/expert_reviews?sort=-check_end_time&apply_id'+ this.unitId).then((response:any) => {
+    this.http.getRequest('/expert_reviews?sort=-check_end_time&designated_apply_id'+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         //根据单位去重
         let resArr = response;

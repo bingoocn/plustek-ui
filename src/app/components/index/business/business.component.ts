@@ -86,24 +86,19 @@ export class BusinessComponent implements OnInit {
     this.http.getRequest('/specification_evaluations?evaluation_status_code=05&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.slides[0].leader = response.length;
-        //获取自评结果统计
-        this.selfEvaluations.id = response[0].id;
-        this.selfEvaluations.level = response[0].evaluation_level.name;
-        this.selfEvaluations.score = response[0].self_score;
-        this.selfEvaluations.time = response[0].evaluation_date;
       }
     })
     //监控评价
-    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response){
         response.forEach(element => {
           this.http.getRequest('/specification_evaluations/' + element.id + '/top_group_monitor').then((response:any) => {
-            if(response !== null){
+            if(response !== null && response.mon_approval_content){
               this.slides[1].group ++
             }
           })
           this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_monitor').then((response:any) => {
-            if(response !== null){
+            if(response !== null && response.mon_approval_content){
               this.slides[1].subGroup ++
             }
           })
@@ -111,17 +106,16 @@ export class BusinessComponent implements OnInit {
       }
     })
     //领导阅评
-    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=01&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=01&designated_apply_id='+ this.unitId).then((response:any) => {
       this.slides[2].group = response.length;
     });
-    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=02&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations?evaluation_status_code=05&leader_review_type_code=02&designated_apply_id='+ this.unitId).then((response:any) => {
         this.slides[2].subGroup = response.length;
     });
   }
   getSelfEvaluations(){
     this.http.getRequest('/specification_evaluations?evaluation_status_code=02&sort=-create_time&designated_apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
-        this.slides[0].leader = response.length;
         //获取自评结果统计
         this.selfEvaluations.id = response[0].id;
         this.selfEvaluations.level = response[0].evaluation_level.name;
@@ -131,17 +125,17 @@ export class BusinessComponent implements OnInit {
     })
   }
   // 获取最新评价
-  // getNews(){
-  //   this.http.getRequest('/specification_mon_evaluations?sort=-evaluation_date').then((response:any) => {
-  //     if(response && response.length > 0){
-        // this.http.getRequest('/specification_evaluations/'+ response.id +'/sub_group_monitor').then((response:any) => {
-        //   if(response && response.length > 0){
-        //     this.noticeSlides = response;
-        //   }
-        // });
-  //     }
-  //   });
-  // }
+  getNews(){
+    this.http.getRequest('/specification_mon_evaluations?sort=-evaluation_date&designated_apply_id='+ this.unitId).then((response:any) => {
+      if(response && response.length > 0){
+        this.http.getRequest('/specification_evaluations/'+ response.id +'/sub_group_monitor').then((response:any) => {
+          if(response && response.length > 0){
+            this.noticeSlides = response;
+          }
+        });
+      }
+    });
+  }
 
   // 获取公告通知数据
   getNotice(){

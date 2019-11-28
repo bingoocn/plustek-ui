@@ -35,6 +35,15 @@ export class PlanDetailComponent implements OnInit {
     this.planTabValue = 'improveContent';
   }
 
+  //下载附件
+  download(id:any){
+    if(id){
+      window.location.href = this.http.baseIp + "/attachment/" + id;
+    }else{
+      this.http.presentToast('下载失败！', 'bottom');
+    }
+  }
+
   // tab切换事件
   segmentChanged(ev: any) {
     console.log('Segment changed', ev);

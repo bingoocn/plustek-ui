@@ -13,9 +13,7 @@ export class NoticeDetailComponent implements OnInit {
   public noticeId:string;
   public notice: any;
 
-  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService, public common:CommonService) { 
-
-  }
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public http:HttpService, public common:CommonService) { }
     
   ngOnInit() {
     this.routeInfo.params.subscribe((params: Params) => this.noticeId = params['noticeId']);
@@ -28,6 +26,14 @@ export class NoticeDetailComponent implements OnInit {
           this.notice = response;
         }
       })
+    }
+  }
+  //下载附件
+  download(id:any){
+    if(id){
+      window.location.href = this.http.baseIp + "/attachment/" + id;
+    }else{
+      this.http.presentToast('下载失败！', 'bottom');
     }
   }
 }

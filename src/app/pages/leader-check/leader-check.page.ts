@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-leader-check',
@@ -15,20 +16,24 @@ export class LeaderCheckPage implements OnInit {
   public unAssess: any = [];//待审核
   public assess: any = [];//已审核
 
-  constructor(public router: Router, public http: HttpService) { }
+  constructor(public common: CommonService ,public router: Router, public http: HttpService) { 
+    this.common.eventEmit.on('getData',(result)=>{
+      this.checkTabValue = result;
+      const checkedParams = { evaluation_status_code:'05',sort:'-evaluation_date',apply_id:this.unit_id };
+      this.getCheckedData(checkedParams);
+    })
+  }
 
   ngOnInit() {
     this.checkTabValue = 'unchecked';// 默认显示待审核的
     // 获取当前登录人所属单位信息
-    this.http.getUser().then((response:any) => {
-      if(response && response.subordinateOrgId){
-        this.unit_id = response.subordinateOrgId;
+    this.unit_id = window.localStorage.getItem("unitId");
+      if(this.unit_id){
         const uncheckedParams = { evaluation_status_code:'03',sort:'-evaluation_date',apply_id:this.unit_id };
         this.getUnCheckedData(uncheckedParams);
         const checkedParams = { evaluation_status_code:'05',sort:'-evaluation_date',apply_id:this.unit_id };
         this.getCheckedData(checkedParams);
       }
-    })
   }
 
   // 发送请求获取待审核数据

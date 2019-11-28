@@ -112,7 +112,7 @@ export class GroupLeaderComponent implements OnInit {
   }
   getEcharts() {
     this.echarts = echarts.init(document.querySelector('#main'));
-    this.http.getRequest('/specification_evaluations?evaluation_status_code=05').then((response:any) => {
+    this.http.getRequest('/specification_evaluations?evaluation_status_code=05&apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         let levelCodeArr = [];
         response.forEach(item => {
