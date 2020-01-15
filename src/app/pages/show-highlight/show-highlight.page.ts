@@ -40,7 +40,7 @@ export class ShowHighlightPage implements OnInit {
     this.http.getUser().then((response:any) => {
       if(response){
         if(response.guid){
-          this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ this.unitId +'&recommended_unit_type_code=01').then((response:any) => {
+          this.http.getRequest('/specification_evaluations_lightspot?apply_id='+ this.unitId +'&recommended_unit_type_code=01').then((response:any) => {
             if(response && response.length > 0){
               response.forEach( item=>{
                   this.groupArr.push({
@@ -57,7 +57,7 @@ export class ShowHighlightPage implements OnInit {
             }
           });
         }
-        this.http.getRequest('/specification_evaluations_lightspot?apply_fguid='+ this.unitId +'&recommended_unit_type_code=02').then((response:any) => {
+        this.http.getRequest('/specification_evaluations_lightspot?apply_id='+ this.unitId +'&recommended_unit_type_code=02').then((response:any) => {
           if(response && response.length > 0){
             response.forEach( item=>{
                 this.subGroupArr.push({
