@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { NavController } from '@ionic/angular';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-company-assess',
@@ -10,7 +12,12 @@ import { HttpService } from 'src/app/service/http/http.service';
 export class CompanyAssessPage implements OnInit {
   public assess: any = [];
   public unit_id: string = ''; // 当前登录人所属组织机构id
-  constructor(public router: Router, public http: HttpService) { }
+  constructor(public common: CommonService ,public nav: NavController,public router: Router, public http: HttpService) {
+    this.common.eventEmit.on('getData',(result)=>{
+      const params = { apply_id: this.unit_id };
+      this.getData(params);
+    })
+  }
 
 
   ngOnInit() {
@@ -29,13 +36,21 @@ export class CompanyAssessPage implements OnInit {
       }
     });
   }
-
+  toAddAssess(status,id,title) {
+    console.log(status.code)
+    // if(status.code == "01"){
+      this.nav.navigateForward("/company-assess/addAssess?companyId="+id+"&title="+title);
+    // }else{
+    //   this.http.presentToast(status.name+'数据不可编辑！', 'bottom', 'warning');
+    // }
+  }
   // 上报
   toReport(id: any ) {
     this.http.putRequest('/specification_evaluations/' + id + '/reported','').then((response:any) => {
-      if (response) {
+      // console.log(response)
+      // if (response) {
         this.http.presentToast('上报成功', 'bottom', 'success');
-      }
+      // }
     })
   }
 

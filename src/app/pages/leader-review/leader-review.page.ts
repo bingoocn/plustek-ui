@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http/http.service';
 import { ActivatedRoute } from "@angular/router";
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-leader-review',
@@ -14,7 +15,13 @@ export class LeaderReviewPage implements OnInit {
   public evaluations: any = [];
   public role: any = [];//当前登录人的当前角色
 
-  constructor(public routeInfo:ActivatedRoute,public http:HttpService) { }
+  constructor(public common: CommonService ,public routeInfo:ActivatedRoute,public http:HttpService) {
+    this.common.eventEmit.on('getData',(result)=>{
+      this.evaluationTabValue = result;
+      const params = { evaluation_level_code: '',sort:'-evaluation_date' };
+      this.getData(params);
+    })
+   }
 
   ngOnInit() {
     // 获取传递过来的状态（已评价，未评价）

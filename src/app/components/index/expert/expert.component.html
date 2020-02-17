@@ -15,12 +15,18 @@
           </div>
           <ion-label class="mine-icon-label">专家阅评</ion-label>
         </ion-col>
-        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/company-assess']">
+        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/view-self-assessment']">
+          <div class="mine-icon-circle bg-orange">
+            <ion-img class="mine-icon-img" src="./assets/view-self-evaluation.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">自评查看</ion-label>
+        </ion-col>
+        <!-- <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/company-assess']">
           <div class="mine-icon-circle bg-lightRed">
             <ion-img class="mine-icon-img" src="./assets/company-assess.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">企业自评</ion-label>
-        </ion-col>
+        </ion-col> -->
       </ion-row> 
     </ion-grid>
   </div>
@@ -32,7 +38,7 @@
           <ion-label class="mine-section-title">企业自评评价统计</ion-label> 
         </ion-col>
         <ion-col size="4">
-          <div class="mine-section linear-lightGreens" [routerLink]="['/company-assess']">
+          <div class="mine-section linear-lightGreens" [routerLink]="['/view-self-assessment']">
               <p>{{selfAccess.accessedNum}}家</p>
               <p>已自评</p>
             <ion-img class="mine-icon-bg" src="./assets/company-assess.png" alt=""></ion-img>

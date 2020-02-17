@@ -155,7 +155,9 @@ export class SubGroupLeaderComponent implements OnInit {
     });
   }
   getMyWork(){
-    this.http.getRequest('/specification_mon_evaluations&apply_id='+ this.unitId).then((response:any) => {
+    this.http.getRequest('/specification_mon_evaluations').then((response:any) => {
+      console.log(response,0)
+
       if(response && response.length > 0){
         response.forEach(element => {
           this.http.getRequest('/specification_evaluations/' + element.id + '/sub_group_review').then((response:any) => {

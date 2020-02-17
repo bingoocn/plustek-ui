@@ -10,6 +10,8 @@ import { HttpService } from 'src/app/service/http/http.service';
 export class OverallEvaluationPage implements OnInit {
   @ViewChild(IonInfiniteScroll,null) infiniteScroll: IonInfiniteScroll;
 
+  //当前登录人单位Id
+  public unitId: string;
   public evaluationValue:any = [];
   public page:any = 1;
   public per_page:any = 10;
@@ -17,11 +19,12 @@ export class OverallEvaluationPage implements OnInit {
   constructor(public http:HttpService) { }
 
   ngOnInit() {
+    this.unitId = window.localStorage.getItem("unitId");
     this.getData();
   }
   // 发送请求获取数据
   getData(){
-    this.http.getRequest('/evaluation_results').then((response:any) => {
+    this.http.getRequest('/evaluation_results?apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.evaluationValue = response;
       }
@@ -30,7 +33,7 @@ export class OverallEvaluationPage implements OnInit {
    // 刷新
    doRefresh(e) {
     this.page = 1;
-    this.http.getRequest('/evaluation_results').then((response:any) => {
+    this.http.getRequest('/evaluation_results?apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.evaluationValue = response;
         if(response.length < this.per_page){
@@ -46,7 +49,7 @@ export class OverallEvaluationPage implements OnInit {
   }
   // 加载更多
   loadMore(e){
-    this.http.getRequest('/evaluation_results').then((response:any) => {
+    this.http.getRequest('/evaluation_results?apply_id='+ this.unitId).then((response:any) => {
       if(response && response.length > 0){
         this.evaluationValue = this.evaluationValue.concat(response);
         ++this.page;

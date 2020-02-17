@@ -52,12 +52,6 @@
             </div>
             <ion-label class="mine-icon-label">领导审核</ion-label>
           </ion-col>
-          <ion-col size="3" class="text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
-            <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
-              <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
-            </div>
-            <ion-label class="mine-icon-label">综合评价</ion-label>
-          </ion-col>
           <ion-col size="3" class="text-center ion-align-self-center"  [routerLink]="['/experience']">
             <div class="mine-icon-circle bg-lightRed">
               <ion-img class="mine-icon-img" src="./assets/experience.png" alt=""></ion-img>
@@ -69,6 +63,12 @@
               <ion-img class="mine-icon-img" src="./assets/internal-communication.png" alt=""></ion-img>
             </div>
             <ion-label class="mine-icon-label">内部交流</ion-label>
+          </ion-col>
+          <ion-col size="3" class="text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
+            <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
+              <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
+            </div>
+            <ion-label class="mine-icon-label">综合评价</ion-label>
           </ion-col>
         </ion-row>  
       </ion-grid>
@@ -156,7 +156,7 @@
           <ion-col size="12" class="title-pos"> 
             <ion-label class="mine-section-title">我的工作</ion-label> 
           </ion-col>
-          <ion-col size="6" [routerLink]="['/leader-check']">
+          <ion-col size="6" [routerLink]="['/leader-check']"  [queryParams]="{check_state:'unchecked'}">
             <div class="mine-section mini linear-lightViolets">
               <ion-row>
                 <ion-col size="4">
@@ -169,7 +169,7 @@
               </ion-row>
             </div>
           </ion-col>
-          <ion-col size="6" [routerLink]="['/leader-check']">
+          <ion-col size="6" [routerLink]="['/leader-check']" [queryParams]="{check_state:'checked'}">
             <div class="mine-section mini linear-lightViolet">
               <ion-row>
                 <ion-col size="4">
