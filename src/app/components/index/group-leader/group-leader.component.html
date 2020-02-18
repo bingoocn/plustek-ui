@@ -21,17 +21,17 @@
           </div>
           <ion-label class="mine-icon-label">自评查看</ion-label>
         </ion-col>
+        <ion-col size="3" class="text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
+          <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
+            <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">综合评价</ion-label>
+        </ion-col>
         <ion-col size="3" class="text-center ion-align-self-center" [routerLink]="['/internal-communication']" [queryParams]="{title:'内部交流'}">
           <div class="mine-icon-circle bg-orange" style="padding: 3px;">
             <ion-img class="mine-icon-img" src="./assets/internal-communication.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">内部交流</ion-label>
-        </ion-col>
-        <ion-col size="3" class="text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
-          <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
-            <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
-          </div>
-          <ion-label class="mine-icon-label">综合评价结果</ion-label>
         </ion-col>
       </ion-row>  
     </ion-grid>

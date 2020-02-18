@@ -23,7 +23,6 @@ export class ItemInfoComponent implements OnInit {
   public selfEvaluations: any = []; // 保存的数组
   public self_evaluations: any; // 返回的数据
   public companyId: any; // 企业自评ID
-  public evaluation_status: any; // 自评状态
   public slideOpts: any = {
     effect: 'flip',
     speed: 400,
@@ -56,7 +55,6 @@ export class ItemInfoComponent implements OnInit {
     this.http.getRequest(`/specification_evaluations/${this.companyId}`).then((response: any) => {
       if (response) {
         this.self_evaluations = response.self_evaluations;
-        this.evaluation_status = response.evaluation_status.code;
         const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code' };
         this.getIndicator(params);
       }

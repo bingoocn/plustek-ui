@@ -67,6 +67,12 @@
           </div>
           <ion-label class="mine-icon-label">领导审核</ion-label>
         </ion-col>
+        <ion-col *ngIf="role == 'QYTBY' || role == 'QYBMLD' || role == 'QYFGLD'" class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
+          <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
+            <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
+          </div>
+          <ion-label class="mine-icon-label">综合评价</ion-label>
+        </ion-col>
         <ion-col *ngIf="role == 'ZJTYWBM' || role == 'JTYWBM'" class="col-20 text-center ion-align-self-center" [routerLink]="['/monitor-evaluation']">
           <div class="mine-icon-circle bg-brightBlue">
             <ion-img class="mine-icon-img" src="./assets/monitor-evaluation.png" alt=""></ion-img>
@@ -85,7 +91,7 @@
           </div>
           <ion-label class="mine-icon-label">专家阅评</ion-label>
         </ion-col>
-        <ion-col *ngIf="role == 'JTYWBM' || role == 'JTLD' || role == 'ZJ'" class="col-20 text-center ion-align-self-center" [routerLink]="['/view-self-assessment']">
+        <ion-col *ngIf="role != 'QYTBY'" class="col-20 text-center ion-align-self-center" [routerLink]="['/view-self-assessment']">
           <div class="mine-icon-circle bg-orange">
             <ion-img class="mine-icon-img" src="./assets/view-self-evaluation.png" alt=""></ion-img>
           </div>
@@ -96,13 +102,6 @@
             <ion-img class="mine-icon-img" src="./assets/show-highlight.png" alt=""></ion-img>
           </div>
           <ion-label class="mine-icon-label">亮点展示</ion-label>
-        </ion-col>
-        <!-- <ion-col *ngIf="role == 'QYTBY' || role == 'QYBMLD' || role == 'QYFGLD'" class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']"> -->
-        <ion-col class="col-20 text-center ion-align-self-center" [routerLink]="['/overall-evaluation']">
-          <div class="mine-icon-circle bg-brightBlue" style="padding: 5px;">
-            <ion-img class="mine-icon-img" src="./assets/overall-evaluation.png" alt=""></ion-img>
-          </div>
-          <ion-label class="mine-icon-label">综合评价</ion-label>
         </ion-col>
         <!-- <ion-col *ngIf="role != 'JTYWBM' && role != 'JTLD' && role != 'ZJ'" class="col-20 text-center ion-align-self-center" [routerLink]="['/message-interaction']">
           <div class="mine-icon-circle bg-cyan">

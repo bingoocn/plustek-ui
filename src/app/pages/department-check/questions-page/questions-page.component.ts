@@ -29,7 +29,6 @@ export class QuestionsPageComponent implements OnInit {
   public leader_review: any; // 部门审核批阅
   public approvalDetail: any; // 审核数据回显
   public showDepartment: any = false; // 部门回显
-  public evaluation_status: any; // 自评状态
   public slideOpts: any = {
     effect: 'flip',
     speed: 400,
@@ -57,7 +56,6 @@ export class QuestionsPageComponent implements OnInit {
       if (response) {
         this.self_evaluations = response.self_evaluations;
         this.evaluationLevelCode = response.evaluation_level.code;
-        this.evaluation_status = response.evaluation_status.code;
         const params = { indicator_pid: this.indexId, index_level_type_code: '03', scort: 'index_code' };
         this.getIndicator(params);
       }
@@ -70,6 +68,8 @@ export class QuestionsPageComponent implements OnInit {
         this.leader_review = response.leader_review;
       }
     })
+
+
   }
   // 获取当前试题得到具体的题目
   getIndicator(params: any) {
@@ -145,11 +145,10 @@ export class QuestionsPageComponent implements OnInit {
       leader_review: this.leader_review, // 部门审批留言
       detail: this.detail
     };
-    this.http.postRequest(`/specification_evaluations/${this.companyId}/department_check`, params).then((response: any) => {
+    this.http.postRequest(`/specification_evaluations/${this.companyId}/department`, params).then((response: any) => {
       if (response) {
         this.http.putRequest(`/specification_evaluations/${this.companyId}/reported`, '').then((response) => {
           // 跳转到审核列表页面
-          this.common.eventEmit.emit('getData','checked');
           this.nav.navigateForward("/department-check")
         })
       }

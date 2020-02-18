@@ -36,8 +36,6 @@
   <div class="ion-padding">
     <ion-button (click)="save()" expand="block" type="submit" class="ion-no-margin" [routerLink]="['../questionPage']"
       [queryParams]="{companyId:(this.companyId?this.companyId:''),title:this.title, evaluationLevelCode:evaluationLevelCode, evaluationDate:evaluationDate, subordinatePlate:subordinatePlate}">
-      <span *ngIf="evaluation_status == '01'">开始答题</span>
-      <span *ngIf="evaluation_status != '01'">查看</span>
-    </ion-button>
+      开始答题</ion-button>
   </div>
 </ion-content>

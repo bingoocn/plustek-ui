@@ -1,7 +1,5 @@
 {
   "name": "plustek-ui",
-  "integrations": {
-    "cordova": {}
-  },
+  "integrations": {},
   "type": "angular"
 }

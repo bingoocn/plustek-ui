@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { HttpService } from 'src/app/service/http/http.service';
-import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-leader-review-detail',
@@ -21,7 +20,7 @@ export class LeaderReviewDetailComponent implements OnInit {
   public is_sub_group_role:boolean = false;//子集团领导角色
   public review:string = '';
 
-  constructor(public common: CommonService,public routeInfo:ActivatedRoute,private router: Router, public nav:NavController, public http:HttpService) { 
+  constructor(public routeInfo:ActivatedRoute,private router: Router, public nav:NavController, public http:HttpService) { 
     // 从session里获取当前登录人的当前角色信息
     const currentRole = JSON.parse(localStorage.getItem('currentRole'));
     if(currentRole && currentRole.guid){
@@ -86,8 +85,6 @@ export class LeaderReviewDetailComponent implements OnInit {
       this.http.postRequest('/specification_evaluations/' + this.reviewId + this.review,group_params).then((response:any) => {
         this.http.presentToast('保存成功！', 'bottom', 'success');
         this.ngOnInit();
-        this.common.eventEmit.emit('getData','alreadyEvaluated');
-        this.nav.navigateForward("/leader-review")
       })
     }
   }
