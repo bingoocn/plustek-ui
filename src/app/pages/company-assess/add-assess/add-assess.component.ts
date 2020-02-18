@@ -17,6 +17,7 @@ export class AddAssessComponent implements OnInit {
   public companyId: string; // 企业自评ID
   public isEdito: boolean = false; // 编辑时不可操作
   public butValue: string = '开始答题'; // 新增：开始答题，
+  public evaluation_status = '01'; // 自评状态
 
   constructor(public routeInfo: ActivatedRoute, private router: Router, public http: HttpService) { }
 
@@ -36,6 +37,7 @@ export class AddAssessComponent implements OnInit {
       this.isEdito = true,
       this.http.getRequest('/specification_evaluations/' + this.companyId).then((response: any) => {
         if (response) {
+          this.evaluation_status = response.evaluation_status.code;
           this.evaluationLevelCode = response.evaluation_level.code;
           this.subordinatePlate = response.subordinate_plate;
           this.evaluationDate = response.evaluation_date;

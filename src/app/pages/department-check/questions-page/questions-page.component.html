@@ -21,8 +21,8 @@
         <p class="size-sm">{{item.description}}</p>
         <ion-list class="item-label size-sm" *ngIf="(item.options && item.options.length>0 )">
           <ion-item *ngFor="let entry of item.options">
-            <ion-label *ngIf="entry.topics_type.code ==='01'">{{entry.topics_content}}</ion-label>
-            <ion-input *ngIf="entry.topics_type.code ==='02'" placeholder="请输入……" [(ngModel)]="entry.topics_content">
+            <ion-label *ngIf="entry.topics_type ==='01'">{{entry.topics_content}}</ion-label>
+            <ion-input *ngIf="entry.topics_type ==='02'" placeholder="请输入……" [(ngModel)]="entry.topics_content">
             </ion-input>
             <ion-checkbox disabled slot="start" [(ngModel)]="entry.checked" (ionChange)="changeOption(entry,item.id)">
             </ion-checkbox>
@@ -64,7 +64,7 @@
         <ion-icon name="arrow-round-forward"></ion-icon>
         <ion-label>下一题</ion-label>
       </ion-tab-button>
-      <ion-tab-button *ngIf='!showSave' (click)="toNext()">
+      <ion-tab-button *ngIf="!showSave && evaluation_status=='02'" (click)="toNext()">
         <ion-icon name="bookmark"></ion-icon>
         <ion-label>下一步</ion-label>
       </ion-tab-button>

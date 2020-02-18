@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http/http.service';
+import { CommonService } from 'src/app/service/common/common.service';
 
 @Component({
   selector: 'app-department-check',
@@ -14,7 +15,15 @@ export class DepartmentCheckPage implements OnInit {
   public unAssess: any = []; // 待审核
   public assess: any = []; // 已审核
 
-  constructor(public routeInfo:ActivatedRoute ,public router: Router, public http: HttpService) { }
+  constructor(public common: CommonService ,public routeInfo:ActivatedRoute ,public router: Router, public http: HttpService) {
+    this.common.eventEmit.on('getData',(result)=>{
+      this.checkTabValue = result;
+      const checkedParams = { evaluation_status_code: '03,04,05,06', sort: '-evaluation_date', apply_id: this.unit_id };
+      this.getCheckedData(checkedParams);
+      const uncheckedParams = { evaluation_status_code: '02', sort: '-evaluation_date', apply_id: this.unit_id };
+      this.getUnCheckedData(uncheckedParams);
+    })
+   }
 
   ngOnInit() {
     this.unit_id = window.localStorage.getItem("unitId");
@@ -35,7 +44,7 @@ export class DepartmentCheckPage implements OnInit {
   // 发送请求获取待审核数据
   getUnCheckedData(params) {
     this.http.getRequest('/specification_evaluations', params).then((response: any) => {
-      if (response && response.length > 0) {
+      if (response) {
         this.unAssess = response;
       }
     });
@@ -43,7 +52,7 @@ export class DepartmentCheckPage implements OnInit {
   // 发送请求获取已审核数据
   getCheckedData(params) {
     this.http.getRequest('/specification_evaluations', params).then((response: any) => {
-      if (response && response.length > 0) {
+      if (response) {
         this.assess = response;
       }
     });

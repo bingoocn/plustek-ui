@@ -13,7 +13,8 @@ import { CommonService } from 'src/app/service/common/common.service';
 export class RolesComponent implements OnInit {
 
   public roles:any = this.navParams['roles'];
-  readonly PortalIp = 'http://10.100.240.200:10002/api';
+  // readonly PortalIp = 'http://10.100.240.200:10002/api';
+  readonly PortalIp = 'http://36.110.64.102:6002/api';
 
   constructor(
     public navParams: NavParams,

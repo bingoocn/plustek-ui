@@ -7,11 +7,11 @@ import { ToastController, AlertController, LoadingController } from '@ionic/angu
 })
 export class HttpService {
   // readonly baseIp = 'http://10.100.47.19:10008';  // 测试环境
-  readonly baseIp = 'http://10.100.240.200:10008';
+  readonly baseIp = 'http://36.110.64.102:6001';
   // readonly baseIp = 'http://192.168.1.111:10009';
   
   // readonly portalIp = 'http://10.100.240.163:10002';
-  readonly portalIp = 'http://10.100.240.200:10002';
+  readonly portalIp = 'http://36.110.64.102:6002';
   // readonly portalIp = 'http://192.168.1.111:10006';
   // 请求头
   public header = new HttpHeaders({
